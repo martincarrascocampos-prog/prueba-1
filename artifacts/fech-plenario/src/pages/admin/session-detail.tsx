@@ -56,7 +56,7 @@ import { useSessionLive } from "@/hooks/use-session-live";
 import { formatMinutes } from "@/components/session-agenda";
 import { SessionResources } from "@/components/session-resources";
 import { useUpload } from "@workspace/object-storage-web";
-import { RefreshCw, MapPin, Clock, Pencil, Maximize2, ArrowUp, ArrowDown, Trash2, Plus, Wifi, LogOut, Hand, FileUp, Users } from "lucide-react";
+import { RefreshCw, MapPin, Clock, Pencil, Maximize2, ArrowUp, ArrowDown, ArrowLeft, Trash2, Plus, Wifi, LogOut, Hand, FileUp, Users, Scale, AlertTriangle, CheckCircle2, Download, Wrench } from "lucide-react";
 
 // Fixed voting divisions. Value = users.group used for eligibility (empty
 // selection = pleno completo / open to all). Mesa Directiva is intentionally excluded.
@@ -65,6 +65,10 @@ const ESTAMENTO_OPTIONS: { value: string; label: string }[] = [
   { value: "Consejeros FECh", label: "Consejerías" },
   { value: "COSEFECH", label: "Cosefech" },
 ];
+
+// Fracción de la ponderación total necesaria para sesionar y votar.
+// REVISAR contra los Estatutos de la FECh antes de darlo por definitivo.
+const QUORUM_MINIMO = 0.5;
 
 function toDatetimeLocal(iso: string | null | undefined): string {
   if (!iso) return "";
@@ -323,50 +327,64 @@ export default function AdminSessionDetail() {
 
   return (
     <AppLayout>
-      <div className="flex items-start justify-between mb-6">
-        <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-3xl font-bold">{session.title}</h1>
-            <Button variant="ghost" size="icon" className="h-8 w-8" onClick={openEdit}>
-              <Pencil className="h-4 w-4" />
-            </Button>
+      <div className="mb-5 border-b-2 border-gray-800 pb-4">
+        <button
+          onClick={() => setLocation("/admin")}
+          className="mb-2 inline-flex items-center gap-1.5 text-xs font-semibold text-muted-foreground hover:text-foreground"
+        >
+          <ArrowLeft className="h-3.5 w-3.5" /> Todas las sesiones
+        </button>
+        <div className="flex flex-wrap items-start justify-between gap-3">
+          <div className="min-w-0">
+            <div className="flex items-center gap-2">
+              <span className={`px-2 py-0.5 text-[10px] font-bold tracking-wider text-white ${
+                session.status === "abierta" ? "bg-red-700" : "bg-gray-500"}`}>
+                {session.status === "abierta" ? "EN CURSO" : "CERRADA"}
+              </span>
+              {session.officialStartAt && (
+                <span className="border border-lime-600 px-2 py-0.5 text-[10px] font-bold tracking-wider text-lime-700">
+                  APERTURA OFICIAL
+                </span>
+              )}
+            </div>
+            <h1 className="mt-1.5 flex items-center gap-2 text-2xl font-bold leading-tight">
+              {session.title}
+              <Button variant="ghost" size="icon" className="h-7 w-7 shrink-0" onClick={openEdit}>
+                <Pencil className="h-3.5 w-3.5" />
+              </Button>
+            </h1>
+            <div className="mt-1.5 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
+              {session.location && (
+                <span className="flex items-center gap-1"><MapPin className="h-3.5 w-3.5" />{session.location}</span>
+              )}
+              {session.scheduledAt && (
+                <span className="flex items-center gap-1"><Clock className="h-3.5 w-3.5" />{new Date(session.scheduledAt).toLocaleString()}</span>
+              )}
+              {session.officialStartAt && (
+                <span className="flex items-center gap-1">
+                  Inicio oficial {new Date(session.officialStartAt).toLocaleTimeString()}
+                  {session.officialEndAt && ` · cierre ${new Date(session.officialEndAt).toLocaleTimeString()}`}
+                </span>
+              )}
+            </div>
           </div>
-          <div className="flex gap-2 items-center mt-2 flex-wrap">
-            <Badge variant={session.status === "abierta" ? "default" : "secondary"}>
-              {session.status.toUpperCase()}
-            </Badge>
-            <span className="text-muted-foreground">Código: <strong className="text-foreground">{session.sessionCode}</strong></span>
-            {session.location && (
-              <span className="text-muted-foreground flex items-center gap-1"><MapPin className="w-4 h-4" />{session.location}</span>
-            )}
-            {session.scheduledAt && (
-              <span className="text-muted-foreground flex items-center gap-1"><Clock className="w-4 h-4" />{new Date(session.scheduledAt).toLocaleString()}</span>
+          <div className="flex shrink-0 flex-wrap gap-2">
+            <Button variant="outline" size="sm" className="rounded-none" onClick={handleRefresh} disabled={refreshing}>
+              <RefreshCw className={`h-4 w-4 mr-2 ${refreshing ? "animate-spin" : ""}`} />
+              Actualizar
+            </Button>
+            {session.status === "abierta" ? (
+              <Button variant="destructive" className="rounded-none" onClick={() => {
+                updateSession.mutate({ id, data: { status: "cerrada" } }, {
+                  onSuccess: () => queryClient.invalidateQueries({ queryKey: getGetSessionQueryKey(id) })
+                });
+              }}>Cerrar sesión</Button>
+            ) : (
+              <Button variant="outline" className="rounded-none" onClick={() => setOpenConfirmOpen(true)}>
+                {session.officialStartAt ? "Reabrir sesión" : "Abrir sesión"}
+              </Button>
             )}
           </div>
-        </div>
-        <div className="flex gap-2">
-          <Button variant="outline" size="sm" onClick={handleRefresh} disabled={refreshing}>
-            <RefreshCw className={`h-4 w-4 mr-2 ${refreshing ? "animate-spin" : ""}`} />
-            Actualizar
-          </Button>
-          {session.status === "abierta" ? (
-            <Button variant="destructive" onClick={() => {
-              updateSession.mutate({ id, data: { status: "cerrada" } }, {
-                onSuccess: () => queryClient.invalidateQueries({ queryKey: getGetSessionQueryKey(id) })
-              });
-            }}>Cerrar Sesión</Button>
-          ) : (
-            <Button variant="outline" onClick={() => setOpenConfirmOpen(true)}>
-              {session.officialStartAt ? "Reabrir Sesión" : "Abrir Sesión"}
-            </Button>
-          )}
-          <Button variant="ghost" className="text-red-600 hover:text-red-700 hover:bg-red-50" onClick={() => {
-            if (confirm("¿Estás seguro de eliminar esta sesión y todos sus votos?")) {
-              deleteSession.mutate({ id }, {
-                onSuccess: () => setLocation("/admin")
-              });
-            }
-          }}>Eliminar</Button>
         </div>
       </div>
 
@@ -374,35 +392,10 @@ export default function AdminSessionDetail() {
         <CurrentSpeaker sessionId={id} live={liveConnected} />
       </div>
 
-      <Card className="mb-6">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2"><FileUp className="h-5 w-5" /> Enlace y Acta</CardTitle>
-          <CardDescription>El enlace y el acta (PDF) son visibles y descargables por todo el pleno.</CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <SessionResources meetingLink={session.meetingLink} actaObjectPath={session.actaObjectPath} actaFileName={session.actaFileName} />
-          {!session.meetingLink && !session.actaObjectPath && (
-            <p className="text-sm text-muted-foreground">Aún no hay enlace ni acta. Usa "Editar" para el enlace y el botón para subir el acta.</p>
-          )}
-          <input ref={actaInputRef} type="file" accept="application/pdf,.pdf" className="hidden" onChange={handleActaSelected} />
-          <div className="flex flex-wrap gap-2">
-            <Button variant="outline" size="sm" disabled={isUploading || updateSession.isPending} onClick={() => actaInputRef.current?.click()}>
-              <FileUp className="h-4 w-4 mr-2" />
-              {isUploading ? "Subiendo..." : session.actaObjectPath ? "Reemplazar acta (PDF)" : "Subir acta (PDF)"}
-            </Button>
-            {session.actaObjectPath && (
-              <Button variant="ghost" size="sm" className="text-red-600 hover:text-red-700" disabled={updateSession.isPending} onClick={handleRemoveActa}>
-                <Trash2 className="h-4 w-4 mr-2" /> Eliminar acta
-              </Button>
-            )}
-          </div>
-        </CardContent>
-      </Card>
-
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Lado izquierdo: Control de Asistencia y Acciones */}
         <div className="space-y-6">
-          <Card>
+          <Card className="rounded-none">
             <CardHeader>
               <CardTitle>Asistencia</CardTitle>
             </CardHeader>
@@ -425,23 +418,56 @@ export default function AdminSessionDetail() {
                 </div>
               </div>
 
-              <div className="space-y-2 text-sm border-t pt-4">
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Presentes:</span>
-                  <span className="font-semibold">{attendance?.present.length || 0} personas</span>
-                </div>
-                {(attendance?.checkedOut.length ?? 0) > 0 && (
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">Retirados:</span>
-                    <span className="font-semibold">{attendance?.checkedOut.length} personas</span>
+              {/* Quórum. Antes esta tarjeta mostraba la ponderación presente
+                  pero no decía si alcanzaba el mínimo para votar; había que
+                  calcularlo de cabeza en plena sesión. */}
+              {(() => {
+                const presente = attendance?.presentWeight ?? 0;
+                const total = attendance?.totalWeight ?? 0;
+                const pct = total > 0 ? (presente / total) * 100 : 0;
+                const minimo = total * QUORUM_MINIMO;
+                const hayQuorum = presente >= minimo && total > 0;
+                return (
+                  <div className="border-t pt-4">
+                    <div className={`mb-3 flex items-start gap-2.5 border-l-4 p-3 ${
+                      hayQuorum ? "border-l-lime-600 bg-lime-50/60" : "border-l-red-600 bg-red-50/60"}`}>
+                      {hayQuorum
+                        ? <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-lime-700" />
+                        : <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-red-700" />}
+                      <div>
+                        <div className={`text-sm font-bold ${hayQuorum ? "text-lime-800" : "text-red-800"}`}>
+                          {hayQuorum ? "Quórum alcanzado" : "Sin quórum"}
+                        </div>
+                        <p className="mt-0.5 text-xs leading-snug text-muted-foreground">
+                          Mínimo {(QUORUM_MINIMO * 100).toFixed(0)}% = {minimo.toFixed(2)}.{" "}
+                          {hayQuorum ? "El pleno puede votar válidamente." : "No se pueden abrir votaciones."}
+                        </p>
+                      </div>
+                    </div>
+                    <div className="space-y-2 text-sm">
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Presentes</span>
+                        <span className="font-semibold tabular-nums">{attendance?.present.length || 0} personas</span>
+                      </div>
+                      {(attendance?.checkedOut.length ?? 0) > 0 && (
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Retirades</span>
+                          <span className="font-semibold tabular-nums">{attendance?.checkedOut.length} personas</span>
+                        </div>
+                      )}
+                      <div className="flex justify-between">
+                        <span className="flex items-center gap-1.5 text-muted-foreground">
+                          <Scale className="h-3.5 w-3.5" /> Ponderación presente
+                        </span>
+                        <span className="font-semibold tabular-nums">
+                          {presente.toFixed(2)} / {total.toFixed(2)} · {pct.toFixed(1)}%
+                        </span>
+                      </div>
+                      <Progress value={pct} className="mt-2 h-2" />
+                    </div>
                   </div>
-                )}
-                <div className="flex justify-between">
-                  <span className="text-muted-foreground">Ponderación Presente:</span>
-                  <span className="font-semibold">{attendance?.presentWeight.toFixed(2) || "0.00"} / {attendance?.totalWeight.toFixed(2) || "0.00"}</span>
-                </div>
-                <Progress value={((attendance?.presentWeight || 0) / (attendance?.totalWeight || 1)) * 100} className="h-2 mt-2" />
-              </div>
+                );
+              })()}
 
               <div className="border-t pt-4 mt-4 space-y-4">
                 <div className="text-sm font-medium text-muted-foreground">Asistencia por estamento</div>
@@ -453,30 +479,13 @@ export default function AdminSessionDetail() {
                 <LiveRoster present={attendance?.present ?? []} checkedOut={attendance?.checkedOut ?? []} />
               </div>
 
-              <div className="mt-6 flex flex-col gap-2">
-                <Button variant="secondary" className="w-full" onClick={() => setAttendanceOpen(true)}>
-                  <Pencil className="h-4 w-4 mr-2" /> Editar asistencia
-                </Button>
-                <Button variant="secondary" className="w-full" onClick={() => setVotesEditOpen(true)}>
-                  <Pencil className="h-4 w-4 mr-2" /> Editar votaciones
-                </Button>
-                <Button variant="outline" className="w-full" disabled={!!exporting} onClick={() => handleExport("attendance")}>
-                  {exporting === "attendance" ? "Exportando..." : "Exportar Asistencia"}
-                </Button>
-                <Button variant="outline" className="w-full" disabled={!!exporting} onClick={() => handleExport("results")}>
-                  {exporting === "results" ? "Exportando..." : "Exportar Resultados"}
-                </Button>
-                <Button variant="outline" className="w-full" disabled={!!exporting} onClick={() => handleExport("matrix")}>
-                  {exporting === "matrix" ? "Exportando..." : "Exportar Matriz de Votos"}
-                </Button>
-              </div>
             </CardContent>
           </Card>
         </div>
 
         {/* Lado derecho: Tabla y Mociones propuestas */}
         <div className="lg:col-span-2 space-y-6">
-          <Card>
+          <Card className="rounded-none">
             <CardHeader>
               <CardTitle>Tabla de la Sesión</CardTitle>
               <CardDescription>Puntos a tratar, en orden, con tiempo estimado.</CardDescription>
@@ -492,13 +501,13 @@ export default function AdminSessionDetail() {
               </form>
 
               {sortedAgenda.length === 0 ? (
-                <div className="text-center py-6 text-muted-foreground border rounded-lg border-dashed">No hay puntos en la tabla todavía.</div>
+                <div className="text-center py-6 text-muted-foreground border border-dashed">No hay puntos en la tabla todavía.</div>
               ) : (
                 <ol className="space-y-2">
                   {sortedAgenda.map((p, i) => {
                     const t = formatMinutes(p.estimatedMinutes);
                     return (
-                      <li key={p.id} className="flex items-center gap-3 rounded-md border bg-card p-3">
+                      <li key={p.id} className="flex items-center gap-3 border bg-card p-3">
                         <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/10 text-xs font-semibold text-primary">{i + 1}</span>
                         <span className="flex-1 font-medium leading-tight">{p.title}</span>
                         {t && (
@@ -525,7 +534,7 @@ export default function AdminSessionDetail() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="rounded-none">
             <CardHeader>
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div className="space-y-1.5">
@@ -614,7 +623,7 @@ export default function AdminSessionDetail() {
             </CardContent>
           </Card>
 
-          <Card>
+          <Card className="rounded-none">
             <CardHeader>
               <CardTitle>Mociones propuestas</CardTitle>
             </CardHeader>
@@ -788,7 +797,7 @@ export default function AdminSessionDetail() {
 
               <div className="space-y-4">
                 {topics?.map(topic => (
-                  <Card key={topic.id} className="overflow-hidden border-primary/10">
+                  <Card key={topic.id} className="overflow-hidden rounded-none border-gray-300">
                     <div className="p-4 flex items-start justify-between bg-gray-50/50">
                       <div>
                         <h3 className="font-semibold text-lg">{topic.title}</h3>
@@ -874,10 +883,95 @@ export default function AdminSessionDetail() {
                     </div>
                   </Card>
                 ))}
-                {topics?.length === 0 && <div className="text-center py-8 text-muted-foreground border rounded-lg border-dashed">No hay mociones propuestas en esta sesión.</div>}
+                {topics?.length === 0 && <div className="text-center py-8 text-muted-foreground border border-dashed">No hay mociones propuestas en esta sesión.</div>}
               </div>
             </CardContent>
           </Card>
+        </div>
+      </div>
+
+      {/* Cierre de la sesión: lo que se hace al terminar. Antes esto estaba
+          arriba de todo, delante de la tabla y las mociones, que es lo que se
+          usa durante el pleno. */}
+      <div className="mt-6 border-t-2 border-gray-800 pt-5">
+        <h2 className="mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-wider">
+          <Download className="h-4 w-4" /> Cierre de la sesión
+        </h2>
+        <div className="grid gap-4 lg:grid-cols-2">
+          <Card className="rounded-none">
+            <CardHeader className="pb-3">
+              <CardTitle className="flex items-center gap-2 text-base"><FileUp className="h-4 w-4" /> Enlace y acta</CardTitle>
+              <CardDescription>Visibles y descargables por todo el pleno.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <SessionResources meetingLink={session.meetingLink} actaObjectPath={session.actaObjectPath} actaFileName={session.actaFileName} />
+              {!session.meetingLink && !session.actaObjectPath && (
+                <p className="text-sm text-muted-foreground">Aún no hay enlace ni acta. Usa «Editar» para el enlace y el botón para subir el acta.</p>
+              )}
+              <input ref={actaInputRef} type="file" accept="application/pdf,.pdf" className="hidden" onChange={handleActaSelected} />
+              <div className="flex flex-wrap gap-2">
+                <Button variant="outline" size="sm" className="rounded-none" disabled={isUploading || updateSession.isPending} onClick={() => actaInputRef.current?.click()}>
+                  <FileUp className="h-4 w-4 mr-2" />
+                  {isUploading ? "Subiendo..." : session.actaObjectPath ? "Reemplazar acta (PDF)" : "Subir acta (PDF)"}
+                </Button>
+                {session.actaObjectPath && (
+                  <Button variant="ghost" size="sm" className="rounded-none text-red-600 hover:text-red-700" disabled={updateSession.isPending} onClick={handleRemoveActa}>
+                    <Trash2 className="h-4 w-4 mr-2" /> Eliminar acta
+                  </Button>
+                )}
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card className="rounded-none">
+            <CardHeader className="pb-3">
+              <CardTitle className="flex items-center gap-2 text-base"><Download className="h-4 w-4" /> Exportar a Excel</CardTitle>
+              <CardDescription>Planillas de esta sesión, para el acta y el archivo.</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="grid gap-2 sm:grid-cols-3">
+                {([
+                  ["attendance", "Asistencia", "Nómina con modalidad y ponderación"],
+                  ["results", "Resultados", "Cada moción con su veredicto"],
+                  ["matrix", "Matriz de votos", "Quién votó qué, en filas y columnas"],
+                ] as const).map(([tipo, titulo, desc]) => (
+                  <button key={tipo} type="button" disabled={!!exporting}
+                    onClick={() => handleExport(tipo)}
+                    className="border border-gray-300 p-3 text-left transition-colors hover:border-gray-800 disabled:opacity-50">
+                    <Download className="mb-1.5 h-4 w-4 text-muted-foreground" />
+                    <div className="text-sm font-semibold">{exporting === tipo ? "Exportando…" : titulo}</div>
+                    <div className="mt-0.5 text-[11px] leading-snug text-muted-foreground">{desc}</div>
+                  </button>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
+        {/* Correcciones: acciones excepcionales, con menos peso visual que la
+            operación normal del pleno. */}
+        <div className="mt-4 border border-dashed border-gray-400 p-4">
+          <div className="mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+            <Wrench className="h-3.5 w-3.5" /> Correcciones
+          </div>
+          <p className="mb-3 text-xs text-muted-foreground">
+            Para arreglar errores de registro. Ambas alteran datos ya guardados de la sesión.
+          </p>
+          <div className="flex flex-wrap gap-2">
+            <Button variant="outline" size="sm" className="rounded-none" onClick={() => setAttendanceOpen(true)}>
+              <Pencil className="h-4 w-4 mr-2" /> Editar asistencia
+            </Button>
+            <Button variant="outline" size="sm" className="rounded-none" onClick={() => setVotesEditOpen(true)}>
+              <Pencil className="h-4 w-4 mr-2" /> Editar votaciones
+            </Button>
+            <Button variant="ghost" size="sm" className="rounded-none text-red-600 hover:bg-red-50 hover:text-red-700" onClick={() => {
+              if (confirm("¿Estás seguro de eliminar esta sesión y todos sus votos?")) {
+                deleteSession.mutate({ id }, { onSuccess: () => setLocation("/admin") });
+              }
+            }}>
+              <Trash2 className="h-4 w-4 mr-2" /> Eliminar sesión
+            </Button>
+          </div>
         </div>
       </div>
 

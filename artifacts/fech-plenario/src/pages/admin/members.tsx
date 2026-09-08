@@ -14,7 +14,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Spinner } from "@/components/ui/spinner";
 import { GROUP_ORDER } from "@/lib/groups";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
-import { Eye, EyeOff, RefreshCw, UserPlus, Trash2, Pencil, Ban, CheckCircle2, ArrowUpDown } from "lucide-react";
+import { Eye, EyeOff, RefreshCw, UserPlus, Trash2, Pencil, Ban, CheckCircle2, ArrowUpDown, Search } from "lucide-react";
 
 function AddMemberDialog() {
   const [open, setOpen] = useState(false);
@@ -587,38 +587,39 @@ export default function AdminMembers() {
     query: { refetchInterval: 10000, queryKey: getListMembersQueryKey() },
   });
   const [sortKey, setSortKey] = useState<SortKey>("displayName");
+  // Con casi cien integrantes, buscar es más frecuente que ordenar.
+  const [search, setSearch] = useState("");
 
   const sortedMembers = useMemo(() => {
     if (!members) return [];
-    const arr = [...members];
+    const q = search.trim().toLowerCase();
+    const arr = members.filter((m) =>
+      !q ||
+      m.displayName.toLowerCase().includes(q) ||
+      m.username.toLowerCase().includes(q) ||
+      (m.group ?? "").toLowerCase().includes(q) ||
+      (m.faculty ?? "").toLowerCase().includes(q));
     arr.sort((a, b) => {
       const av = (sortKey === "group" ? a.group : a[sortKey]) ?? "";
       const bv = (sortKey === "group" ? b.group : b[sortKey]) ?? "";
       return av.localeCompare(bv, "es", { sensitivity: "base" });
     });
     return arr;
-  }, [members, sortKey]);
+  }, [members, sortKey, search]);
 
   return (
     <AppLayout>
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-gray-900">Gestión de Miembres</h1>
+      <div className="space-y-5">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-gray-800 pb-4">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">Integrantes del pleno</h1>
+            <p className="text-sm text-muted-foreground">
+              {members?.filter((m) => m.active).length ?? 0} activos de {members?.length ?? 0}.
+              Las altas y bajas no afectan sesiones ya creadas.
+            </p>
+          </div>
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1">
-              <ArrowUpDown className="h-4 w-4 text-muted-foreground" />
-              <Select value={sortKey} onValueChange={(v) => setSortKey(v as SortKey)}>
-                <SelectTrigger className="h-9 w-40" aria-label="Ordenar por">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="displayName">Nombre</SelectItem>
-                  <SelectItem value="username">Usuario</SelectItem>
-                  <SelectItem value="group">Grupo</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <Button variant="outline" size="sm" onClick={() => refetch()} disabled={isFetching}>
+            <Button variant="outline" size="sm" className="rounded-none" onClick={() => refetch()} disabled={isFetching}>
               <RefreshCw className={`h-4 w-4 mr-2 ${isFetching ? "animate-spin" : ""}`} />
               Actualizar
             </Button>
@@ -626,9 +627,37 @@ export default function AdminMembers() {
           </div>
         </div>
 
-        <UnidadesManager />
+        <div className="flex flex-wrap items-center gap-2">
+          <div className="relative min-w-[240px] flex-1">
+            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Buscar por nombre, usuario, facultad o grupo…"
+              className="rounded-none pl-9"
+            />
+          </div>
+          <div className="flex items-center gap-1">
+            <ArrowUpDown className="h-4 w-4 text-muted-foreground" />
+            <Select value={sortKey} onValueChange={(v) => setSortKey(v as SortKey)}>
+              <SelectTrigger className="h-10 w-36 rounded-none" aria-label="Ordenar por">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="displayName">Nombre</SelectItem>
+                <SelectItem value="username">Usuario</SelectItem>
+                <SelectItem value="group">Grupo</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+          {search && (
+            <span className="text-xs tabular-nums text-muted-foreground">
+              {sortedMembers.length} resultado{sortedMembers.length !== 1 ? "s" : ""}
+            </span>
+          )}
+        </div>
 
-        <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
+        <div className="bg-white border overflow-hidden">
           {isLoading ? (
             <div className="p-8 flex justify-center"><Spinner /></div>
           ) : (
@@ -698,7 +727,23 @@ export default function AdminMembers() {
               </TableBody>
             </Table>
           )}
+          {!isLoading && sortedMembers.length === 0 && (
+            <div className="p-8 text-center text-sm text-muted-foreground">
+              Nadie coincide con «{search}».
+            </div>
+          )}
         </div>
+
+        {/* Catálogo de unidades: mantenimiento ocasional. Antes estaba sobre la
+            nómina, ocupando espacio permanente en la pantalla que más se usa. */}
+        <details className="border">
+          <summary className="cursor-pointer select-none bg-muted/40 px-4 py-2.5 text-sm font-semibold hover:bg-muted/60">
+            Unidades académicas
+          </summary>
+          <div className="border-t p-4">
+            <UnidadesManager />
+          </div>
+        </details>
       </div>
     </AppLayout>
   );
