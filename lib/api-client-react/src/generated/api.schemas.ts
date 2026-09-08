@@ -811,6 +811,22 @@ export interface MemberHistoryTopic {
   voteCount: number;
 }
 
+/**
+ * Registro de uso de la palabra de una persona en una sesión. Agrupa todas sus intervenciones finalizadas.
+
+ */
+export interface PublicSpeaker {
+  name: string;
+  /** @nullable */
+  group: string | null;
+  /** Tiempo total efectivamente usado, en segundos. */
+  seconds: number;
+  /** Número de intervenciones. */
+  turns: number;
+  /** Si alguna de sus intervenciones fue palabra colectiva. */
+  collective?: boolean;
+}
+
 export interface MemberHistorySession {
   sessionId: number;
   title: string;
@@ -830,6 +846,17 @@ export interface MemberHistorySession {
   /** When not attended, whether the absence is an "Inasistencia Justificada". */
   justified?: boolean;
   topics: MemberHistoryTopic[];
+  /** Quiénes tomaron la palabra en la sesión y cuánto hablaron. */
+  speakers?: PublicSpeaker[];
+  /** Tiempo propio en uso de la palabra en esta sesión, en segundos. */
+  mySeconds?: number;
+  /** Intervenciones propias en esta sesión. */
+  myTurns?: number;
+  /**
+     * Duración real de la sesión, si se abrió oficialmente y ya cerró.
+     * @nullable
+     */
+  officialMinutes?: number | null;
 }
 
 export type AdminHistoryTopicType = typeof AdminHistoryTopicType[keyof typeof AdminHistoryTopicType];
@@ -916,22 +943,6 @@ export interface PublicAgendaPoint {
   position: number;
   /** @nullable */
   estimatedMinutes?: number | null;
-}
-
-/**
- * Registro de uso de la palabra de una persona en una sesión. Agrupa todas sus intervenciones finalizadas.
-
- */
-export interface PublicSpeaker {
-  name: string;
-  /** @nullable */
-  group: string | null;
-  /** Tiempo total efectivamente usado, en segundos. */
-  seconds: number;
-  /** Número de intervenciones. */
-  turns: number;
-  /** Si alguna de sus intervenciones fue palabra colectiva. */
-  collective?: boolean;
 }
 
 export interface AdminHistorySession {

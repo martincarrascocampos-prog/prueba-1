@@ -1146,7 +1146,17 @@ export const GetMyHistoryResponseItem = zod.object({
 })).optional(),
   "approved": zod.boolean().nullable(),
   "voteCount": zod.number()
-}))
+})),
+  "speakers": zod.array(zod.object({
+  "name": zod.string(),
+  "group": zod.string().nullable(),
+  "seconds": zod.number().describe('Tiempo total efectivamente usado, en segundos.'),
+  "turns": zod.number().describe('Número de intervenciones.'),
+  "collective": zod.boolean().optional().describe('Si alguna de sus intervenciones fue palabra colectiva.')
+}).describe('Registro de uso de la palabra de una persona en una sesión. Agrupa todas sus intervenciones finalizadas.\n')).optional().describe('Quiénes tomaron la palabra en la sesión y cuánto hablaron.'),
+  "mySeconds": zod.number().optional().describe('Tiempo propio en uso de la palabra en esta sesión, en segundos.'),
+  "myTurns": zod.number().optional().describe('Intervenciones propias en esta sesión.'),
+  "officialMinutes": zod.number().nullish().describe('Duración real de la sesión, si se abrió oficialmente y ya cerró.')
 })
 export const GetMyHistoryResponse = zod.array(GetMyHistoryResponseItem)
 

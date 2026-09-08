@@ -2209,6 +2209,20 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/MemberHistoryTopic"
+        speakers:
+          type: array
+          description: Quiénes tomaron la palabra en la sesión y cuánto hablaron.
+          items:
+            $ref: "#/components/schemas/PublicSpeaker"
+        mySeconds:
+          type: integer
+          description: Tiempo propio en uso de la palabra en esta sesión, en segundos.
+        myTurns:
+          type: integer
+          description: Intervenciones propias en esta sesión.
+        officialMinutes:
+          type: ["integer", "null"]
+          description: Duración real de la sesión, si se abrió oficialmente y ya cerró.
 
     AdminHistoryTopic:
       type: object

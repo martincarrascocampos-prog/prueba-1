@@ -6,6 +6,7 @@
  * OpenAPI spec version: 0.1.0
  */
 import type { MemberHistoryTopic } from './memberHistoryTopic';
+import type { PublicSpeaker } from './publicSpeaker';
 
 export interface MemberHistorySession {
   sessionId: number;
@@ -26,4 +27,15 @@ export interface MemberHistorySession {
   /** When not attended, whether the absence is an "Inasistencia Justificada". */
   justified?: boolean;
   topics: MemberHistoryTopic[];
+  /** Quiénes tomaron la palabra en la sesión y cuánto hablaron. */
+  speakers?: PublicSpeaker[];
+  /** Tiempo propio en uso de la palabra en esta sesión, en segundos. */
+  mySeconds?: number;
+  /** Intervenciones propias en esta sesión. */
+  myTurns?: number;
+  /**
+     * Duración real de la sesión, si se abrió oficialmente y ya cerró.
+     * @nullable
+     */
+  officialMinutes?: number | null;
 }

@@ -59,6 +59,9 @@ interface LoadedData {
     number,
     { name: string; group: string | null; seconds: number; turns: number; collective: boolean }[]
   >;
+  // Turnos propios por (sesión, integrante), para el histórico personal.
+  // Clave: `${sessionId}:${userId}`.
+  ownTurns: Map<string, { seconds: number; turns: number }>;
 }
 
 async function loadHistoryData(): Promise<LoadedData> {
@@ -129,6 +132,19 @@ async function loadHistoryData(): Promise<LoadedData> {
     arr.sort((a, b) => b.seconds - a.seconds || a.name.localeCompare(b.name, "es"));
   }
 
+  // Registro propio. A diferencia del agregado público, aquí sí se cuentan las
+  // intervenciones colectivas en las que participó la persona: es su historial,
+  // no una atribución pública de mérito.
+  const ownTurns = new Map<string, { seconds: number; turns: number }>();
+  for (const t of speakingRows) {
+    if (t.userId === null) continue;
+    const key = `${t.sessionId}:${t.userId}`;
+    const cur = ownTurns.get(key) ?? { seconds: 0, turns: 0 };
+    cur.seconds += t.elapsedSeconds;
+    cur.turns += 1;
+    ownTurns.set(key, cur);
+  }
+
   const justifiedBySession = new Map<number, Set<number>>();
   for (const j of justifiedRows) {
     let set = justifiedBySession.get(j.sessionId);
@@ -193,6 +209,7 @@ async function loadHistoryData(): Promise<LoadedData> {
     justifiedBySession,
     agendaBySession,
     speakersBySession,
+    ownTurns,
   };
 }
 
@@ -390,6 +407,17 @@ router.get("/history/me", requireAuth, async (req, res): Promise<void> => {
         myVote: myVoteByTopic.get(t.id) ?? null,
         ...buildTopicResult(data, sessionRoster(data, s), t, attendeeIds, checkedOutIds),
       })),
+      // Quiénes intervinieron en la sesión, y el registro propio.
+      speakers: data.speakersBySession.get(s.id) ?? [],
+      mySeconds: data.ownTurns.get(`${s.id}:${userId}`)?.seconds ?? 0,
+      myTurns: data.ownTurns.get(`${s.id}:${userId}`)?.turns ?? 0,
+      officialMinutes:
+        s.officialStartAt !== null && s.officialEndAt !== null
+          ? Math.max(
+              0,
+              Math.round((s.officialEndAt.getTime() - s.officialStartAt.getTime()) / 60000),
+            )
+          : null,
     };
   });
 
