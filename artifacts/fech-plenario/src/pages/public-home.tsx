@@ -51,7 +51,7 @@ const ESTAMENTO: Record<
     chip: "bg-blue-50 text-blue-700 border-blue-300", text: "text-blue-700", bg: "bg-blue-700",
   },
   cee: {
-    label: "CEE — Delegades", short: "CEE", hex: "#047857", shape: "square",
+    label: "Centros de Estudiantes", short: "Centros", hex: "#047857", shape: "square",
     chip: "bg-emerald-50 text-emerald-700 border-emerald-300", text: "text-emerald-700", bg: "bg-emerald-700",
   },
   otro: {
@@ -71,6 +71,68 @@ function estamentoOf(group: string | null | undefined): EstamentoKey {
 
 const ORDEN: Record<EstamentoKey, number> = { mesa: 0, cosefech: 1, consejero: 2, cee: 3, otro: 4 };
 const ESTAMENTOS_VISIBLES: EstamentoKey[] = ["mesa", "cosefech", "consejero", "cee"];
+
+// ─── Campus ──────────────────────────────────────────────────────────────────
+//
+// A qué campus pertenece cada unidad. La aplicación no guarda el campus en la
+// base de datos, así que se resuelve por esta tabla.
+//
+// REVISAR Y CORREGIR: este mapa es una aproximación. Toda unidad que no
+// aparezca aquí se agrupa bajo «Otras unidades», sin inventarle un campus.
+
+const CAMPUS: Record<string, string> = {
+  // Juan Gómez Millas
+  FACSO: "Juan Gómez Millas",
+  FYHH: "Juan Gómez Millas",
+  FACIEN: "Juan Gómez Millas",
+  FCEI: "Juan Gómez Millas",
+  "F. Artes": "Juan Gómez Millas",
+  // Andrés Bello
+  FEN: "Andrés Bello",
+  FAU: "Andrés Bello",
+  FAGOB: "Andrés Bello",
+  // Beauchef
+  FCFM: "Beauchef",
+  // Campus Norte
+  FACMED: "Norte",
+  FaO: "Norte",
+  FaCQyF: "Norte",
+  // Campus Sur
+  FAGRO: "Sur",
+  FAVET: "Sur",
+  FCFCN: "Sur",
+  // Centro
+  Derecho: "Centro",
+  "Artes Centro": "Centro",
+};
+
+const SIN_CAMPUS = "Otras unidades";
+const campusDe = (faculty: string | null | undefined) =>
+  (faculty && CAMPUS[faculty]) || SIN_CAMPUS;
+
+// Orden de presentación de los campus. Los no listados van al final.
+const ORDEN_CAMPUS = ["Juan Gómez Millas", "Andrés Bello", "Beauchef", "Norte", "Sur", "Centro"];
+const ordenCampus = (c: string) => {
+  const i = ORDEN_CAMPUS.indexOf(c);
+  return i === -1 ? ORDEN_CAMPUS.length : i;
+};
+
+// Nombre completo de cada Centro de Estudiantes. Los códigos que no estén aquí
+// se muestran tal cual, sin inventarles un nombre.
+// COMPLETAR con la nómina real de la FECh.
+const CENTROS: Record<string, string> = {
+  CEArq: "Arquitectura",
+  CED: "Derecho",
+  CEO: "Odontología",
+  CEV: "Veterinaria",
+  CEG: "Gobierno",
+  CEFH: "Filosofía y Humanidades",
+  CECSO: "Ciencias Sociales",
+  CEFaQ: "Ciencias Químicas y Farmacéuticas",
+};
+
+const nombreCentro = (faculty: string | null | undefined) =>
+  faculty ? (CENTROS[faculty] ? `CE de ${CENTROS[faculty]}` : faculty) : "Centro de Estudiantes";
 
 // ─── Geometría de las formas ─────────────────────────────────────────────────
 
@@ -316,6 +378,102 @@ function Hemicycle({ members }: { members: PublicMember[] }) {
     </div>
   );
 }
+// ─── Listados de composición ─────────────────────────────────────────────────
+
+// Un grupo desplegable. Cerrado por defecto salvo que se indique lo contrario:
+// la Composición es larga y conviene que abra ordenada, no volcada de una vez.
+function Desplegable({ titulo, cuenta, color, defecto, children }: {
+  titulo: React.ReactNode; cuenta: number; color: string;
+  defecto?: boolean; children: React.ReactNode;
+}) {
+  return (
+    <details open={defecto} className="border border-gray-300 bg-white">
+      <summary
+        className="flex cursor-pointer select-none items-center justify-between gap-3 border-l-4 px-4 py-2.5 hover:bg-gray-50"
+        style={{ borderLeftColor: color }}
+      >
+        <span className="flex items-center gap-2 text-sm font-bold">{titulo}</span>
+        <span className="shrink-0 border border-gray-300 px-2 py-0.5 text-xs font-bold tabular-nums text-muted-foreground">
+          {cuenta}
+        </span>
+      </summary>
+      <div className="border-t border-gray-200 p-4">{children}</div>
+    </details>
+  );
+}
+
+// Nómina simple: un nombre por línea, con su unidad al costado.
+function Nomina({ personas, etiqueta }: {
+  personas: PublicMember[]; etiqueta?: (m: PublicMember) => string | null;
+}) {
+  return (
+    <ul className="divide-y divide-gray-200 border border-gray-200">
+      {personas.map((m) => {
+        const extra = etiqueta?.(m) ?? m.faculty;
+        return (
+          <li key={m.name} className="flex flex-wrap items-baseline justify-between gap-2 px-3 py-1.5">
+            <span className="text-sm">{m.name}</span>
+            {extra && <span className="text-xs text-muted-foreground">{extra}</span>}
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+// Agrupa por campus y, dentro de cada campus, por unidad.
+function PorCampus({ personas, color, nombreUnidad }: {
+  personas: PublicMember[]; color: string;
+  nombreUnidad?: (faculty: string | null | undefined) => string;
+}) {
+  const porCampus = new Map<string, Map<string, PublicMember[]>>();
+  for (const m of personas) {
+    const campus = campusDe(m.faculty);
+    const unidad = m.faculty ?? "Sin unidad";
+    if (!porCampus.has(campus)) porCampus.set(campus, new Map());
+    const u = porCampus.get(campus)!;
+    if (!u.has(unidad)) u.set(unidad, []);
+    u.get(unidad)!.push(m);
+  }
+
+  const campus = [...porCampus.entries()].sort(([a], [b]) =>
+    (ordenCampus(a) - ordenCampus(b)) || a.localeCompare(b, "es"));
+
+  return (
+    <div className="space-y-3">
+      {campus.map(([nombre, unidades]) => {
+        const total = [...unidades.values()].reduce((n, x) => n + x.length, 0);
+        const lista = [...unidades.entries()].sort(([a], [b]) => a.localeCompare(b, "es"));
+        return (
+          <div key={nombre} className="border border-gray-200">
+            <div className="flex items-baseline justify-between gap-2 border-b border-gray-200 bg-gray-50 px-3 py-1.5">
+              <span className="text-xs font-bold uppercase tracking-wider" style={{ color }}>
+                {nombre === SIN_CAMPUS ? nombre : `Campus ${nombre}`}
+              </span>
+              <span className="text-xs tabular-nums text-muted-foreground">{total}</span>
+            </div>
+            <div className="divide-y divide-gray-100">
+              {lista.map(([unidad, gente]) => (
+                <div key={unidad} className="px-3 py-2">
+                  <div className="mb-1 text-[11px] font-bold text-gray-700">
+                    {nombreUnidad ? nombreUnidad(unidad) : unidad}
+                    <span className="ml-1.5 font-normal tabular-nums text-muted-foreground">{gente.length}</span>
+                  </div>
+                  <div className="flex flex-wrap gap-x-4 gap-y-0.5">
+                    {gente.sort((a, b) => a.name.localeCompare(b.name, "es")).map((m) => (
+                      <span key={m.name} className="text-sm">{m.name}</span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 
 // ─── Datos derivados ─────────────────────────────────────────────────────────
 
@@ -794,18 +952,6 @@ export default function PublicHome() {
               </p>
             </div>
 
-            <div className="mb-6 border border-gray-300 bg-white p-5 text-[15px] leading-relaxed text-gray-700">
-              <p>
-                El <b className="text-foreground">Pleno FECh</b> es la instancia máxima de deliberación y
-                decisión de la Federación. Reúne a la Mesa Directiva, las Consejerías FECh, las delegaciones
-                de los Centros de Estudiantes y al Consejo Superior, bajo un sistema de votación ponderada.
-              </p>
-              <p className="mt-3">
-                Este portal publica la tabla de cada sesión, la composición del pleno, el registro de
-                asistencias, el uso de la palabra y los resultados completos de cada votación.
-              </p>
-            </div>
-
             {!historyLoading && (
               <div className="grid grid-cols-2 border-l border-t border-gray-300 sm:grid-cols-4">
                 {[
@@ -937,39 +1083,74 @@ export default function PublicHome() {
         {tab === "composicion" && (
           <section>
             <SectionHeading icon={<Users className="h-5 w-5" />} title="Composición del Pleno"
-              subtitle="Cada estamento tiene su forma: estrella la Mesa, triángulo COSEFECH, círculo las Consejerías, cuadrado los CEE."
+              subtitle="Lo integran la Mesa Directiva de la FECh, el COSEFECH, las Consejerías FECh y los Centros de Estudiantes."
               color="#047857" />
             {membersLoading ? (
               <div className="flex justify-center py-12"><Spinner /></div>
             ) : members && members.length > 0 ? (
-              <div className="border border-gray-300 bg-white p-5">
-                <Hemicycle members={members} />
-                <div className="mt-6 space-y-5 border-t border-gray-200 pt-5">
-                  {ESTAMENTOS_VISIBLES.map((k) => {
-                    const cfg = ESTAMENTO[k];
-                    const group = members.filter((m) => estamentoOf(m.group) === k)
-                      .sort((a, b) => a.name.localeCompare(b.name, "es"));
-                    if (group.length === 0) return null;
-                    return (
-                      <div key={k}>
-                        <div className="mb-2 flex flex-wrap items-center gap-2 border-b border-gray-200 pb-1.5">
-                          <ShapeMark estamento={k} size={13} />
-                          <h4 className={`text-xs font-bold uppercase tracking-wider ${cfg.text}`}>{cfg.label}</h4>
-                          <span className="text-xs tabular-nums text-muted-foreground">{group.length}</span>
-                        </div>
-                        <div className="flex flex-wrap gap-1">
-                          {group.map((m) => (
-                            <span key={m.name} title={m.faculty ?? undefined}
-                              className={`border px-2 py-0.5 text-xs font-medium ${cfg.chip}`}>
-                              {m.name}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
+              (() => {
+                const de = (k: EstamentoKey) => members
+                  .filter((m) => estamentoOf(m.group) === k)
+                  .sort((a, b) => a.name.localeCompare(b.name, "es"));
+                const mesa = de("mesa");
+                const cosefech = de("cosefech");
+                const consejeros = de("consejero");
+                const centros = de("cee");
+                const otros = de("otro");
+
+                const Titulo = ({ k }: { k: EstamentoKey }) => (
+                  <>
+                    <ShapeMark estamento={k} size={13} />
+                    <span className={ESTAMENTO[k].text}>{ESTAMENTO[k].label}</span>
+                  </>
+                );
+
+                return (
+                  <div className="space-y-4">
+                    <div className="border border-gray-300 bg-white p-5">
+                      <Hemicycle members={members} />
+                    </div>
+
+                    <div className="space-y-2">
+                    {mesa.length > 0 && (
+                      <Desplegable titulo={<Titulo k="mesa" />} cuenta={mesa.length}
+                        color={ESTAMENTO.mesa.hex} defecto>
+                        <Nomina personas={mesa} />
+                      </Desplegable>
+                    )}
+
+                    {cosefech.length > 0 && (
+                      <Desplegable titulo={<Titulo k="cosefech" />} cuenta={cosefech.length}
+                        color={ESTAMENTO.cosefech.hex} defecto>
+                        <Nomina personas={cosefech} />
+                      </Desplegable>
+                    )}
+
+                    {consejeros.length > 0 && (
+                      <Desplegable titulo={<Titulo k="consejero" />} cuenta={consejeros.length}
+                        color={ESTAMENTO.consejero.hex}>
+                        <PorCampus personas={consejeros} color={ESTAMENTO.consejero.hex} />
+                      </Desplegable>
+                    )}
+
+                    {centros.length > 0 && (
+                      <Desplegable titulo={<Titulo k="cee" />} cuenta={centros.length}
+                        color={ESTAMENTO.cee.hex}>
+                        <PorCampus personas={centros} color={ESTAMENTO.cee.hex}
+                          nombreUnidad={nombreCentro} />
+                      </Desplegable>
+                    )}
+
+                    {otros.length > 0 && (
+                      <Desplegable titulo={<Titulo k="otro" />} cuenta={otros.length}
+                        color={ESTAMENTO.otro.hex}>
+                        <Nomina personas={otros} />
+                      </Desplegable>
+                    )}
+                    </div>
+                  </div>
+                );
+              })()
             ) : (
               <div className="border border-gray-300 bg-white p-8 text-center text-muted-foreground">
                 No hay datos de composición disponibles.
@@ -1198,7 +1379,7 @@ export default function PublicHome() {
             Federación de Estudiantes de la Universidad de Chile
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
-            Portal de Transparencia Plenaria · Sistema de Votación Ponderada
+            Portal de Transparencia del Pleno
           </p>
         </div>
       </footer>
