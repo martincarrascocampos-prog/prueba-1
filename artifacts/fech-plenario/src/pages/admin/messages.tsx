@@ -36,6 +36,15 @@ const ETIQUETA_TIPO: Record<string, { label: string; clase: string }> = {
   informativo: { label: "INFORMATIVO", clase: "bg-gray-500" },
 };
 
+
+// Los errores del servidor traen la causa en el mensaje (incluye el código
+// HTTP). Mostrarla es la diferencia entre "no se pudo" y saber que falta
+// correr las migraciones.
+function detalleError(err: unknown): string {
+  const m = err instanceof Error ? err.message : "";
+  return m ? m.slice(0, 200) : "Error desconocido";
+}
+
 function fecha(v: string | null | undefined) {
   if (!v) return "—";
   const d = new Date(v);
@@ -96,7 +105,11 @@ function Redactar({ onEnviado }: { onEnviado: () => void }) {
           setSubject(""); setBody(""); setGrupos([]); setPersonas([]); setDeadline("");
           onEnviado();
         },
-        onError: () => toast({ title: "No se pudo enviar el mensaje", variant: "destructive" }),
+        onError: (err) => toast({
+            title: "No se pudo enviar el mensaje",
+            description: detalleError(err),
+            variant: "destructive",
+          }),
       },
     );
   };
@@ -239,7 +252,11 @@ function Respuestas({ mensaje }: { mensaje: AdminMessage }) {
               : `Justificación rechazada — ${r.name}`,
           });
         },
-        onError: () => toast({ title: "No se pudo resolver", variant: "destructive" }),
+        onError: (err) => toast({
+          title: "No se pudo resolver la justificación",
+          description: detalleError(err),
+          variant: "destructive",
+        }),
       },
     );
   };

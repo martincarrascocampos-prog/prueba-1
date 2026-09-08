@@ -30,6 +30,15 @@ const ETIQUETA: Record<string, { label: string; clase: string }> = {
   informativo: { label: "INFORMATIVO", clase: "bg-gray-500" },
 };
 
+
+// Los errores del servidor traen la causa en el mensaje (incluye el código
+// HTTP). Mostrarla es la diferencia entre "no se pudo" y saber que falta
+// correr las migraciones.
+function detalleError(err: unknown): string {
+  const m = err instanceof Error ? err.message : "";
+  return m ? m.slice(0, 200) : "Error desconocido";
+}
+
 function fecha(v: string | null | undefined) {
   if (!v) return "—";
   const d = new Date(v);
@@ -67,7 +76,11 @@ function Responder({ mensaje }: { mensaje: InboxMessage }) {
           setAbierto(false);
           setDetalle("");
         },
-        onError: () => toast({ title: "No se pudo enviar la respuesta", variant: "destructive" }),
+        onError: (err) => toast({
+          title: "No se pudo enviar la respuesta",
+          description: detalleError(err),
+          variant: "destructive",
+        }),
       },
     );
   };
