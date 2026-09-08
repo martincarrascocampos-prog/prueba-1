@@ -762,6 +762,24 @@ paths:
                 items:
                   $ref: "#/components/schemas/AdminHistorySession"
 
+  /public/members:
+    get:
+      operationId: getPublicMembers
+      tags: [public]
+      summary: Composición del pleno (integrantes activos)
+      description: >
+        Nombre, estamento y facultad de cada integrante activo. No expone
+        credenciales, ponderaciones ni ningún otro dato personal.
+      responses:
+        "200":
+          description: Integrantes activos ordenados alfabéticamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/PublicMember"
+
   /sessions/{id}/speaking-turns:
     get:
       operationId: listSpeakingTurns
@@ -2267,10 +2285,39 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/PublicMemberRef"
+        agenda:
+          type: array
+          description: Puntos de tabla de la sesión, en orden.
+          items:
+            $ref: "#/components/schemas/PublicAgendaPoint"
         topics:
           type: array
           items:
             $ref: "#/components/schemas/AdminHistoryTopic"
+
+    PublicAgendaPoint:
+      type: object
+      required: [title, position]
+      description: Punto de tabla expuesto públicamente (sin identificadores internos).
+      properties:
+        title:
+          type: string
+        position:
+          type: integer
+        estimatedMinutes:
+          type: ["integer", "null"]
+
+    PublicMember:
+      type: object
+      required: [name, group, faculty]
+      description: Integrante activo del pleno, tal como se publica en el portal.
+      properties:
+        name:
+          type: string
+        group:
+          type: ["string", "null"]
+        faculty:
+          type: ["string", "null"]
 
     PublicMemberRef:
       type: object

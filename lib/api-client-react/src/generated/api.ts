@@ -45,6 +45,7 @@ import type {
   MemberUpdate,
   MyVote,
   PasswordResetInput,
+  PublicMember,
   Session,
   SessionDetail,
   SessionInput,
@@ -2718,6 +2719,85 @@ export function useGetPublicHistory<TData = Awaited<ReturnType<typeof getPublicH
  ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
 
   const queryOptions = getGetPublicHistoryQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+
+
+
+
+
+
+export const getGetPublicMembersUrl = () => {
+
+
+
+
+  return `/api/public/members`
+}
+
+/**
+ * Nombre, estamento y facultad de cada integrante activo. No expone credenciales, ponderaciones ni ningún otro dato personal.
+
+ * @summary Composición del pleno (integrantes activos)
+ */
+export const getPublicMembers = async ( options?: RequestInit): Promise<PublicMember[]> => {
+
+  return customFetch<PublicMember[]>(getGetPublicMembersUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getGetPublicMembersQueryKey = () => {
+    return [
+    `/api/public/members`
+    ] as const;
+    }
+
+
+export const getGetPublicMembersQueryOptions = <TData = Awaited<ReturnType<typeof getPublicMembers>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getPublicMembers>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetPublicMembersQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getPublicMembers>>> = ({ signal }) => getPublicMembers({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getPublicMembers>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type GetPublicMembersQueryResult = NonNullable<Awaited<ReturnType<typeof getPublicMembers>>>
+export type GetPublicMembersQueryError = ErrorType<unknown>
+
+
+/**
+ * @summary Composición del pleno (integrantes activos)
+ */
+
+export function useGetPublicMembers<TData = Awaited<ReturnType<typeof getPublicMembers>>, TError = ErrorType<unknown>>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof getPublicMembers>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getGetPublicMembersQueryOptions(options)
 
   const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
 

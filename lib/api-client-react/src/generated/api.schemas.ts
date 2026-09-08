@@ -885,6 +885,16 @@ export interface PublicMemberRef {
   justified?: boolean;
 }
 
+/**
+ * Punto de tabla expuesto públicamente (sin identificadores internos).
+ */
+export interface PublicAgendaPoint {
+  title: string;
+  position: number;
+  /** @nullable */
+  estimatedMinutes?: number | null;
+}
+
 export interface AdminHistorySession {
   sessionId: number;
   title: string;
@@ -908,7 +918,20 @@ export interface AdminHistorySession {
   totalWeight: number;
   attendees?: PublicAttendee[];
   absentees?: PublicMemberRef[];
+  /** Puntos de tabla de la sesión, en orden. */
+  agenda?: PublicAgendaPoint[];
   topics: AdminHistoryTopic[];
+}
+
+/**
+ * Integrante activo del pleno, tal como se publica en el portal.
+ */
+export interface PublicMember {
+  name: string;
+  /** @nullable */
+  group: string | null;
+  /** @nullable */
+  faculty: string | null;
 }
 
 export interface AdminStats {

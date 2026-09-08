@@ -7,6 +7,7 @@
  */
 import type { AdminHistorySessionPhase } from './adminHistorySessionPhase';
 import type { AdminHistoryTopic } from './adminHistoryTopic';
+import type { PublicAgendaPoint } from './publicAgendaPoint';
 import type { PublicAttendee } from './publicAttendee';
 import type { PublicMemberRef } from './publicMemberRef';
 
@@ -33,5 +34,7 @@ export interface AdminHistorySession {
   totalWeight: number;
   attendees?: PublicAttendee[];
   absentees?: PublicMemberRef[];
+  /** Puntos de tabla de la sesión, en orden. */
+  agenda?: PublicAgendaPoint[];
   topics: AdminHistoryTopic[];
 }

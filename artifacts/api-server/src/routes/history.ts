@@ -11,6 +11,7 @@ import {
   attendanceTable,
   usersTable,
   justifiedAbsencesTable,
+  agendaPointsTable,
 } from "@workspace/db";
 import { requireAuth, requireAdmin } from "../middlewares/auth";
 import { computeTopicResult, computeCandidateResult } from "../lib/results";
@@ -46,6 +47,10 @@ interface LoadedData {
   // Label-only overlay: absences marked "Inasistencia Justificada" by an admin.
   // Operationally these members are plain absentees (no attendance row).
   justifiedBySession: Map<number, Set<number>>;
+  // Session agenda ("tabla"), ordered by position — the list of points the
+  // pleno works through. Published so the public panel can show what each
+  // session covered, and what an upcoming one will cover.
+  agendaBySession: Map<number, { title: string; position: number; estimatedMinutes: number | null }[]>;
 }
 
 async function loadHistoryData(): Promise<LoadedData> {
@@ -59,6 +64,7 @@ async function loadHistoryData(): Promise<LoadedData> {
     estamentos,
     weightsBySession,
     justifiedRows,
+    agendaRows,
   ] = await Promise.all([
     db.select().from(plenariasTable).orderBy(sql`${plenariasTable.createdAt} DESC`),
     db.select().from(topicsTable).orderBy(sql`${topicsTable.createdAt} ASC`),
@@ -69,7 +75,18 @@ async function loadHistoryData(): Promise<LoadedData> {
     db.select().from(topicEstamentosTable),
     getAllSessionWeightMaps(),
     db.select().from(justifiedAbsencesTable),
+    db.select().from(agendaPointsTable).orderBy(agendaPointsTable.position, agendaPointsTable.id),
   ]);
+
+  const agendaBySession = new Map<
+    number,
+    { title: string; position: number; estimatedMinutes: number | null }[]
+  >();
+  for (const a of agendaRows) {
+    let arr = agendaBySession.get(a.sessionId);
+    if (!arr) agendaBySession.set(a.sessionId, (arr = []));
+    arr.push({ title: a.title, position: a.position, estimatedMinutes: a.estimatedMinutes });
+  }
 
   const justifiedBySession = new Map<number, Set<number>>();
   for (const j of justifiedRows) {
@@ -133,6 +150,7 @@ async function loadHistoryData(): Promise<LoadedData> {
     candidateNameById,
     weightsBySession,
     justifiedBySession,
+    agendaBySession,
   };
 }
 
@@ -484,6 +502,9 @@ router.get("/public/history", async (_req, res): Promise<void> => {
       totalWeight,
       attendees,
       absentees,
+      // The agenda is published for every phase: an upcoming plenary announces
+      // what it will cover, and a held one documents what it did.
+      agenda: data.agendaBySession.get(s.id) ?? [],
       // Only closed (held) sessions expose vote tallies — in-progress and future
       // plenaries do not publish live results. Each topic also carries the
       // per-member nominal ballot detail (transparency).

@@ -80,6 +80,16 @@ function HistoricoTab() {
                         <div className="mt-1"><MyVoteBadge myVote={t.myVote} attended={s.attended} /></div>
                       </div>
                     </div>
+                    {/* Qué se sometió a votación: sin el detalle, el histórico
+                        deja solo el título y se pierde el contenido de la moción. */}
+                    {t.detail && (
+                      <div className="mb-3 rounded-r-lg border-l-[3px] border-primary/60 bg-muted/40 px-3 py-2">
+                        <div className="text-[10px] font-bold uppercase tracking-wider text-primary mb-1">
+                          Detalle de la moción
+                        </div>
+                        <p className="text-sm leading-relaxed text-muted-foreground whitespace-pre-line">{t.detail}</p>
+                      </div>
+                    )}
                     {t.type === "candidato" ? (
                       <CandidateResultsBar candidates={t.candidates ?? []} />
                     ) : (

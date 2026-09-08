@@ -583,6 +583,11 @@ export const GetPublicHistoryResponseItem = zod.object({
   "group": zod.string().nullable(),
   "justified": zod.boolean().optional().describe('Absence marked as \"Inasistencia Justificada\" (display label only).')
 })).optional(),
+  "agenda": zod.array(zod.object({
+  "title": zod.string(),
+  "position": zod.number(),
+  "estimatedMinutes": zod.number().nullish()
+}).describe('Punto de tabla expuesto públicamente (sin identificadores internos).')).optional().describe('Puntos de tabla de la sesión, en orden.'),
   "topics": zod.array(zod.object({
   "topicId": zod.number(),
   "title": zod.string(),
@@ -625,6 +630,19 @@ export const GetPublicHistoryResponseItem = zod.object({
 }))
 })
 export const GetPublicHistoryResponse = zod.array(GetPublicHistoryResponseItem)
+
+
+/**
+ * Nombre, estamento y facultad de cada integrante activo. No expone credenciales, ponderaciones ni ningún otro dato personal.
+
+ * @summary Composición del pleno (integrantes activos)
+ */
+export const GetPublicMembersResponseItem = zod.object({
+  "name": zod.string(),
+  "group": zod.string().nullable(),
+  "faculty": zod.string().nullable()
+}).describe('Integrante activo del pleno, tal como se publica en el portal.')
+export const GetPublicMembersResponse = zod.array(GetPublicMembersResponseItem)
 
 
 /**
@@ -1145,6 +1163,11 @@ export const GetSessionsHistoryResponseItem = zod.object({
   "group": zod.string().nullable(),
   "justified": zod.boolean().optional().describe('Absence marked as \"Inasistencia Justificada\" (display label only).')
 })).optional(),
+  "agenda": zod.array(zod.object({
+  "title": zod.string(),
+  "position": zod.number(),
+  "estimatedMinutes": zod.number().nullish()
+}).describe('Punto de tabla expuesto públicamente (sin identificadores internos).')).optional().describe('Puntos de tabla de la sesión, en orden.'),
   "topics": zod.array(zod.object({
   "topicId": zod.number(),
   "title": zod.string(),

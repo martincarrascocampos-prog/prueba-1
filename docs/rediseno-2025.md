@@ -208,10 +208,75 @@ Rutas: `artifacts/fech-plenario/src/pages/admin/`
 Se llama **Administración**, no "Mesa Directiva": la Mesa es un usuario del
 sistema, no el nombre del panel.
 
-**Se mantienen todas las herramientas actuales.** Crear sesión, subir y quitar
-acta, gestionar tabla, mociones, sistema de palabra, alta y baja de
-integrantes, restablecer contraseñas, ver asistencia individual, unidades, y
-las tres exportaciones (asistencia, resultados, matriz).
+### 4.0 Inventario de facultades del administrador — NO SE PUEDE PERDER NINGUNA
+
+> **Advertencia para quien implemente.** La maqueta `docs/mockups/panel-admin.html`
+> es una simplificación de la navegación. **No representa toda la funcionalidad**
+> y no debe usarse como especificación de comportamiento. Esta tabla sí.
+>
+> Antes de modificar `session-detail.tsx` o `members.tsx`, verificar que cada
+> fila siga funcionando.
+
+**Configuración de una votación** (`session-detail.tsx`) — el sistema es más
+complejo de lo que parece y cada opción cambia cómo se cuenta:
+
+| Opción | Valores | Efecto |
+|---|---|---|
+| Tipo | moción · candidato | Moción tiene a favor/contra/abstención; candidato tiene candidaturas |
+| Ponderación | ponderada · simple | Ponderada usa el peso de cada integrante; simple cuenta 1 voto = 1 |
+| Opciones múltiples | activado · desactivado | Solo en candidato: permite elegir varias candidaturas |
+| Votos por votante | número | Solo con opciones múltiples. **Los votos no usados cuentan como abstención** |
+| Habilitades por división | lista de estamentos | Si está vacía, vota el pleno completo. Si no, solo esos estamentos |
+| **Ponderación a usar** | normal · **alternativa** | **Solo aparece cuando es ponderada Y hay estamentos seleccionados.** Usa `votingWeightAlt` en lugar de `votingWeight` |
+
+La ponderación alternativa existe porque una votación restringida a un
+estamento puede necesitar pesos distintos a los del pleno completo. Cada
+integrante tiene ambas columnas (`votingWeight` y `votingWeightAlt`), y la
+votación decide cuál usar mediante `weightSource`.
+
+**Edición de asistencia** (diálogo en `session-detail.tsx`):
+
+| Función | Detalle |
+|---|---|
+| Buscar y ordenar | Por nombre o por grupo |
+| Cambiar modalidad | Presencial ↔ Online, por persona, desde un desplegable |
+| Marcar ausente | Quita a alguien de presentes |
+| Marcar presente | Agrega a alguien desde la lista de ausentes |
+| Retirades | Se listan aparte, con botón **Reactivar** |
+| Inasistencia justificada | Etiqueta sobre les ausentes |
+
+**Exportaciones a Excel** (`handleExport` en `session-detail.tsx`): asistencia,
+resultados y **matriz de votos** (integrantes en filas, mociones en columnas).
+
+**Gestión de integrantes** (`members.tsx`):
+
+| Función | Detalle |
+|---|---|
+| Crear integrante | Nombre, usuario, contraseña, facultad, grupo, ponderación normal y **alternativa** |
+| Editar integrante | Todos los campos anteriores |
+| `EditableWeight` | Edición en línea de **ambas** ponderaciones desde la tabla |
+| `PasswordCell` | **Muestra la contraseña en texto plano** (`plainPassword`) para poder entregarla |
+| Restablecer contraseña | Asigna una nueva |
+| Inhabilitar / habilitar | Conserva historial; deja de contar para el quórum |
+| Eliminar | Baja definitiva |
+| Ver asistencias | Historial individual por integrante |
+| `UnidadesManager` | **Sistema de unidades académicas**: crear y eliminar facultades |
+
+**Otras herramientas de sesión:** código de sesión con QR ampliable a pantalla
+completa, tabla (agregar y eliminar puntos), sistema de palabra, enlace de la
+sesión, subir y quitar acta, y **edición de votaciones ya emitidas**
+(`edit-votes-dialog.tsx`).
+
+### 4.0.1 Alcance del rediseño en administración
+
+Dado el inventario anterior, el rediseño **solo toca la navegación**:
+
+- `admin/dashboard.tsx` pasa a ser el listado de sesiones
+- `session-detail.tsx` **no se modifica**: ya es el editor por sesión que
+  propone este documento, con toda la lógica arriba
+- `members.tsx` **no se modifica**
+
+Lo que sigue describe la navegación, no reemplaza el inventario.
 
 ### 4.1 Estructura: listado y editor
 
