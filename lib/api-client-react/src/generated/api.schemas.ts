@@ -123,6 +123,16 @@ export interface Session {
   speakingRoundOpen: boolean;
   /** @nullable */
   speakingRoundAgendaPointId?: number | null;
+  /**
+     * Momento de la apertura oficial. Nulo si nunca se abrió oficialmente.
+     * @nullable
+     */
+  officialStartAt?: string | null;
+  /**
+     * Momento del cierre. Nulo si sigue en curso o si nunca se abrió oficialmente.
+     * @nullable
+     */
+  officialEndAt?: string | null;
   createdAt: string;
 }
 
@@ -144,6 +154,16 @@ export interface SessionDetail {
   speakingRoundOpen: boolean;
   /** @nullable */
   speakingRoundAgendaPointId?: number | null;
+  /**
+     * Momento de la apertura oficial. Nulo si nunca se abrió oficialmente.
+     * @nullable
+     */
+  officialStartAt?: string | null;
+  /**
+     * Momento del cierre. Nulo si sigue en curso o si nunca se abrió oficialmente.
+     * @nullable
+     */
+  officialEndAt?: string | null;
   createdAt: string;
   attendanceCount: number;
   topicsCount: number;
@@ -169,6 +189,9 @@ export interface SessionUpdate {
   location?: string;
   scheduledAt?: string;
   status?: SessionUpdateStatus;
+  /** Solo al abrir una sesión. Si es true, registra la apertura oficial y la sesión pasa a contar horas. Una apertura de prueba o de preparación va sin esta bandera y no suma al registro del pleno.
+   */
+  official?: boolean;
   /** @nullable */
   meetingLink?: string | null;
   /** @nullable */
@@ -895,6 +918,22 @@ export interface PublicAgendaPoint {
   estimatedMinutes?: number | null;
 }
 
+/**
+ * Registro de uso de la palabra de una persona en una sesión. Agrupa todas sus intervenciones finalizadas.
+
+ */
+export interface PublicSpeaker {
+  name: string;
+  /** @nullable */
+  group: string | null;
+  /** Tiempo total efectivamente usado, en segundos. */
+  seconds: number;
+  /** Número de intervenciones. */
+  turns: number;
+  /** Si alguna de sus intervenciones fue palabra colectiva. */
+  collective?: boolean;
+}
+
 export interface AdminHistorySession {
   sessionId: number;
   title: string;
@@ -920,6 +959,14 @@ export interface AdminHistorySession {
   absentees?: PublicMemberRef[];
   /** Puntos de tabla de la sesión, en orden. */
   agenda?: PublicAgendaPoint[];
+  /** Quiénes tomaron la palabra en la sesión y cuánto hablaron. */
+  speakers?: PublicSpeaker[];
+  /**
+     * Duración real en minutos, entre la apertura oficial y el cierre. Nulo si la sesión no se abrió oficialmente o si sigue en curso.
+
+     * @nullable
+     */
+  officialMinutes?: number | null;
   topics: AdminHistoryTopic[];
 }
 

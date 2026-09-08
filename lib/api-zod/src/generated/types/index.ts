@@ -53,6 +53,7 @@ export * from './publicBallot';
 export * from './publicBallotStatus';
 export * from './publicMember';
 export * from './publicMemberRef';
+export * from './publicSpeaker';
 export * from './session';
 export * from './sessionDetail';
 export * from './sessionInput';

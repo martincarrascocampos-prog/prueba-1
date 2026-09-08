@@ -270,6 +270,8 @@ export const ListSessionsResponseItem = zod.object({
   "actaFileName": zod.string().nullish(),
   "speakingRoundOpen": zod.boolean(),
   "speakingRoundAgendaPointId": zod.number().nullish(),
+  "officialStartAt": zod.string().nullish().describe('Momento de la apertura oficial. Nulo si nunca se abrió oficialmente.'),
+  "officialEndAt": zod.string().nullish().describe('Momento del cierre. Nulo si sigue en curso o si nunca se abrió oficialmente.'),
   "createdAt": zod.string()
 })
 export const ListSessionsResponse = zod.array(ListSessionsResponseItem)
@@ -305,6 +307,8 @@ export const GetSessionResponse = zod.object({
   "actaFileName": zod.string().nullish(),
   "speakingRoundOpen": zod.boolean(),
   "speakingRoundAgendaPointId": zod.number().nullish(),
+  "officialStartAt": zod.string().nullish().describe('Momento de la apertura oficial. Nulo si nunca se abrió oficialmente.'),
+  "officialEndAt": zod.string().nullish().describe('Momento del cierre. Nulo si sigue en curso o si nunca se abrió oficialmente.'),
   "createdAt": zod.string(),
   "attendanceCount": zod.number(),
   "topicsCount": zod.number()
@@ -323,6 +327,7 @@ export const UpdateSessionBody = zod.object({
   "location": zod.string().optional(),
   "scheduledAt": zod.string().optional(),
   "status": zod.enum(['abierta', 'cerrada']).optional(),
+  "official": zod.boolean().optional().describe('Solo al abrir una sesión. Si es true, registra la apertura oficial y la sesión pasa a contar horas. Una apertura de prueba o de preparación va sin esta bandera y no suma al registro del pleno.\n'),
   "meetingLink": zod.string().nullish(),
   "actaObjectPath": zod.string().nullish(),
   "actaFileName": zod.string().nullish()
@@ -340,6 +345,8 @@ export const UpdateSessionResponse = zod.object({
   "actaFileName": zod.string().nullish(),
   "speakingRoundOpen": zod.boolean(),
   "speakingRoundAgendaPointId": zod.number().nullish(),
+  "officialStartAt": zod.string().nullish().describe('Momento de la apertura oficial. Nulo si nunca se abrió oficialmente.'),
+  "officialEndAt": zod.string().nullish().describe('Momento del cierre. Nulo si sigue en curso o si nunca se abrió oficialmente.'),
   "createdAt": zod.string()
 })
 
@@ -588,6 +595,14 @@ export const GetPublicHistoryResponseItem = zod.object({
   "position": zod.number(),
   "estimatedMinutes": zod.number().nullish()
 }).describe('Punto de tabla expuesto públicamente (sin identificadores internos).')).optional().describe('Puntos de tabla de la sesión, en orden.'),
+  "speakers": zod.array(zod.object({
+  "name": zod.string(),
+  "group": zod.string().nullable(),
+  "seconds": zod.number().describe('Tiempo total efectivamente usado, en segundos.'),
+  "turns": zod.number().describe('Número de intervenciones.'),
+  "collective": zod.boolean().optional().describe('Si alguna de sus intervenciones fue palabra colectiva.')
+}).describe('Registro de uso de la palabra de una persona en una sesión. Agrupa todas sus intervenciones finalizadas.\n')).optional().describe('Quiénes tomaron la palabra en la sesión y cuánto hablaron.'),
+  "officialMinutes": zod.number().nullish().describe('Duración real en minutos, entre la apertura oficial y el cierre. Nulo si la sesión no se abrió oficialmente o si sigue en curso.\n'),
   "topics": zod.array(zod.object({
   "topicId": zod.number(),
   "title": zod.string(),
@@ -732,6 +747,8 @@ export const ToggleSpeakingRoundResponse = zod.object({
   "actaFileName": zod.string().nullish(),
   "speakingRoundOpen": zod.boolean(),
   "speakingRoundAgendaPointId": zod.number().nullish(),
+  "officialStartAt": zod.string().nullish().describe('Momento de la apertura oficial. Nulo si nunca se abrió oficialmente.'),
+  "officialEndAt": zod.string().nullish().describe('Momento del cierre. Nulo si sigue en curso o si nunca se abrió oficialmente.'),
   "createdAt": zod.string()
 })
 
@@ -1168,6 +1185,14 @@ export const GetSessionsHistoryResponseItem = zod.object({
   "position": zod.number(),
   "estimatedMinutes": zod.number().nullish()
 }).describe('Punto de tabla expuesto públicamente (sin identificadores internos).')).optional().describe('Puntos de tabla de la sesión, en orden.'),
+  "speakers": zod.array(zod.object({
+  "name": zod.string(),
+  "group": zod.string().nullable(),
+  "seconds": zod.number().describe('Tiempo total efectivamente usado, en segundos.'),
+  "turns": zod.number().describe('Número de intervenciones.'),
+  "collective": zod.boolean().optional().describe('Si alguna de sus intervenciones fue palabra colectiva.')
+}).describe('Registro de uso de la palabra de una persona en una sesión. Agrupa todas sus intervenciones finalizadas.\n')).optional().describe('Quiénes tomaron la palabra en la sesión y cuánto hablaron.'),
+  "officialMinutes": zod.number().nullish().describe('Duración real en minutos, entre la apertura oficial y el cierre. Nulo si la sesión no se abrió oficialmente o si sigue en curso.\n'),
   "topics": zod.array(zod.object({
   "topicId": zod.number(),
   "title": zod.string(),

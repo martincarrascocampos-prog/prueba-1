@@ -125,6 +125,9 @@ export default function AdminSessionDetail() {
   const [newPointMinutes, setNewPointMinutes] = useState("");
   const [attendanceOpen, setAttendanceOpen] = useState(false);
   const [votesEditOpen, setVotesEditOpen] = useState(false);
+  // Al abrir hay que declarar si la apertura es oficial: solo esas registran
+  // horario y suman al total de horas de pleno.
+  const [openConfirmOpen, setOpenConfirmOpen] = useState(false);
   const [attSearch, setAttSearch] = useState("");
   const [attSort, setAttSort] = useState<"nombre" | "grupo">("nombre");
 
@@ -353,11 +356,9 @@ export default function AdminSessionDetail() {
               });
             }}>Cerrar Sesión</Button>
           ) : (
-            <Button variant="outline" onClick={() => {
-              updateSession.mutate({ id, data: { status: "abierta" } }, {
-                onSuccess: () => queryClient.invalidateQueries({ queryKey: getGetSessionQueryKey(id) })
-              });
-            }}>Reabrir Sesión</Button>
+            <Button variant="outline" onClick={() => setOpenConfirmOpen(true)}>
+              {session.officialStartAt ? "Reabrir Sesión" : "Abrir Sesión"}
+            </Button>
           )}
           <Button variant="ghost" className="text-red-600 hover:text-red-700 hover:bg-red-50" onClick={() => {
             if (confirm("¿Estás seguro de eliminar esta sesión y todos sus votos?")) {
@@ -932,6 +933,65 @@ export default function AdminSessionDetail() {
         open={votesEditOpen}
         onOpenChange={setVotesEditOpen}
       />
+
+      {/* Apertura de sesión: oficial u operativa. Solo la oficial registra
+          horario y suma al total de horas de pleno del portal público. */}
+      <Dialog open={openConfirmOpen} onOpenChange={setOpenConfirmOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>¿Cómo quieres abrir la sesión?</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-3 py-1">
+            {session.officialStartAt && (
+              <div className="rounded-md border border-amber-200 bg-amber-50 p-3 text-sm text-amber-900">
+                Esta sesión ya tiene una apertura oficial registrada
+                ({new Date(session.officialStartAt).toLocaleString()}). Reabrirla oficialmente
+                <b> reanuda</b> el conteo desde esa hora; no lo reinicia.
+              </div>
+            )}
+            <button
+              type="button"
+              className="w-full rounded-lg border-2 border-lime-500 bg-lime-50/60 p-4 text-left transition-colors hover:bg-lime-50"
+              disabled={updateSession.isPending}
+              onClick={() => {
+                updateSession.mutate({ id, data: { status: "abierta", official: true } }, {
+                  onSuccess: () => {
+                    setOpenConfirmOpen(false);
+                    toast({ title: "Sesión abierta oficialmente" });
+                    queryClient.invalidateQueries({ queryKey: getGetSessionQueryKey(id) });
+                  },
+                });
+              }}
+            >
+              <div className="font-semibold text-lime-800">Apertura oficial</div>
+              <p className="mt-0.5 text-xs text-muted-foreground">
+                Se registra la hora de inicio. La sesión suma al total de horas de pleno
+                que se publica en el portal de transparencia.
+              </p>
+            </button>
+            <button
+              type="button"
+              className="w-full rounded-lg border-2 border-gray-300 p-4 text-left transition-colors hover:bg-gray-50"
+              disabled={updateSession.isPending}
+              onClick={() => {
+                updateSession.mutate({ id, data: { status: "abierta" } }, {
+                  onSuccess: () => {
+                    setOpenConfirmOpen(false);
+                    toast({ title: "Sesión abierta (sin registro de horas)" });
+                    queryClient.invalidateQueries({ queryKey: getGetSessionQueryKey(id) });
+                  },
+                });
+              }}
+            >
+              <div className="font-semibold">Apertura no oficial</div>
+              <p className="mt-0.5 text-xs text-muted-foreground">
+                Para probar el sistema o preparar la tabla. No registra horario ni suma
+                horas al registro del pleno.
+              </p>
+            </button>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <Dialog open={attendanceOpen} onOpenChange={setAttendanceOpen}>
         <DialogContent className="max-w-lg">

@@ -12,6 +12,7 @@ import {
   usersTable,
   justifiedAbsencesTable,
   agendaPointsTable,
+  speakingTurnsTable,
 } from "@workspace/db";
 import { requireAuth, requireAdmin } from "../middlewares/auth";
 import { computeTopicResult, computeCandidateResult } from "../lib/results";
@@ -51,6 +52,13 @@ interface LoadedData {
   // pleno works through. Published so the public panel can show what each
   // session covered, and what an upcoming one will cover.
   agendaBySession: Map<number, { title: string; position: number; estimatedMinutes: number | null }[]>;
+  // Uso de la palabra por sesión, agregado por orador. Solo turnos
+  // finalizados: los que quedaron en cola o quedaron a medias no son registro
+  // de nada. La palabra colectiva se atribuye a la unidad, no a una persona.
+  speakersBySession: Map<
+    number,
+    { name: string; group: string | null; seconds: number; turns: number; collective: boolean }[]
+  >;
 }
 
 async function loadHistoryData(): Promise<LoadedData> {
@@ -65,6 +73,7 @@ async function loadHistoryData(): Promise<LoadedData> {
     weightsBySession,
     justifiedRows,
     agendaRows,
+    speakingRows,
   ] = await Promise.all([
     db.select().from(plenariasTable).orderBy(sql`${plenariasTable.createdAt} DESC`),
     db.select().from(topicsTable).orderBy(sql`${topicsTable.createdAt} ASC`),
@@ -76,6 +85,7 @@ async function loadHistoryData(): Promise<LoadedData> {
     getAllSessionWeightMaps(),
     db.select().from(justifiedAbsencesTable),
     db.select().from(agendaPointsTable).orderBy(agendaPointsTable.position, agendaPointsTable.id),
+    db.select().from(speakingTurnsTable).where(eq(speakingTurnsTable.status, "finalizada")),
   ]);
 
   const agendaBySession = new Map<
@@ -86,6 +96,37 @@ async function loadHistoryData(): Promise<LoadedData> {
     let arr = agendaBySession.get(a.sessionId);
     if (!arr) agendaBySession.set(a.sessionId, (arr = []));
     arr.push({ title: a.title, position: a.position, estimatedMinutes: a.estimatedMinutes });
+  }
+
+  // Uso de la palabra, agregado por orador dentro de cada sesión.
+  const memberById = new Map(members.map((m) => [m.id, m]));
+  const speakersBySession = new Map<
+    number,
+    { name: string; group: string | null; seconds: number; turns: number; collective: boolean }[]
+  >();
+  for (const t of speakingRows) {
+    // Una intervención colectiva la ejerce la unidad académica, no una
+    // persona: atribuirla a quien la pidió inflaría su registro individual.
+    const isCollective = t.kind === "colectiva";
+    const member = t.userId !== null ? memberById.get(t.userId) : undefined;
+    const name = isCollective
+      ? t.faculty ?? "Palabra colectiva"
+      : member?.displayName ?? t.speakerName ?? "—";
+    const group = isCollective ? t.faculty : member?.group ?? null;
+
+    let arr = speakersBySession.get(t.sessionId);
+    if (!arr) speakersBySession.set(t.sessionId, (arr = []));
+    const existing = arr.find((s) => s.name === name);
+    if (existing) {
+      existing.seconds += t.elapsedSeconds;
+      existing.turns += 1;
+      existing.collective ||= isCollective;
+    } else {
+      arr.push({ name, group, seconds: t.elapsedSeconds, turns: 1, collective: isCollective });
+    }
+  }
+  for (const arr of speakersBySession.values()) {
+    arr.sort((a, b) => b.seconds - a.seconds || a.name.localeCompare(b.name, "es"));
   }
 
   const justifiedBySession = new Map<number, Set<number>>();
@@ -151,6 +192,7 @@ async function loadHistoryData(): Promise<LoadedData> {
     weightsBySession,
     justifiedBySession,
     agendaBySession,
+    speakersBySession,
   };
 }
 
@@ -505,6 +547,20 @@ router.get("/public/history", async (_req, res): Promise<void> => {
       // The agenda is published for every phase: an upcoming plenary announces
       // what it will cover, and a held one documents what it did.
       agenda: data.agendaBySession.get(s.id) ?? [],
+      // Duración real de la sesión, en minutos. Solo existe cuando la apertura
+      // se declaró oficial y la sesión ya se cerró: una apertura de prueba no
+      // suma horas, y una sesión en curso todavía no tiene duración.
+      officialMinutes:
+        s.officialStartAt !== null && s.officialEndAt !== null
+          ? Math.max(
+              0,
+              Math.round((s.officialEndAt.getTime() - s.officialStartAt.getTime()) / 60000),
+            )
+          : null,
+      // Registro de uso de la palabra. Solo en sesiones ya celebradas: una
+      // futura no tiene intervenciones, y publicar la cola de una sesión en
+      // curso expondría quién está por hablar antes de que hable.
+      speakers: phase === "pasado" ? data.speakersBySession.get(s.id) ?? [] : [],
       // Only closed (held) sessions expose vote tallies — in-progress and future
       // plenaries do not publish live results. Each topic also carries the
       // per-member nominal ballot detail (transparency).

@@ -10,6 +10,7 @@ import type { AdminHistoryTopic } from './adminHistoryTopic';
 import type { PublicAgendaPoint } from './publicAgendaPoint';
 import type { PublicAttendee } from './publicAttendee';
 import type { PublicMemberRef } from './publicMemberRef';
+import type { PublicSpeaker } from './publicSpeaker';
 
 export interface AdminHistorySession {
   sessionId: number;
@@ -36,5 +37,13 @@ export interface AdminHistorySession {
   absentees?: PublicMemberRef[];
   /** Puntos de tabla de la sesión, en orden. */
   agenda?: PublicAgendaPoint[];
+  /** Quiénes tomaron la palabra en la sesión y cuánto hablaron. */
+  speakers?: PublicSpeaker[];
+  /**
+     * Duración real en minutos, entre la apertura oficial y el cierre. Nulo si la sesión no se abrió oficialmente o si sigue en curso.
+
+     * @nullable
+     */
+  officialMinutes?: number | null;
   topics: AdminHistoryTopic[];
 }

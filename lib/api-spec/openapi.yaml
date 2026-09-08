@@ -1435,6 +1435,12 @@ components:
           type: boolean
         speakingRoundAgendaPointId:
           type: ["integer", "null"]
+        officialStartAt:
+          type: ["string", "null"]
+          description: Momento de la apertura oficial. Nulo si nunca se abrió oficialmente.
+        officialEndAt:
+          type: ["string", "null"]
+          description: Momento del cierre. Nulo si sigue en curso o si nunca se abrió oficialmente.
         createdAt:
           type: string
 
@@ -1464,6 +1470,12 @@ components:
           type: boolean
         speakingRoundAgendaPointId:
           type: ["integer", "null"]
+        officialStartAt:
+          type: ["string", "null"]
+          description: Momento de la apertura oficial. Nulo si nunca se abrió oficialmente.
+        officialEndAt:
+          type: ["string", "null"]
+          description: Momento del cierre. Nulo si sigue en curso o si nunca se abrió oficialmente.
         createdAt:
           type: string
         attendanceCount:
@@ -1496,6 +1508,12 @@ components:
         status:
           type: string
           enum: [abierta, cerrada]
+        official:
+          type: boolean
+          description: >
+            Solo al abrir una sesión. Si es true, registra la apertura oficial
+            y la sesión pasa a contar horas. Una apertura de prueba o de
+            preparación va sin esta bandera y no suma al registro del pleno.
         meetingLink:
           type: ["string", "null"]
         actaObjectPath:
@@ -2290,6 +2308,16 @@ components:
           description: Puntos de tabla de la sesión, en orden.
           items:
             $ref: "#/components/schemas/PublicAgendaPoint"
+        speakers:
+          type: array
+          description: Quiénes tomaron la palabra en la sesión y cuánto hablaron.
+          items:
+            $ref: "#/components/schemas/PublicSpeaker"
+        officialMinutes:
+          type: ["integer", "null"]
+          description: >
+            Duración real en minutos, entre la apertura oficial y el cierre.
+            Nulo si la sesión no se abrió oficialmente o si sigue en curso.
         topics:
           type: array
           items:
@@ -2306,6 +2334,27 @@ components:
           type: integer
         estimatedMinutes:
           type: ["integer", "null"]
+
+    PublicSpeaker:
+      type: object
+      required: [name, group, seconds, turns]
+      description: >
+        Registro de uso de la palabra de una persona en una sesión. Agrupa
+        todas sus intervenciones finalizadas.
+      properties:
+        name:
+          type: string
+        group:
+          type: ["string", "null"]
+        seconds:
+          type: integer
+          description: Tiempo total efectivamente usado, en segundos.
+        turns:
+          type: integer
+          description: Número de intervenciones.
+        collective:
+          type: boolean
+          description: Si alguna de sus intervenciones fue palabra colectiva.
 
     PublicMember:
       type: object

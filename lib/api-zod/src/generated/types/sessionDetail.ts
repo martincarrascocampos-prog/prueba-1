@@ -24,6 +24,16 @@ export interface SessionDetail {
   speakingRoundOpen: boolean;
   /** @nullable */
   speakingRoundAgendaPointId?: number | null;
+  /**
+     * Momento de la apertura oficial. Nulo si nunca se abrió oficialmente.
+     * @nullable
+     */
+  officialStartAt?: string | null;
+  /**
+     * Momento del cierre. Nulo si sigue en curso o si nunca se abrió oficialmente.
+     * @nullable
+     */
+  officialEndAt?: string | null;
   createdAt: string;
   attendanceCount: number;
   topicsCount: number;

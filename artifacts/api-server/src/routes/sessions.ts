@@ -31,6 +31,8 @@ router.get("/sessions", requireAuth, async (_req, res): Promise<void> => {
       actaFileName: s.actaFileName,
       speakingRoundOpen: s.speakingRoundOpen,
       speakingRoundAgendaPointId: s.speakingRoundAgendaPointId,
+      officialStartAt: s.officialStartAt,
+      officialEndAt: s.officialEndAt,
       createdAt: s.createdAt,
     })),
   );
@@ -78,6 +80,8 @@ router.post("/sessions", requireAdmin, async (req, res): Promise<void> => {
     actaFileName: session.actaFileName,
     speakingRoundOpen: session.speakingRoundOpen,
     speakingRoundAgendaPointId: session.speakingRoundAgendaPointId,
+    officialStartAt: session.officialStartAt,
+    officialEndAt: session.officialEndAt,
     createdAt: session.createdAt,
   });
 });
@@ -122,6 +126,8 @@ router.get("/sessions/:id", requireAuth, async (req, res): Promise<void> => {
     actaFileName: session.actaFileName,
     speakingRoundOpen: session.speakingRoundOpen,
     speakingRoundAgendaPointId: session.speakingRoundAgendaPointId,
+    officialStartAt: session.officialStartAt,
+    officialEndAt: session.officialEndAt,
     createdAt: session.createdAt,
     attendanceCount: Number(attendanceCount?.count ?? 0),
     topicsCount: Number(topicsCount?.count ?? 0),
@@ -136,11 +142,29 @@ router.patch("/sessions/:id", requireAdmin, async (req, res): Promise<void> => {
     return;
   }
 
-  const { title, status, location, scheduledAt, meetingLink, actaObjectPath, actaFileName } =
-    req.body;
+  const {
+    title, status, location, scheduledAt, meetingLink, actaObjectPath, actaFileName, official,
+  } = req.body;
   const updates: Record<string, unknown> = {};
   if (title !== undefined) updates.title = title;
   if (status !== undefined) updates.status = status;
+
+  // Horario oficial. Solo una apertura declarada oficial abre el reloj; las
+  // aperturas de prueba o preparación no suman horas al registro del pleno.
+  if (status !== undefined) {
+    const [current] = await db.select().from(plenariasTable).where(eq(plenariasTable.id, id));
+    if (current) {
+      if (status === "abierta" && official === true) {
+        // Reapertura de una sesión oficial: se reanuda, no se reinicia.
+        if (current.officialStartAt === null) updates.officialStartAt = new Date();
+        updates.officialEndAt = null;
+      }
+      if (status === "cerrada" && current.officialStartAt !== null) {
+        updates.officialEndAt = new Date();
+      }
+    }
+  }
+
   if (location !== undefined) updates.location = location;
   if (scheduledAt !== undefined)
     updates.scheduledAt = scheduledAt ? new Date(scheduledAt) : null;
@@ -175,6 +199,8 @@ router.patch("/sessions/:id", requireAdmin, async (req, res): Promise<void> => {
     actaFileName: updated.actaFileName,
     speakingRoundOpen: updated.speakingRoundOpen,
     speakingRoundAgendaPointId: updated.speakingRoundAgendaPointId,
+    officialStartAt: updated.officialStartAt,
+    officialEndAt: updated.officialEndAt,
     createdAt: updated.createdAt,
   });
 });

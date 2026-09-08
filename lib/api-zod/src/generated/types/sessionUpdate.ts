@@ -12,6 +12,9 @@ export interface SessionUpdate {
   location?: string;
   scheduledAt?: string;
   status?: SessionUpdateStatus;
+  /** Solo al abrir una sesión. Si es true, registra la apertura oficial y la sesión pasa a contar horas. Una apertura de prueba o de preparación va sin esta bandera y no suma al registro del pleno.
+   */
+  official?: boolean;
   /** @nullable */
   meetingLink?: string | null;
   /** @nullable */
