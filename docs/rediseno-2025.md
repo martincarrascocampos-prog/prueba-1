@@ -10,8 +10,12 @@ Estado de cada bloque:
 |---|---|
 | Panel público | Implementado parcialmente (falta navegación por paneles) |
 | Panel del integrante | Especificado, sin implementar |
-| Panel de la Mesa Directiva | Especificado, sin implementar |
+| Panel de administración | Especificado, sin implementar |
 | Confirmación de asistencia y correo interno | Requiere migración de base de datos |
+
+Las maquetas HTML navegables de los tres paneles están en `docs/mockups/`. Son
+referencia visual, no código de producción: la aplicación real es React +
+TypeScript.
 
 ---
 
@@ -197,67 +201,103 @@ verificarlo desde el panel.
 
 ---
 
-## 4. Panel de la Mesa Directiva
+## 4. Panel de administración
 
 Rutas: `artifacts/fech-plenario/src/pages/admin/`
+
+Se llama **Administración**, no "Mesa Directiva": la Mesa es un usuario del
+sistema, no el nombre del panel.
 
 **Se mantienen todas las herramientas actuales.** Crear sesión, subir y quitar
 acta, gestionar tabla, mociones, sistema de palabra, alta y baja de
 integrantes, restablecer contraseñas, ver asistencia individual, unidades, y
 las tres exportaciones (asistencia, resultados, matriz).
 
-### Pestañas
+### 4.1 Estructura: listado y editor
 
-1. **Resumen** — estadísticas, quórum, sesión en vivo, crear sesión
-2. **Sesión en vivo** — control completo de la sesión abierta
-3. **Próximo pleno** — confirmaciones, justificaciones, tabla, citación
-4. **Integrantes** — nómina y gestión
-5. **Exportar** — planillas, reportes y actas
+> **Decisión de arquitectura.** El panel **es el listado de sesiones**. No hay
+> pestañas de "Resumen", "Sesión en vivo" y "Próximo pleno" en paralelo: eso
+> repartía la información de las sesiones en tres lugares y obligaba a
+> mantenerla sincronizada entre ellos. Tampoco encabeza con tarjetas de
+> estadísticas (integrantes, ponderación total, mociones votadas) — son cifras
+> de adorno que no permiten hacer nada.
+>
+> Se administra una sesión a la vez. Entonces: una lista, y se entra a editar
+> cada sesión directamente.
 
-### 4.1 Alerta de quórum
+**Vista principal — listado de sesiones.** Agrupadas en "En curso y próximas" y
+"Cerradas". Cada fila muestra estado (EN VIVO / PRÓXIMA / CERRADA), título,
+fecha, lugar, cantidad de puntos y mociones, y un dato vivo según su estado:
 
-Presente en Resumen y en Próximo pleno. Compara la ponderación presente (o
-proyectada) contra el mínimo reglamentario, y dice explícitamente si el pleno
-puede sesionar y votar. En el próximo pleno indica cuánta ponderación falta.
+| Estado | Dato en la fila | Acción |
+|---|---|---|
+| En vivo | presentes y % de quórum | Conducir |
+| Próxima | confirmades y justificaciones por revisar | Preparar |
+| Cerrada | presentes y si tiene acta subida | Ver |
 
-El mínimo está como constante `QUORUM_MIN = 0.5`; conviene confirmarlo contra
-los Estatutos antes de implementar.
+Botón **Nueva sesión** que abre el formulario en la misma vista, sin navegar.
 
-### 4.2 Control de la sesión en vivo
+**Vista de sesión — editor completo.** Todo lo de esa sesión en una página, en
+secciones plegables. Qué secciones aparecen y en qué orden depende del estado:
 
-- **Código de la sesión** en grande, con botones para mostrar el QR a pantalla
+| Estado | Secciones, en orden |
+|---|---|
+| En vivo | Código de asistencia · Asistencia y quórum · Tabla · Mociones · Sistema de palabra · Datos · **Cerrar la sesión** |
+| Próxima | Datos · Tabla · Confirmaciones · Justificaciones · Mociones preparadas · **Abrir la sesión** |
+| Cerrada | Resultados · Asistencia registrada · Tabla tratada · Acta y exportaciones · Datos |
+
+Las secciones más urgentes vienen abiertas por defecto (en vivo: código,
+asistencia y mociones; próxima: datos, tabla, confirmaciones y justificaciones
+pendientes).
+
+**Integrantes** queda como vista secundaria, accesible desde un enlace en el
+encabezado. Es mantenimiento, no la tarea diaria: no compite con las sesiones.
+
+### 4.2 Alerta de quórum
+
+Dentro de la sesión, no en un resumen aparte. Compara la ponderación presente
+(o proyectada, en una sesión próxima) contra el mínimo reglamentario, y dice
+explícitamente si el pleno puede votar. En una sesión próxima indica cuánta
+ponderación falta.
+
+El mínimo está como constante `QUORUM = 0.5`; conviene confirmarlo contra los
+Estatutos antes de implementar.
+
+### 4.3 Control de la sesión en vivo
+
+- **Código de asistencia** en grande, con botones para mostrar el QR a pantalla
   completa y regenerarlo
-- **Asistencia** con barras por estamento, nómina de presenciales, online y
-  ausentes; los ausentes se pueden marcar como Inasistencia Justificada desde ahí
-- **Tabla** con puntos marcados como tratado / en debate / se vota, y control
-  para agregar y eliminar
+- **Asistencia** con anillo, barras por estamento, nómina de presenciales,
+  online y ausentes; los ausentes se marcan como Inasistencia Justificada
+  haciendo clic en su nombre
+- **Tabla** con puntos marcados como tratado / en debate / se vota
 - **Mociones** con abrir y cerrar votación, resultados en vivo mientras está
   abierta, cuántos votos faltan por emitir, y acceso al detalle nominal
 - **Sistema de palabra** con temporizador, dar y quitar la palabra, agregar
   minutos, cerrar ronda
-- **Cerrar sesión** y subir acta
+- **Cerrar sesión** en una sección propia marcada en rojo, con advertencia de
+  que es irreversible
 
-### 4.3 Confirmaciones del próximo pleno
+### 4.4 Confirmaciones y justificaciones (sesión próxima)
 
-Cuatro indicadores: confirmaron (con su ponderación), justificaron (con cuántas
-faltan revisar), sin responder (con la ponderación en duda) y quórum proyectado.
+Cuatro indicadores: confirmades, justificades, sin responder y quórum
+proyectado. Más los nombres de quienes confirmaron y de quienes no han
+respondido, con un botón para enviarles recordatorio.
 
-**Bandeja de justificaciones:** cada una con el nombre, estamento, facultad,
-motivo, ponderación, texto completo, y botones para aceptar, rechazar o
-responder por correo interno.
+**Bandeja de justificaciones:** cada una con nombre, estamento, facultad,
+motivo, texto completo, y botones para aceptar, rechazar o responder por correo
+interno. El contador de pendientes aparece en la cabecera de la sección y en la
+fila de la sesión en el listado.
 
 > Al aceptar una justificación, esta queda registrada en `justified_absences`.
 > La persona **sigue contando como ausente** para el quórum y no puede votar —
 > solo cambia la etiqueta. El panel lo dice explícitamente para que no se preste
 > a confusión.
 
-**Estado de respuestas:** tres bloques con los nombres de quienes confirmaron,
-justificaron y no han respondido, más un botón para enviar recordatorio a los
-últimos.
+### 4.5 Reportes nuevos
 
-### 4.4 Reportes nuevos
-
-Además de las tres exportaciones actuales:
+Las tres exportaciones actuales viven **dentro de cada sesión cerrada**, junto
+al acta, que es donde se ocupan. Además:
 
 - **Acta en PDF** con tabla, asistencia, intervenciones y resultados
 - **Asistencia acumulada** del período por integrante
