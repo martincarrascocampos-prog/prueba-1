@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "FECh Plenario"
+version = "1.0.0"
+id = "artifacts/fech-plenario"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18531
+
+[services.development]
+run = "pnpm --filter @workspace/fech-plenario run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/fech-plenario", "run", "build" ]
+publicDir = "artifacts/fech-plenario/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18531"
+BASE_PATH = "/"
