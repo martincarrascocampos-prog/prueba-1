@@ -652,173 +652,6 @@ export default function AdminSessionDetail() {
               <Plegar abierto={abierto.mociones} onClick={() => alternar("mociones")} que="Mociones propuestas" />
             </CardHeader>
             {abierto.mociones && <CardContent>
-              <form onSubmit={(e) => {
-                e.preventDefault();
-                if (!newTopicTitle) return;
-                const isCandidato = newTopicType === "candidato";
-                const candidates = newTopicCandidates.map((c) => c.trim()).filter(Boolean);
-                if (isCandidato && candidates.length < 1) {
-                  toast({ title: "Agrega al menos une candidate", variant: "destructive" });
-                  return;
-                }
-                const isMulti = isCandidato && newTopicMultiVote;
-                const votesPerVoter = isMulti ? Math.max(1, parseInt(newTopicVotesPerVoter, 10) || 1) : 1;
-                createTopic.mutate({
-                  id,
-                  data: {
-                    title: newTopicTitle,
-                    detail: newTopicDetail.trim() || null,
-                    agendaPointId: newTopicPointId ? Number(newTopicPointId) : null,
-                    type: newTopicType,
-                    candidateMode: isCandidato ? (isMulti ? "multiple" : "single") : null,
-                    weighted: newTopicWeighted,
-                    weightSource: newTopicWeighted && newTopicEstamentos.length > 0 ? newTopicWeightSource : "normal",
-                    votesPerVoter,
-                    candidates: isCandidato ? candidates : [],
-                    estamentos: newTopicEstamentos,
-                  },
-                }, {
-                  onSuccess: () => {
-                    setNewTopicTitle("");
-                    setNewTopicDetail("");
-                    setNewTopicPointId("");
-                    setNewTopicType("mocion");
-                    setNewTopicMultiVote(false);
-                    setNewTopicWeighted(true);
-                    setNewTopicWeightSource("normal");
-                    setNewTopicVotesPerVoter("1");
-                    setNewTopicCandidates([""]);
-                    setNewTopicEstamentos([]);
-                    queryClient.invalidateQueries({ queryKey: getListTopicsQueryKey(id) });
-                    toast({ title: "Tema creado" });
-                  }
-                });
-              }} className="space-y-4 mb-6 rounded-lg border p-4 bg-gray-50/50">
-                <div className="flex flex-col sm:flex-row gap-2">
-                  <Input value={newTopicTitle} onChange={e => setNewTopicTitle(e.target.value)} placeholder="Título del nuevo tema" className="flex-1" />
-                  {sortedAgenda.length > 0 && (
-                    <Select value={newTopicPointId || "none"} onValueChange={(v) => setNewTopicPointId(v === "none" ? "" : v)}>
-                      <SelectTrigger className="sm:w-52"><SelectValue placeholder="Punto de tabla" /></SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="none">Sin punto de tabla</SelectItem>
-                        {sortedAgenda.map((p, i) => (
-                          <SelectItem key={p.id} value={String(p.id)}>{i + 1}. {p.title}</SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  )}
-                </div>
-
-                <div className="space-y-1">
-                  <Label>Detalle (opcional)</Label>
-                  <Textarea
-                    value={newTopicDetail}
-                    onChange={(e) => setNewTopicDetail(e.target.value)}
-                    placeholder="Descripción o contexto de la votación"
-                    rows={3}
-                  />
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div className="space-y-1">
-                    <Label>Tipo de votación</Label>
-                    <Select value={newTopicType} onValueChange={(v) => setNewTopicType(v as "mocion" | "candidato")}>
-                      <SelectTrigger><SelectValue /></SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="mocion">Moción (favor / contra / abstención)</SelectItem>
-                        <SelectItem value="candidato">Voto de opciones múltiples</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-1">
-                    <Label>Ponderación</Label>
-                    <Select value={newTopicWeighted ? "weighted" : "flat"} onValueChange={(v) => setNewTopicWeighted(v === "weighted")}>
-                      <SelectTrigger><SelectValue /></SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="weighted">Ponderada (peso por miembre)</SelectItem>
-                        <SelectItem value="flat">Simple (1 voto = 1)</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-
-                {newTopicType === "candidato" && (
-                  <div className="space-y-3 rounded-md border bg-white p-3">
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="space-y-0.5">
-                        <Label>Opciones múltiples</Label>
-                        <p className="text-xs text-muted-foreground">
-                          {newTopicMultiVote
-                            ? "Cada votante puede elegir varias opciones (máximo una vez cada una). Los votos no usados cuentan como abstención."
-                            : "Cada votante elige une sole candidate."}
-                        </p>
-                      </div>
-                      <Switch checked={newTopicMultiVote} onCheckedChange={setNewTopicMultiVote} />
-                    </div>
-                    {newTopicMultiVote && (
-                      <div className="space-y-1">
-                        <Label>Votos por votante</Label>
-                        <Input type="number" min={1} value={newTopicVotesPerVoter} onChange={(e) => setNewTopicVotesPerVoter(e.target.value)} className="w-32" />
-                      </div>
-                    )}
-                    <div className="space-y-2">
-                      <Label>Candidates</Label>
-                      {newTopicCandidates.map((c, i) => (
-                        <div key={i} className="flex gap-2">
-                          <Input
-                            value={c}
-                            onChange={(e) => setNewTopicCandidates((prev) => prev.map((x, j) => (j === i ? e.target.value : x)))}
-                            placeholder={`Candidate ${i + 1}`}
-                          />
-                          <Button type="button" variant="ghost" size="icon" className="text-red-600 shrink-0" onClick={() => setNewTopicCandidates((prev) => prev.filter((_, j) => j !== i))} disabled={newTopicCandidates.length <= 1}>
-                            <Trash2 className="h-4 w-4" />
-                          </Button>
-                        </div>
-                      ))}
-                      <Button type="button" variant="outline" size="sm" onClick={() => setNewTopicCandidates((prev) => [...prev, ""])}>
-                        <Plus className="h-4 w-4 mr-2" /> Agregar candidate
-                      </Button>
-                    </div>
-                  </div>
-                )}
-
-                <div className="space-y-2">
-                  <Label>Habilitades (por división)</Label>
-                  <p className="text-xs text-muted-foreground">Si no seleccionas ninguna, vota el pleno completo (todes les asistentes).</p>
-                  <div className="flex flex-wrap gap-2">
-                    {ESTAMENTO_OPTIONS.map((opt) => {
-                      const active = newTopicEstamentos.includes(opt.value);
-                      return (
-                        <button
-                          key={opt.value}
-                          type="button"
-                          onClick={() => setNewTopicEstamentos((prev) => active ? prev.filter((n) => n !== opt.value) : [...prev, opt.value])}
-                          className={`rounded-full border px-3 py-1 text-sm transition-colors ${active ? "border-primary bg-primary text-primary-foreground" : "border-gray-300 hover:bg-gray-100"}`}
-                        >
-                          {opt.label}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {newTopicWeighted && newTopicEstamentos.length > 0 && (
-                  <div className="space-y-1">
-                    <Label>Ponderación a usar</Label>
-                    <p className="text-xs text-muted-foreground">Para votaciones por estamento puedes usar la ponderación alternativa de cada miembre.</p>
-                    <Select value={newTopicWeightSource} onValueChange={(v) => setNewTopicWeightSource(v as "normal" | "alt")}>
-                      <SelectTrigger className="sm:w-72"><SelectValue /></SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="normal">Ponderación normal</SelectItem>
-                        <SelectItem value="alt">Ponderación alternativa</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                )}
-
-                <Button type="submit" disabled={createTopic.isPending || !newTopicTitle}>Agregar tema</Button>
-              </form>
-
               <div className="space-y-4">
                 {topics?.map(topic => (
                   <Card key={topic.id} className="overflow-hidden rounded-none border-gray-300">
@@ -909,6 +742,180 @@ export default function AdminSessionDetail() {
                 ))}
                 {topics?.length === 0 && <div className="text-center py-8 text-muted-foreground border border-dashed">No hay mociones propuestas en esta sesión.</div>}
               </div>
+
+              <details className="mt-5 border border-dashed border-gray-400">
+                <summary className="cursor-pointer select-none px-4 py-2.5 text-sm font-semibold hover:bg-gray-50">
+                  <Plus className="mr-1.5 inline h-4 w-4" /> Nueva moción
+                </summary>
+                <div className="border-t border-gray-200 p-4">
+                <form onSubmit={(e) => {
+                  e.preventDefault();
+                  if (!newTopicTitle) return;
+                  const isCandidato = newTopicType === "candidato";
+                  const candidates = newTopicCandidates.map((c) => c.trim()).filter(Boolean);
+                  if (isCandidato && candidates.length < 1) {
+                    toast({ title: "Agrega al menos une candidate", variant: "destructive" });
+                    return;
+                  }
+                  const isMulti = isCandidato && newTopicMultiVote;
+                  const votesPerVoter = isMulti ? Math.max(1, parseInt(newTopicVotesPerVoter, 10) || 1) : 1;
+                  createTopic.mutate({
+                    id,
+                    data: {
+                      title: newTopicTitle,
+                      detail: newTopicDetail.trim() || null,
+                      agendaPointId: newTopicPointId ? Number(newTopicPointId) : null,
+                      type: newTopicType,
+                      candidateMode: isCandidato ? (isMulti ? "multiple" : "single") : null,
+                      weighted: newTopicWeighted,
+                      weightSource: newTopicWeighted && newTopicEstamentos.length > 0 ? newTopicWeightSource : "normal",
+                      votesPerVoter,
+                      candidates: isCandidato ? candidates : [],
+                      estamentos: newTopicEstamentos,
+                    },
+                  }, {
+                    onSuccess: () => {
+                      setNewTopicTitle("");
+                      setNewTopicDetail("");
+                      setNewTopicPointId("");
+                      setNewTopicType("mocion");
+                      setNewTopicMultiVote(false);
+                      setNewTopicWeighted(true);
+                      setNewTopicWeightSource("normal");
+                      setNewTopicVotesPerVoter("1");
+                      setNewTopicCandidates([""]);
+                      setNewTopicEstamentos([]);
+                      queryClient.invalidateQueries({ queryKey: getListTopicsQueryKey(id) });
+                      toast({ title: "Tema creado" });
+                    }
+                  });
+                }} className="space-y-4 mb-6 rounded-lg border p-4 bg-gray-50/50">
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <Input value={newTopicTitle} onChange={e => setNewTopicTitle(e.target.value)} placeholder="Título del nuevo tema" className="flex-1" />
+                    {sortedAgenda.length > 0 && (
+                      <Select value={newTopicPointId || "none"} onValueChange={(v) => setNewTopicPointId(v === "none" ? "" : v)}>
+                        <SelectTrigger className="sm:w-52"><SelectValue placeholder="Punto de tabla" /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="none">Sin punto de tabla</SelectItem>
+                          {sortedAgenda.map((p, i) => (
+                            <SelectItem key={p.id} value={String(p.id)}>{i + 1}. {p.title}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    )}
+                  </div>
+
+                  <div className="space-y-1">
+                    <Label>Detalle (opcional)</Label>
+                    <Textarea
+                      value={newTopicDetail}
+                      onChange={(e) => setNewTopicDetail(e.target.value)}
+                      placeholder="Descripción o contexto de la votación"
+                      rows={3}
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="space-y-1">
+                      <Label>Tipo de votación</Label>
+                      <Select value={newTopicType} onValueChange={(v) => setNewTopicType(v as "mocion" | "candidato")}>
+                        <SelectTrigger><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="mocion">Moción (favor / contra / abstención)</SelectItem>
+                          <SelectItem value="candidato">Voto de opciones múltiples</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <div className="space-y-1">
+                      <Label>Ponderación</Label>
+                      <Select value={newTopicWeighted ? "weighted" : "flat"} onValueChange={(v) => setNewTopicWeighted(v === "weighted")}>
+                        <SelectTrigger><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="weighted">Ponderada (peso por miembre)</SelectItem>
+                          <SelectItem value="flat">Simple (1 voto = 1)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  </div>
+
+                  {newTopicType === "candidato" && (
+                    <div className="space-y-3 rounded-md border bg-white p-3">
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="space-y-0.5">
+                          <Label>Opciones múltiples</Label>
+                          <p className="text-xs text-muted-foreground">
+                            {newTopicMultiVote
+                              ? "Cada votante puede elegir varias opciones (máximo una vez cada una). Los votos no usados cuentan como abstención."
+                              : "Cada votante elige une sole candidate."}
+                          </p>
+                        </div>
+                        <Switch checked={newTopicMultiVote} onCheckedChange={setNewTopicMultiVote} />
+                      </div>
+                      {newTopicMultiVote && (
+                        <div className="space-y-1">
+                          <Label>Votos por votante</Label>
+                          <Input type="number" min={1} value={newTopicVotesPerVoter} onChange={(e) => setNewTopicVotesPerVoter(e.target.value)} className="w-32" />
+                        </div>
+                      )}
+                      <div className="space-y-2">
+                        <Label>Candidates</Label>
+                        {newTopicCandidates.map((c, i) => (
+                          <div key={i} className="flex gap-2">
+                            <Input
+                              value={c}
+                              onChange={(e) => setNewTopicCandidates((prev) => prev.map((x, j) => (j === i ? e.target.value : x)))}
+                              placeholder={`Candidate ${i + 1}`}
+                            />
+                            <Button type="button" variant="ghost" size="icon" className="text-red-600 shrink-0" onClick={() => setNewTopicCandidates((prev) => prev.filter((_, j) => j !== i))} disabled={newTopicCandidates.length <= 1}>
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        ))}
+                        <Button type="button" variant="outline" size="sm" onClick={() => setNewTopicCandidates((prev) => [...prev, ""])}>
+                          <Plus className="h-4 w-4 mr-2" /> Agregar candidate
+                        </Button>
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="space-y-2">
+                    <Label>Habilitades (por división)</Label>
+                    <p className="text-xs text-muted-foreground">Si no seleccionas ninguna, vota el pleno completo (todes les asistentes).</p>
+                    <div className="flex flex-wrap gap-2">
+                      {ESTAMENTO_OPTIONS.map((opt) => {
+                        const active = newTopicEstamentos.includes(opt.value);
+                        return (
+                          <button
+                            key={opt.value}
+                            type="button"
+                            onClick={() => setNewTopicEstamentos((prev) => active ? prev.filter((n) => n !== opt.value) : [...prev, opt.value])}
+                            className={`rounded-full border px-3 py-1 text-sm transition-colors ${active ? "border-primary bg-primary text-primary-foreground" : "border-gray-300 hover:bg-gray-100"}`}
+                          >
+                            {opt.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {newTopicWeighted && newTopicEstamentos.length > 0 && (
+                    <div className="space-y-1">
+                      <Label>Ponderación a usar</Label>
+                      <p className="text-xs text-muted-foreground">Para votaciones por estamento puedes usar la ponderación alternativa de cada miembre.</p>
+                      <Select value={newTopicWeightSource} onValueChange={(v) => setNewTopicWeightSource(v as "normal" | "alt")}>
+                        <SelectTrigger className="sm:w-72"><SelectValue /></SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="normal">Ponderación normal</SelectItem>
+                          <SelectItem value="alt">Ponderación alternativa</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  )}
+
+                  <Button type="submit" disabled={createTopic.isPending || !newTopicTitle}>Agregar tema</Button>
+                </form>
+                </div>
+              </details>
             </CardContent>}
           </Card>
         </div>
