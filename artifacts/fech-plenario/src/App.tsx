@@ -7,10 +7,11 @@ import Login from "@/pages/login";
 import AdminDashboard from "@/pages/admin/dashboard";
 import AdminSessionDetail from "@/pages/admin/session-detail";
 import AdminMembers from "@/pages/admin/members";
-import AdminHistory from "@/pages/admin/history";
+import AdminMessages from "@/pages/admin/messages";
 import MemberDashboard from "@/pages/member/dashboard";
 import MemberVote from "@/pages/member/vote";
 import MemberHistory from "@/pages/member/history";
+import MemberMessages from "@/pages/member/messages";
 import Settings from "@/pages/settings";
 import Help from "@/pages/help";
 import ForgotPassword from "@/pages/forgot-password";
@@ -49,8 +50,8 @@ function App() {
             <Route path="/admin/members">
               <AuthGuard allowedRole="admin"><AdminMembers /></AuthGuard>
             </Route>
-            <Route path="/admin/history">
-              <AuthGuard allowedRole="admin"><AdminHistory /></AuthGuard>
+            <Route path="/admin/messages">
+              <AuthGuard allowedRole="admin"><AdminMessages /></AuthGuard>
             </Route>
             
             <Route path="/member">
@@ -61,6 +62,9 @@ function App() {
             </Route>
             <Route path="/member/history">
               <AuthGuard allowedRole="miembro"><MemberHistory /></AuthGuard>
+            </Route>
+            <Route path="/member/messages">
+              <AuthGuard allowedRole="miembro"><MemberMessages /></AuthGuard>
             </Route>
             
             <Route path="/settings">

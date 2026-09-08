@@ -12,6 +12,7 @@ import historyRouter from "./history";
 import adminRouter from "./admin";
 import storageRouter from "./storage";
 import unidadesRouter from "./unidades";
+import messagesRouter from "./messages";
 
 const router: IRouter = Router();
 
@@ -28,5 +29,6 @@ router.use(historyRouter);
 router.use(adminRouter);
 router.use(storageRouter);
 router.use(unidadesRouter);
+router.use(messagesRouter);
 
 export default router;

@@ -39,13 +39,14 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
     user?.rol === "admin"
       ? [
           { href: "/admin", label: "Panel" },
-          { href: "/admin/history", label: "Histórico" },
+          { href: "/admin/messages", label: "Correo" },
           { href: "/admin/members", label: "Miembres" },
         ]
       : user?.rol === "miembro"
         ? [
             { href: "/member", label: "Panel" },
             { href: "/member/history", label: "Historial" },
+            { href: "/member/messages", label: "Correo" },
           ]
         : [];
 

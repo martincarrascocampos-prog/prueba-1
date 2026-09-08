@@ -1297,3 +1297,143 @@ export const ExportMatrixResponse = zod.object({
 })
 
 
+/**
+ * @summary Mi correo interno
+ */
+export const ListMyMessagesResponseItem = zod.object({
+  "id": zod.number(),
+  "recipientId": zod.number().optional(),
+  "subject": zod.string(),
+  "body": zod.string(),
+  "kind": zod.enum(['citacion', 'consulta', 'informativo']),
+  "replyDeadline": zod.string().nullish(),
+  "createdAt": zod.string(),
+  "sessionId": zod.number().nullish(),
+  "sessionTitle": zod.string().nullish(),
+  "sessionScheduledAt": zod.string().nullish(),
+  "readAt": zod.string().nullish(),
+  "reply": zod.union([zod.literal('confirmada'),zod.literal('justificada'),zod.literal(null)]).nullish(),
+  "replyReason": zod.string().nullish(),
+  "repliedAt": zod.string().nullish(),
+  "review": zod.union([zod.literal('pendiente'),zod.literal('aceptada'),zod.literal('rechazada'),zod.literal(null)]).nullish(),
+  "reviewNote": zod.string().nullish()
+})
+export const ListMyMessagesResponse = zod.array(ListMyMessagesResponseItem)
+
+
+/**
+ * @summary Marcar un mensaje como leído
+ */
+export const MarkMessageReadParams = zod.object({
+  "id": zod.coerce.number()
+})
+
+
+/**
+ * @summary Confirmar asistencia o justificar inasistencia
+ */
+export const ReplyMessageParams = zod.object({
+  "id": zod.coerce.number()
+})
+
+export const ReplyMessageBody = zod.object({
+  "reply": zod.enum(['confirmada', 'justificada']),
+  "reason": zod.string().optional().describe('Obligatorio al justificar.')
+})
+
+export const ReplyMessageResponse = zod.object({
+  "id": zod.number(),
+  "messageId": zod.number(),
+  "userId": zod.number(),
+  "readAt": zod.string().nullish(),
+  "reply": zod.union([zod.literal('confirmada'),zod.literal('justificada'),zod.literal(null)]).nullish(),
+  "replyReason": zod.string().nullish(),
+  "repliedAt": zod.string().nullish(),
+  "review": zod.union([zod.literal('pendiente'),zod.literal('aceptada'),zod.literal('rechazada'),zod.literal(null)]).nullish(),
+  "reviewNote": zod.string().nullish()
+})
+
+
+/**
+ * @summary Mensajes enviados, con el detalle de respuestas
+ */
+export const ListAdminMessagesResponseItem = zod.object({
+  "id": zod.number(),
+  "subject": zod.string(),
+  "body": zod.string(),
+  "kind": zod.enum(['citacion', 'consulta', 'informativo']),
+  "replyDeadline": zod.string().nullish(),
+  "createdAt": zod.string(),
+  "sessionId": zod.number().nullish(),
+  "sessionTitle": zod.string().nullish(),
+  "recipients": zod.array(zod.object({
+  "messageId": zod.number().optional(),
+  "userId": zod.number(),
+  "name": zod.string(),
+  "group": zod.string().nullish(),
+  "faculty": zod.string().nullish(),
+  "weight": zod.string().optional(),
+  "readAt": zod.string().nullish(),
+  "reply": zod.union([zod.literal('confirmada'),zod.literal('justificada'),zod.literal(null)]).nullish(),
+  "replyReason": zod.string().nullish(),
+  "repliedAt": zod.string().nullish(),
+  "review": zod.union([zod.literal('pendiente'),zod.literal('aceptada'),zod.literal('rechazada'),zod.literal(null)]).nullish(),
+  "reviewNote": zod.string().nullish()
+})).optional(),
+  "total": zod.number().optional(),
+  "leidos": zod.number().optional(),
+  "confirmadas": zod.number().optional(),
+  "justificadas": zod.number().optional(),
+  "sinResponder": zod.number().optional(),
+  "pendientesRevision": zod.number().optional(),
+  "pesoConfirmado": zod.number().optional().describe('Ponderación comprometida por quienes confirmaron. Es una proyección para estimar el quórum antes de la sesión, nunca asistencia real.\n')
+})
+export const ListAdminMessagesResponse = zod.array(ListAdminMessagesResponseItem)
+
+
+/**
+ * @summary Enviar un mensaje al pleno o a parte de él
+ */
+
+
+
+
+export const SendMessageBody = zod.object({
+  "subject": zod.string().min(1),
+  "body": zod.string().min(1),
+  "kind": zod.enum(['citacion', 'consulta', 'informativo']).optional(),
+  "sessionId": zod.number().nullish().describe('Pleno al que se refiere. Nulo para un mensaje extra-pleno.'),
+  "replyDeadline": zod.string().nullish(),
+  "userIds": zod.array(zod.number()).optional().describe('Destinatarios explícitos. Tiene prioridad sobre groups.'),
+  "groups": zod.array(zod.string()).optional().describe('Estamentos completos. Si se omiten ambos, va a todo el pleno activo.')
+})
+
+
+/**
+ * Aceptar deja la etiqueta «Inasistencia Justificada» en el acta de la sesión asociada. No modifica la asistencia: la persona sigue contando como ausente para el quórum y no queda habilitada para votar.
+
+ * @summary Aceptar o rechazar una justificación
+ */
+export const ReviewMessageReplyParams = zod.object({
+  "id": zod.coerce.number(),
+  "userId": zod.coerce.number()
+})
+
+export const ReviewMessageReplyBody = zod.object({
+  "review": zod.enum(['aceptada', 'rechazada']),
+  "note": zod.string().optional()
+})
+
+export const ReviewMessageReplyResponse = zod.object({
+  "id": zod.number(),
+  "messageId": zod.number(),
+  "userId": zod.number(),
+  "readAt": zod.string().nullish(),
+  "reply": zod.union([zod.literal('confirmada'),zod.literal('justificada'),zod.literal(null)]).nullish(),
+  "replyReason": zod.string().nullish(),
+  "repliedAt": zod.string().nullish(),
+  "review": zod.union([zod.literal('pendiente'),zod.literal('aceptada'),zod.literal('rechazada'),zod.literal(null)]).nullish(),
+  "reviewNote": zod.string().nullish()
+})
+
+

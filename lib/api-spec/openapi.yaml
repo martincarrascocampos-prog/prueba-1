@@ -30,6 +30,8 @@ tags:
     description: Administración
   - name: unidades
     description: Unidades académicas (catálogo)
+  - name: messages
+    description: Correo interno
   - name: public
     description: Endpoints públicos (sin autenticación)
   - name: Storage
@@ -1283,6 +1285,134 @@ paths:
               schema:
                 $ref: "#/components/schemas/ExportData"
 
+  /messages:
+    get:
+      operationId: listMyMessages
+      tags: [messages]
+      summary: Mi correo interno
+      responses:
+        "200":
+          description: Mensajes recibidos, del más reciente al más antiguo
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/InboxMessage"
+
+  /messages/{id}/read:
+    post:
+      operationId: markMessageRead
+      tags: [messages]
+      summary: Marcar un mensaje como leído
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "204":
+          description: Marcado como leído
+
+  /messages/{id}/reply:
+    post:
+      operationId: replyMessage
+      tags: [messages]
+      summary: Confirmar asistencia o justificar inasistencia
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MessageReplyInput"
+      responses:
+        "200":
+          description: Respuesta registrada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessageRecipient"
+        "400":
+          description: Respuesta inválida o justificación sin motivo
+        "409":
+          description: El plazo para responder ya venció
+
+  /admin/messages:
+    get:
+      operationId: listAdminMessages
+      tags: [messages]
+      summary: Mensajes enviados, con el detalle de respuestas
+      responses:
+        "200":
+          description: Mensajes con sus destinatarios y resúmenes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/AdminMessage"
+    post:
+      operationId: sendMessage
+      tags: [messages]
+      summary: Enviar un mensaje al pleno o a parte de él
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MessageInput"
+      responses:
+        "201":
+          description: Mensaje enviado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AdminMessage"
+        "400":
+          description: Faltan asunto, cuerpo o destinatarios
+
+  /admin/messages/{id}/recipients/{userId}:
+    patch:
+      operationId: reviewMessageReply
+      tags: [messages]
+      summary: Aceptar o rechazar una justificación
+      description: >
+        Aceptar deja la etiqueta «Inasistencia Justificada» en el acta de la
+        sesión asociada. No modifica la asistencia: la persona sigue contando
+        como ausente para el quórum y no queda habilitada para votar.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReplyReviewInput"
+      responses:
+        "200":
+          description: Justificación resuelta
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessageRecipient"
+
+
 components:
   schemas:
     HealthStatus:
@@ -2369,6 +2499,144 @@ components:
         collective:
           type: boolean
           description: Si alguna de sus intervenciones fue palabra colectiva.
+
+    InboxMessage:
+      type: object
+      required: [id, subject, body, kind, createdAt]
+      properties:
+        id: { type: integer }
+        recipientId: { type: integer }
+        subject: { type: string }
+        body: { type: string }
+        kind:
+          type: string
+          enum: [citacion, consulta, informativo]
+        replyDeadline: { type: ["string", "null"] }
+        createdAt: { type: string }
+        sessionId: { type: ["integer", "null"] }
+        sessionTitle: { type: ["string", "null"] }
+        sessionScheduledAt: { type: ["string", "null"] }
+        readAt: { type: ["string", "null"] }
+        reply:
+          type: ["string", "null"]
+          enum: [confirmada, justificada, null]
+        replyReason: { type: ["string", "null"] }
+        repliedAt: { type: ["string", "null"] }
+        review:
+          type: ["string", "null"]
+          enum: [pendiente, aceptada, rechazada, null]
+        reviewNote: { type: ["string", "null"] }
+
+    MessageRecipient:
+      type: object
+      required: [id, messageId, userId]
+      properties:
+        id: { type: integer }
+        messageId: { type: integer }
+        userId: { type: integer }
+        readAt: { type: ["string", "null"] }
+        reply:
+          type: ["string", "null"]
+          enum: [confirmada, justificada, null]
+        replyReason: { type: ["string", "null"] }
+        repliedAt: { type: ["string", "null"] }
+        review:
+          type: ["string", "null"]
+          enum: [pendiente, aceptada, rechazada, null]
+        reviewNote: { type: ["string", "null"] }
+
+    AdminMessageRecipient:
+      type: object
+      required: [userId, name]
+      properties:
+        messageId: { type: integer }
+        userId: { type: integer }
+        name: { type: string }
+        group: { type: ["string", "null"] }
+        faculty: { type: ["string", "null"] }
+        weight: { type: string }
+        readAt: { type: ["string", "null"] }
+        reply:
+          type: ["string", "null"]
+          enum: [confirmada, justificada, null]
+        replyReason: { type: ["string", "null"] }
+        repliedAt: { type: ["string", "null"] }
+        review:
+          type: ["string", "null"]
+          enum: [pendiente, aceptada, rechazada, null]
+        reviewNote: { type: ["string", "null"] }
+
+    AdminMessage:
+      type: object
+      required: [id, subject, body, kind, createdAt]
+      properties:
+        id: { type: integer }
+        subject: { type: string }
+        body: { type: string }
+        kind:
+          type: string
+          enum: [citacion, consulta, informativo]
+        replyDeadline: { type: ["string", "null"] }
+        createdAt: { type: string }
+        sessionId: { type: ["integer", "null"] }
+        sessionTitle: { type: ["string", "null"] }
+        recipients:
+          type: array
+          items:
+            $ref: "#/components/schemas/AdminMessageRecipient"
+        total: { type: integer }
+        leidos: { type: integer }
+        confirmadas: { type: integer }
+        justificadas: { type: integer }
+        sinResponder: { type: integer }
+        pendientesRevision: { type: integer }
+        pesoConfirmado:
+          type: number
+          description: >
+            Ponderación comprometida por quienes confirmaron. Es una proyección
+            para estimar el quórum antes de la sesión, nunca asistencia real.
+
+    MessageInput:
+      type: object
+      required: [subject, body]
+      properties:
+        subject: { type: string, minLength: 1 }
+        body: { type: string, minLength: 1 }
+        kind:
+          type: string
+          enum: [citacion, consulta, informativo]
+        sessionId:
+          type: ["integer", "null"]
+          description: Pleno al que se refiere. Nulo para un mensaje extra-pleno.
+        replyDeadline: { type: ["string", "null"] }
+        userIds:
+          type: array
+          description: Destinatarios explícitos. Tiene prioridad sobre groups.
+          items: { type: integer }
+        groups:
+          type: array
+          description: Estamentos completos. Si se omiten ambos, va a todo el pleno activo.
+          items: { type: string }
+
+    MessageReplyInput:
+      type: object
+      required: [reply]
+      properties:
+        reply:
+          type: string
+          enum: [confirmada, justificada]
+        reason:
+          type: string
+          description: Obligatorio al justificar.
+
+    ReplyReviewInput:
+      type: object
+      required: [review]
+      properties:
+        review:
+          type: string
+          enum: [aceptada, rechazada]
+        note: { type: string }
 
     PublicMember:
       type: object

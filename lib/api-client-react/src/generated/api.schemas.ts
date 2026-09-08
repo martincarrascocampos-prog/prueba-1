@@ -981,6 +981,242 @@ export interface AdminHistorySession {
   topics: AdminHistoryTopic[];
 }
 
+export type InboxMessageKind = typeof InboxMessageKind[keyof typeof InboxMessageKind];
+
+
+export const InboxMessageKind = {
+  citacion: 'citacion',
+  consulta: 'consulta',
+  informativo: 'informativo',
+} as const;
+
+/**
+ * @nullable
+ */
+export type InboxMessageReply = typeof InboxMessageReply[keyof typeof InboxMessageReply] | null;
+
+
+export const InboxMessageReply = {
+  confirmada: 'confirmada',
+  justificada: 'justificada',
+} as const;
+
+/**
+ * @nullable
+ */
+export type InboxMessageReview = typeof InboxMessageReview[keyof typeof InboxMessageReview] | null;
+
+
+export const InboxMessageReview = {
+  pendiente: 'pendiente',
+  aceptada: 'aceptada',
+  rechazada: 'rechazada',
+} as const;
+
+export interface InboxMessage {
+  id: number;
+  recipientId?: number;
+  subject: string;
+  body: string;
+  kind: InboxMessageKind;
+  /** @nullable */
+  replyDeadline?: string | null;
+  createdAt: string;
+  /** @nullable */
+  sessionId?: number | null;
+  /** @nullable */
+  sessionTitle?: string | null;
+  /** @nullable */
+  sessionScheduledAt?: string | null;
+  /** @nullable */
+  readAt?: string | null;
+  /** @nullable */
+  reply?: InboxMessageReply;
+  /** @nullable */
+  replyReason?: string | null;
+  /** @nullable */
+  repliedAt?: string | null;
+  /** @nullable */
+  review?: InboxMessageReview;
+  /** @nullable */
+  reviewNote?: string | null;
+}
+
+/**
+ * @nullable
+ */
+export type MessageRecipientReply = typeof MessageRecipientReply[keyof typeof MessageRecipientReply] | null;
+
+
+export const MessageRecipientReply = {
+  confirmada: 'confirmada',
+  justificada: 'justificada',
+} as const;
+
+/**
+ * @nullable
+ */
+export type MessageRecipientReview = typeof MessageRecipientReview[keyof typeof MessageRecipientReview] | null;
+
+
+export const MessageRecipientReview = {
+  pendiente: 'pendiente',
+  aceptada: 'aceptada',
+  rechazada: 'rechazada',
+} as const;
+
+export interface MessageRecipient {
+  id: number;
+  messageId: number;
+  userId: number;
+  /** @nullable */
+  readAt?: string | null;
+  /** @nullable */
+  reply?: MessageRecipientReply;
+  /** @nullable */
+  replyReason?: string | null;
+  /** @nullable */
+  repliedAt?: string | null;
+  /** @nullable */
+  review?: MessageRecipientReview;
+  /** @nullable */
+  reviewNote?: string | null;
+}
+
+/**
+ * @nullable
+ */
+export type AdminMessageRecipientReply = typeof AdminMessageRecipientReply[keyof typeof AdminMessageRecipientReply] | null;
+
+
+export const AdminMessageRecipientReply = {
+  confirmada: 'confirmada',
+  justificada: 'justificada',
+} as const;
+
+/**
+ * @nullable
+ */
+export type AdminMessageRecipientReview = typeof AdminMessageRecipientReview[keyof typeof AdminMessageRecipientReview] | null;
+
+
+export const AdminMessageRecipientReview = {
+  pendiente: 'pendiente',
+  aceptada: 'aceptada',
+  rechazada: 'rechazada',
+} as const;
+
+export interface AdminMessageRecipient {
+  messageId?: number;
+  userId: number;
+  name: string;
+  /** @nullable */
+  group?: string | null;
+  /** @nullable */
+  faculty?: string | null;
+  weight?: string;
+  /** @nullable */
+  readAt?: string | null;
+  /** @nullable */
+  reply?: AdminMessageRecipientReply;
+  /** @nullable */
+  replyReason?: string | null;
+  /** @nullable */
+  repliedAt?: string | null;
+  /** @nullable */
+  review?: AdminMessageRecipientReview;
+  /** @nullable */
+  reviewNote?: string | null;
+}
+
+export type AdminMessageKind = typeof AdminMessageKind[keyof typeof AdminMessageKind];
+
+
+export const AdminMessageKind = {
+  citacion: 'citacion',
+  consulta: 'consulta',
+  informativo: 'informativo',
+} as const;
+
+export interface AdminMessage {
+  id: number;
+  subject: string;
+  body: string;
+  kind: AdminMessageKind;
+  /** @nullable */
+  replyDeadline?: string | null;
+  createdAt: string;
+  /** @nullable */
+  sessionId?: number | null;
+  /** @nullable */
+  sessionTitle?: string | null;
+  recipients?: AdminMessageRecipient[];
+  total?: number;
+  leidos?: number;
+  confirmadas?: number;
+  justificadas?: number;
+  sinResponder?: number;
+  pendientesRevision?: number;
+  /** Ponderación comprometida por quienes confirmaron. Es una proyección para estimar el quórum antes de la sesión, nunca asistencia real.
+   */
+  pesoConfirmado?: number;
+}
+
+export type MessageInputKind = typeof MessageInputKind[keyof typeof MessageInputKind];
+
+
+export const MessageInputKind = {
+  citacion: 'citacion',
+  consulta: 'consulta',
+  informativo: 'informativo',
+} as const;
+
+export interface MessageInput {
+  /** @minLength 1 */
+  subject: string;
+  /** @minLength 1 */
+  body: string;
+  kind?: MessageInputKind;
+  /**
+     * Pleno al que se refiere. Nulo para un mensaje extra-pleno.
+     * @nullable
+     */
+  sessionId?: number | null;
+  /** @nullable */
+  replyDeadline?: string | null;
+  /** Destinatarios explícitos. Tiene prioridad sobre groups. */
+  userIds?: number[];
+  /** Estamentos completos. Si se omiten ambos, va a todo el pleno activo. */
+  groups?: string[];
+}
+
+export type MessageReplyInputReply = typeof MessageReplyInputReply[keyof typeof MessageReplyInputReply];
+
+
+export const MessageReplyInputReply = {
+  confirmada: 'confirmada',
+  justificada: 'justificada',
+} as const;
+
+export interface MessageReplyInput {
+  reply: MessageReplyInputReply;
+  /** Obligatorio al justificar. */
+  reason?: string;
+}
+
+export type ReplyReviewInputReview = typeof ReplyReviewInputReview[keyof typeof ReplyReviewInputReview];
+
+
+export const ReplyReviewInputReview = {
+  aceptada: 'aceptada',
+  rechazada: 'rechazada',
+} as const;
+
+export interface ReplyReviewInput {
+  review: ReplyReviewInputReview;
+  note?: string;
+}
+
 /**
  * Integrante activo del pleno, tal como se publica en el portal.
  */

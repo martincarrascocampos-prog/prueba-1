@@ -9,3 +9,4 @@ export * from "./session";
 export * from "./unidades";
 export * from "./sessionWeights";
 export * from "./justifiedAbsences";
+export * from "./messages";

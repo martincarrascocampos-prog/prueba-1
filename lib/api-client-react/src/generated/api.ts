@@ -23,6 +23,7 @@ import type {
   AdminBallotInput,
   AdminBallotResult,
   AdminHistorySession,
+  AdminMessage,
   AdminStats,
   AgendaPoint,
   AgendaPointInput,
@@ -38,14 +39,19 @@ import type {
   ErrorEnvelope,
   ExportData,
   HealthStatus,
+  InboxMessage,
   LoginInput,
   Member,
   MemberCreateInput,
   MemberHistorySession,
   MemberUpdate,
+  MessageInput,
+  MessageRecipient,
+  MessageReplyInput,
   MyVote,
   PasswordResetInput,
   PublicMember,
+  ReplyReviewInput,
   Session,
   SessionDetail,
   SessionInput,
@@ -4588,4 +4594,447 @@ export function useExportMatrix<TData = Awaited<ReturnType<typeof exportMatrix>>
 
 
 
+
+export const getListMyMessagesUrl = () => {
+
+
+
+
+  return `/api/messages`
+}
+
+/**
+ * @summary Mi correo interno
+ */
+export const listMyMessages = async ( options?: RequestInit): Promise<InboxMessage[]> => {
+
+  return customFetch<InboxMessage[]>(getListMyMessagesUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getListMyMessagesQueryKey = () => {
+    return [
+    `/api/messages`
+    ] as const;
+    }
+
+
+export const getListMyMessagesQueryOptions = <TData = Awaited<ReturnType<typeof listMyMessages>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof listMyMessages>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getListMyMessagesQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof listMyMessages>>> = ({ signal }) => listMyMessages({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listMyMessages>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type ListMyMessagesQueryResult = NonNullable<Awaited<ReturnType<typeof listMyMessages>>>
+export type ListMyMessagesQueryError = ErrorType<unknown>
+
+
+/**
+ * @summary Mi correo interno
+ */
+
+export function useListMyMessages<TData = Awaited<ReturnType<typeof listMyMessages>>, TError = ErrorType<unknown>>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof listMyMessages>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getListMyMessagesQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+
+
+
+
+
+
+export const getMarkMessageReadUrl = (id: number,) => {
+
+
+
+
+  return `/api/messages/${id}/read`
+}
+
+/**
+ * @summary Marcar un mensaje como leído
+ */
+export const markMessageRead = async (id: number, options?: RequestInit): Promise<void> => {
+
+  return customFetch<void>(getMarkMessageReadUrl(id),
+  {
+    ...options,
+    method: 'POST'
+
+
+  }
+);}
+
+
+
+
+export const getMarkMessageReadMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof markMessageRead>>, TError,{id: number}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof markMessageRead>>, TError,{id: number}, TContext> => {
+
+const mutationKey = ['markMessageRead'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof markMessageRead>>, {id: number}> = (props) => {
+          const {id} = props ?? {};
+
+          return  markMessageRead(id,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type MarkMessageReadMutationResult = NonNullable<Awaited<ReturnType<typeof markMessageRead>>>
+
+    export type MarkMessageReadMutationError = ErrorType<unknown>
+
+    /**
+ * @summary Marcar un mensaje como leído
+ */
+export const useMarkMessageRead = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof markMessageRead>>, TError,{id: number}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof markMessageRead>>,
+        TError,
+        {id: number},
+        TContext
+      > => {
+      return useMutation(getMarkMessageReadMutationOptions(options));
+    }
+
+export const getReplyMessageUrl = (id: number,) => {
+
+
+
+
+  return `/api/messages/${id}/reply`
+}
+
+/**
+ * @summary Confirmar asistencia o justificar inasistencia
+ */
+export const replyMessage = async (id: number,
+    messageReplyInput: MessageReplyInput, options?: RequestInit): Promise<MessageRecipient> => {
+
+  return customFetch<MessageRecipient>(getReplyMessageUrl(id),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      messageReplyInput,)
+  }
+);}
+
+
+
+
+export const getReplyMessageMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof replyMessage>>, TError,{id: number;data: BodyType<MessageReplyInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof replyMessage>>, TError,{id: number;data: BodyType<MessageReplyInput>}, TContext> => {
+
+const mutationKey = ['replyMessage'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof replyMessage>>, {id: number;data: BodyType<MessageReplyInput>}> = (props) => {
+          const {id,data} = props ?? {};
+
+          return  replyMessage(id,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type ReplyMessageMutationResult = NonNullable<Awaited<ReturnType<typeof replyMessage>>>
+    export type ReplyMessageMutationBody = BodyType<MessageReplyInput>
+    export type ReplyMessageMutationError = ErrorType<void>
+
+    /**
+ * @summary Confirmar asistencia o justificar inasistencia
+ */
+export const useReplyMessage = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof replyMessage>>, TError,{id: number;data: BodyType<MessageReplyInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof replyMessage>>,
+        TError,
+        {id: number;data: BodyType<MessageReplyInput>},
+        TContext
+      > => {
+      return useMutation(getReplyMessageMutationOptions(options));
+    }
+
+export const getListAdminMessagesUrl = () => {
+
+
+
+
+  return `/api/admin/messages`
+}
+
+/**
+ * @summary Mensajes enviados, con el detalle de respuestas
+ */
+export const listAdminMessages = async ( options?: RequestInit): Promise<AdminMessage[]> => {
+
+  return customFetch<AdminMessage[]>(getListAdminMessagesUrl(),
+  {
+    ...options,
+    method: 'GET'
+
+
+  }
+);}
+
+
+
+
+
+export const getListAdminMessagesQueryKey = () => {
+    return [
+    `/api/admin/messages`
+    ] as const;
+    }
+
+
+export const getListAdminMessagesQueryOptions = <TData = Awaited<ReturnType<typeof listAdminMessages>>, TError = ErrorType<unknown>>( options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof listAdminMessages>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getListAdminMessagesQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof listAdminMessages>>> = ({ signal }) => listAdminMessages({ signal, ...requestOptions });
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listAdminMessages>>, TError, TData> & { queryKey: QueryKey }
+}
+
+export type ListAdminMessagesQueryResult = NonNullable<Awaited<ReturnType<typeof listAdminMessages>>>
+export type ListAdminMessagesQueryError = ErrorType<unknown>
+
+
+/**
+ * @summary Mensajes enviados, con el detalle de respuestas
+ */
+
+export function useListAdminMessages<TData = Awaited<ReturnType<typeof listAdminMessages>>, TError = ErrorType<unknown>>(
+  options?: { query?:UseQueryOptions<Awaited<ReturnType<typeof listAdminMessages>>, TError, TData>, request?: SecondParameter<typeof customFetch>}
+
+ ):  UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+
+  const queryOptions = getListAdminMessagesQueryOptions(options)
+
+  const query = useQuery(queryOptions) as  UseQueryResult<TData, TError> & { queryKey: QueryKey };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+
+
+
+
+
+
+export const getSendMessageUrl = () => {
+
+
+
+
+  return `/api/admin/messages`
+}
+
+/**
+ * @summary Enviar un mensaje al pleno o a parte de él
+ */
+export const sendMessage = async (messageInput: MessageInput, options?: RequestInit): Promise<AdminMessage> => {
+
+  return customFetch<AdminMessage>(getSendMessageUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      messageInput,)
+  }
+);}
+
+
+
+
+export const getSendMessageMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof sendMessage>>, TError,{data: BodyType<MessageInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof sendMessage>>, TError,{data: BodyType<MessageInput>}, TContext> => {
+
+const mutationKey = ['sendMessage'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof sendMessage>>, {data: BodyType<MessageInput>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  sendMessage(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type SendMessageMutationResult = NonNullable<Awaited<ReturnType<typeof sendMessage>>>
+    export type SendMessageMutationBody = BodyType<MessageInput>
+    export type SendMessageMutationError = ErrorType<void>
+
+    /**
+ * @summary Enviar un mensaje al pleno o a parte de él
+ */
+export const useSendMessage = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof sendMessage>>, TError,{data: BodyType<MessageInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof sendMessage>>,
+        TError,
+        {data: BodyType<MessageInput>},
+        TContext
+      > => {
+      return useMutation(getSendMessageMutationOptions(options));
+    }
+
+export const getReviewMessageReplyUrl = (id: number,
+    userId: number,) => {
+
+
+
+
+  return `/api/admin/messages/${id}/recipients/${userId}`
+}
+
+/**
+ * Aceptar deja la etiqueta «Inasistencia Justificada» en el acta de la sesión asociada. No modifica la asistencia: la persona sigue contando como ausente para el quórum y no queda habilitada para votar.
+
+ * @summary Aceptar o rechazar una justificación
+ */
+export const reviewMessageReply = async (id: number,
+    userId: number,
+    replyReviewInput: ReplyReviewInput, options?: RequestInit): Promise<MessageRecipient> => {
+
+  return customFetch<MessageRecipient>(getReviewMessageReplyUrl(id,userId),
+  {
+    ...options,
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      replyReviewInput,)
+  }
+);}
+
+
+
+
+export const getReviewMessageReplyMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof reviewMessageReply>>, TError,{id: number;userId: number;data: BodyType<ReplyReviewInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof reviewMessageReply>>, TError,{id: number;userId: number;data: BodyType<ReplyReviewInput>}, TContext> => {
+
+const mutationKey = ['reviewMessageReply'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof reviewMessageReply>>, {id: number;userId: number;data: BodyType<ReplyReviewInput>}> = (props) => {
+          const {id,userId,data} = props ?? {};
+
+          return  reviewMessageReply(id,userId,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type ReviewMessageReplyMutationResult = NonNullable<Awaited<ReturnType<typeof reviewMessageReply>>>
+    export type ReviewMessageReplyMutationBody = BodyType<ReplyReviewInput>
+    export type ReviewMessageReplyMutationError = ErrorType<unknown>
+
+    /**
+ * @summary Aceptar o rechazar una justificación
+ */
+export const useReviewMessageReply = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof reviewMessageReply>>, TError,{id: number;userId: number;data: BodyType<ReplyReviewInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof reviewMessageReply>>,
+        TError,
+        {id: number;userId: number;data: BodyType<ReplyReviewInput>},
+        TContext
+      > => {
+      return useMutation(getReviewMessageReplyMutationOptions(options));
+    }
 

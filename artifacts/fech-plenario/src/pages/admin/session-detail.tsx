@@ -55,8 +55,9 @@ import { CurrentSpeaker } from "@/components/current-speaker";
 import { useSessionLive } from "@/hooks/use-session-live";
 import { formatMinutes } from "@/components/session-agenda";
 import { SessionResources } from "@/components/session-resources";
+import { QuorumPie } from "@/components/quorum-pie";
 import { useUpload } from "@workspace/object-storage-web";
-import { RefreshCw, MapPin, Clock, Pencil, Maximize2, ArrowUp, ArrowDown, ArrowLeft, Trash2, Plus, Wifi, LogOut, Hand, FileUp, Users, Scale, AlertTriangle, CheckCircle2, Download, Wrench } from "lucide-react";
+import { RefreshCw, MapPin, Clock, Pencil, Maximize2, ArrowUp, ArrowDown, ArrowLeft, Trash2, Plus, Wifi, LogOut, Hand, FileUp, Users, Scale, AlertTriangle, CheckCircle2, Download, Wrench, ChevronDown } from "lucide-react";
 
 // Fixed voting divisions. Value = users.group used for eligibility (empty
 // selection = pleno completo / open to all). Mesa Directiva is intentionally excluded.
@@ -69,6 +70,23 @@ const ESTAMENTO_OPTIONS: { value: string; label: string }[] = [
 // Fracción de la ponderación total necesaria para sesionar y votar.
 // REVISAR contra los Estatutos de la FECh antes de darlo por definitivo.
 const QUORUM_MINIMO = 0.5;
+
+// Botón para plegar un apartado. Va en la cabecera, junto al título, y no
+// sobre ella: varias cabeceras traen sus propios controles y hacerlas
+// clicables enteras haría que abrir una ronda plegara el apartado.
+function Plegar({ abierto, onClick, que }: { abierto: boolean; onClick: () => void; que: string }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-expanded={abierto}
+      aria-label={`${abierto ? "Plegar" : "Desplegar"} ${que}`}
+      className="flex h-7 w-7 shrink-0 items-center justify-center border border-gray-300 text-muted-foreground transition-colors hover:border-gray-800 hover:text-foreground"
+    >
+      <ChevronDown className={`h-4 w-4 transition-transform ${abierto ? "" : "-rotate-90"}`} />
+    </button>
+  );
+}
 
 function toDatetimeLocal(iso: string | null | undefined): string {
   if (!iso) return "";
@@ -132,6 +150,13 @@ export default function AdminSessionDetail() {
   // Al abrir hay que declarar si la apertura es oficial: solo esas registran
   // horario y suman al total de horas de pleno.
   const [openConfirmOpen, setOpenConfirmOpen] = useState(false);
+  // Quórum a pantalla completa, para proyectar en la sala igual que el QR.
+  const [quorumOpen, setQuorumOpen] = useState(false);
+  // Cada apartado se puede plegar para concentrarse en lo que toca ahora.
+  const [abierto, setAbierto] = useState<Record<string, boolean>>({
+    asistencia: true, tabla: true, palabra: true, mociones: true,
+  });
+  const alternar = (k: string) => setAbierto((p) => ({ ...p, [k]: !p[k] }));
   const [attSearch, setAttSearch] = useState("");
   const [attSort, setAttSort] = useState<"nombre" | "grupo">("nombre");
 
@@ -396,10 +421,11 @@ export default function AdminSessionDetail() {
         {/* Lado izquierdo: Control de Asistencia y Acciones */}
         <div className="space-y-6">
           <Card className="rounded-none">
-            <CardHeader>
+            <CardHeader className="flex-row items-center justify-between space-y-0">
               <CardTitle>Asistencia</CardTitle>
+              <Plegar abierto={abierto.asistencia} onClick={() => alternar("asistencia")} que="Asistencia" />
             </CardHeader>
-            <CardContent>
+            {abierto.asistencia && <CardContent>
               <div className="flex flex-col items-center mb-6">
                 <button
                   type="button"
@@ -424,27 +450,21 @@ export default function AdminSessionDetail() {
               {(() => {
                 const presente = attendance?.presentWeight ?? 0;
                 const total = attendance?.totalWeight ?? 0;
-                const pct = total > 0 ? (presente / total) * 100 : 0;
-                const minimo = total * QUORUM_MINIMO;
-                const hayQuorum = presente >= minimo && total > 0;
                 return (
                   <div className="border-t pt-4">
-                    <div className={`mb-3 flex items-start gap-2.5 border-l-4 p-3 ${
-                      hayQuorum ? "border-l-lime-600 bg-lime-50/60" : "border-l-red-600 bg-red-50/60"}`}>
-                      {hayQuorum
-                        ? <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-lime-700" />
-                        : <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-red-700" />}
-                      <div>
-                        <div className={`text-sm font-bold ${hayQuorum ? "text-lime-800" : "text-red-800"}`}>
-                          {hayQuorum ? "Quórum alcanzado" : "Sin quórum"}
-                        </div>
-                        <p className="mt-0.5 text-xs leading-snug text-muted-foreground">
-                          Mínimo {(QUORUM_MINIMO * 100).toFixed(0)}% = {minimo.toFixed(2)}.{" "}
-                          {hayQuorum ? "El pleno puede votar válidamente." : "No se pueden abrir votaciones."}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="space-y-2 text-sm">
+                    <button
+                      type="button"
+                      onClick={() => setQuorumOpen(true)}
+                      className="w-full transition-transform hover:scale-[1.02] focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                      aria-label="Ampliar el quórum a pantalla completa"
+                    >
+                      <QuorumPie presente={presente} total={total} minimo={QUORUM_MINIMO} size={200} />
+                    </button>
+                    <p className="mt-2 text-center text-[11px] text-muted-foreground">
+                      Toca el gráfico para proyectarlo
+                    </p>
+
+                    <div className="mt-4 space-y-2 border-t pt-3 text-sm">
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Presentes</span>
                         <span className="font-semibold tabular-nums">{attendance?.present.length || 0} personas</span>
@@ -457,13 +477,12 @@ export default function AdminSessionDetail() {
                       )}
                       <div className="flex justify-between">
                         <span className="flex items-center gap-1.5 text-muted-foreground">
-                          <Scale className="h-3.5 w-3.5" /> Ponderación presente
+                          <Scale className="h-3.5 w-3.5" /> Ponderación
                         </span>
                         <span className="font-semibold tabular-nums">
-                          {presente.toFixed(2)} / {total.toFixed(2)} · {pct.toFixed(1)}%
+                          {presente.toFixed(2)} / {total.toFixed(2)}
                         </span>
                       </div>
-                      <Progress value={pct} className="mt-2 h-2" />
                     </div>
                   </div>
                 );
@@ -479,18 +498,21 @@ export default function AdminSessionDetail() {
                 <LiveRoster present={attendance?.present ?? []} checkedOut={attendance?.checkedOut ?? []} />
               </div>
 
-            </CardContent>
+            </CardContent>}
           </Card>
         </div>
 
         {/* Lado derecho: Tabla y Mociones propuestas */}
         <div className="lg:col-span-2 space-y-6">
           <Card className="rounded-none">
-            <CardHeader>
-              <CardTitle>Tabla de la Sesión</CardTitle>
-              <CardDescription>Puntos a tratar, en orden, con tiempo estimado.</CardDescription>
+            <CardHeader className="flex-row items-start justify-between space-y-0">
+              <div className="space-y-1.5">
+                <CardTitle>Tabla de la Sesión</CardTitle>
+                <CardDescription>Puntos a tratar, en orden, con tiempo estimado.</CardDescription>
+              </div>
+              <Plegar abierto={abierto.tabla} onClick={() => alternar("tabla")} que="la Tabla de la Sesión" />
             </CardHeader>
-            <CardContent>
+            {abierto.tabla && <CardContent>
               <form onSubmit={handleAddPoint} className="flex flex-col sm:flex-row gap-2 mb-6">
                 <Input value={newPointTitle} onChange={e => setNewPointTitle(e.target.value)} placeholder="Título del punto" className="flex-1" />
                 <div className="flex gap-2">
@@ -531,7 +553,7 @@ export default function AdminSessionDetail() {
                   })}
                 </ol>
               )}
-            </CardContent>
+            </CardContent>}
           </Card>
 
           <Card className="rounded-none">
@@ -542,6 +564,7 @@ export default function AdminSessionDetail() {
                   <CardDescription>Gestiona la cola de oradores, temporizadores y palabras colectivas.</CardDescription>
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
+                  <Plegar abierto={abierto.palabra} onClick={() => alternar("palabra")} que="el Sistema de Palabra" />
                   {session?.speakingRoundOpen ? (
                     <>
                       <Badge variant="default">
@@ -610,7 +633,7 @@ export default function AdminSessionDetail() {
                 </div>
               </div>
             </CardHeader>
-            <CardContent>
+            {abierto.palabra && <CardContent>
               <SpeakingPanel
                 sessionId={id}
                 agenda={agenda ?? []}
@@ -620,14 +643,15 @@ export default function AdminSessionDetail() {
                 speakingRoundOpen={session?.speakingRoundOpen ?? false}
                 speakingRoundAgendaPointId={session?.speakingRoundAgendaPointId ?? null}
               />
-            </CardContent>
+            </CardContent>}
           </Card>
 
           <Card className="rounded-none">
-            <CardHeader>
+            <CardHeader className="flex-row items-center justify-between space-y-0">
               <CardTitle>Mociones propuestas</CardTitle>
+              <Plegar abierto={abierto.mociones} onClick={() => alternar("mociones")} que="Mociones propuestas" />
             </CardHeader>
-            <CardContent>
+            {abierto.mociones && <CardContent>
               <form onSubmit={(e) => {
                 e.preventDefault();
                 if (!newTopicTitle) return;
@@ -885,7 +909,7 @@ export default function AdminSessionDetail() {
                 ))}
                 {topics?.length === 0 && <div className="text-center py-8 text-muted-foreground border border-dashed">No hay mociones propuestas en esta sesión.</div>}
               </div>
-            </CardContent>
+            </CardContent>}
           </Card>
         </div>
       </div>
@@ -974,6 +998,30 @@ export default function AdminSessionDetail() {
           </div>
         </div>
       </div>
+
+      <Dialog open={quorumOpen} onOpenChange={setQuorumOpen}>
+        <DialogContent className="max-w-[95vw] sm:max-w-3xl">
+          <DialogHeader>
+            <DialogTitle className="text-center text-2xl">{session.title}</DialogTitle>
+          </DialogHeader>
+          <div className="flex flex-col items-center gap-4 py-4">
+            <QuorumPie
+              presente={attendance?.presentWeight ?? 0}
+              total={attendance?.totalWeight ?? 0}
+              minimo={QUORUM_MINIMO}
+              size={Math.min(520, typeof window !== "undefined" ? window.innerWidth * 0.7 : 520)}
+              grande
+            />
+            <div className="flex flex-wrap justify-center gap-x-8 gap-y-2 text-lg">
+              <span><b className="tabular-nums">{attendance?.present.length ?? 0}</b> presentes</span>
+              {(attendance?.checkedOut.length ?? 0) > 0 && (
+                <span><b className="tabular-nums">{attendance?.checkedOut.length}</b> retirades</span>
+              )}
+              <span><b className="tabular-nums">{attendance?.absent.length ?? 0}</b> ausentes</span>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <Dialog open={qrOpen} onOpenChange={setQrOpen}>
         <DialogContent className="max-w-[95vw] sm:max-w-2xl">
