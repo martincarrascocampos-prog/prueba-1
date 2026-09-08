@@ -1,0 +1,14 @@
+uploads = []
+generated = []
+
+[[outputs]]
+id = "oxVQfVvunn93JFhAvoJJU"
+uri = "file://docs/minuta-integrantes-pleno.md"
+type = "text"
+title = "Minuta de uso — Integrantes del Pleno"
+
+[[outputs]]
+id = "AtiUbjoIs2WCIlEfayYH1"
+uri = "file://docs/minuta-administrador-fech.md"
+type = "text"
+title = "Minuta de uso — Administrador FECh"

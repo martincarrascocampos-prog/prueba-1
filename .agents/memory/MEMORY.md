@@ -1,0 +1,16 @@
+- [Session persistence](session-persistence.md) — explicit req.session.save() required after login; session table must be created manually; trust proxy always on
+- [bcrypt vs bcryptjs](bcryptjs.md) — use bcryptjs (pure JS) not bcrypt to avoid native module compilation failures in Replit
+- [Export hooks pattern](export-hooks.md) — export hooks are queries not mutations; call raw functions directly on button click
+- [Weighted results computation](results-computation.md) — one shared helper computeTopicResult(); /topics/:id/results and /history/* must all use it (no drift)
+- [Member management / usernames](member-management.md) — store usernames case-preserving; login is case-sensitive; uniqueness case-insensitive + catch 23505 -> 409
+- [Object storage uploads](object-storage-uploads.md) — enforce file-type restrictions server-side in presign endpoint; copied web lib needs composite tsconfig
+- [api-server bundled restart](api-server-bundled-restart.md) — api-server dev is esbuild bundle (no HMR); restart its workflow after editing routes or new endpoints 404
+- [Socket.io realtime](socketio-realtime.md) — sockets signal refetch only (not data); /api/socket.io, session-auth, room session:<id>; fan-out throttle + jittered invalidation + reconnect catch-up
+- [Test setup](test-setup.md) — vitest configured per-artifact (no root runner); node env for api-server, jsdom for fech-plenario; `test` validation runs both
+- [Estamentos fixed divisions](estamentos-fixed-divisions.md) — per-votación eligibility is a fixed whitelist (CEE/Consejeros FECh/COSEFECH), no CRUD; Mesa Directiva excluded
+- [Candidato voting modes](candidato-voting-modes.md) — candidato defaults to single-pick; "multiple" is approval-style (max 1/candidate, unused→abstención, server-derived)
+- [Public unauthed endpoints](public-unauthed-endpoints.md) — pre-login "/" portal; tallies only for pasado; retired-early is admin-only; session-scoped rosters (new members never retro-affect old sessions)
+- [Account deprovisioning](account-deprovisioning.md) — deleting a user must purge their session rows + disconnect sockets; auth guards don't check user existence
+- [Session weight snapshots](session-weight-snapshots.md) — all session denominators/exports must overlay frozen session_weights, never current user weights; legacy sessions self-heal via startup backfill
+- [Justified absence](justified-absence.md) — label-only overlay table, never an attendance state; every attend transition must clear it; table self-creates at boot
+- [Alt weight & deactivation](alt-weight-and-deactivation.md) — weightSource="alt" only persists when weighted+estamento-restricted; deactivation drops weight from tallies instantly
