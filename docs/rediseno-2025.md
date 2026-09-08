@@ -262,9 +262,45 @@ resultados y **matriz de votos** (integrantes en filas, mociones en columnas).
 | Ver asistencias | Historial individual por integrante |
 | `UnidadesManager` | **Sistema de unidades académicas**: crear y eliminar facultades |
 
+**Sistema de palabra** (`speaking-panel.tsx`, 555 líneas, más
+`current-speaker.tsx` y `speaking-timer.tsx`) — es el subsistema más complejo
+del panel y el más fácil de empobrecer sin darse cuenta:
+
+*Quién puede hablar.* Dos categorías, y la distinción importa:
+
+| Categoría | Quién |
+|---|---|
+| `pleno` | Integrante del Pleno (tiene cuenta en el sistema) |
+| `base` | **Estudiante de Base** (no tiene cuenta; se ingresa por nombre) |
+
+*Tres formas de entrar a la cola:*
+
+| Forma | Quién la usa | Detalle |
+|---|---|---|
+| Autopedido | El propio integrante | Elige categoría y punto de tabla. Requiere que la ronda esté abierta (`speakingRoundOpen`) |
+| Individual — modo integrante | Administración | Selecciona de la nómina con buscador (`Command`), con segundos configurables |
+| Individual — modo nombre libre | Administración | Escribe un nombre cualquiera. **Es la vía para estudiantes de base sin cuenta** |
+| **Palabra colectiva** | Administración | Por **Unidad Académica**: crea un turno colectivo con todes les consejeres de esa unidad. Falla si la unidad no tiene consejeres |
+
+*Controles sobre cada turno* — siete acciones distintas, no dos:
+
+| Acción | Efecto |
+|---|---|
+| `grant` | Concede la palabra |
+| `start` | Inicia el cronómetro |
+| `pause` | **Pausa** el cronómetro |
+| `finish` | Finaliza la intervención |
+| `adjustSeconds ±30` | **Suma o resta 30 segundos** al tiempo asignado |
+| `move ±1` | **Reordena** el turno en la cola (subir / bajar) |
+| `remove` | Quita el turno de la cola |
+
+*Además:* cada turno se asocia a un punto de la tabla (o queda «Sin punto
+asignado»), la cola **se agrupa por punto de tabla**, y cada turno muestra su
+estado (`en_cola` · `hablando` · `finalizada`).
+
 **Otras herramientas de sesión:** código de sesión con QR ampliable a pantalla
-completa, tabla (agregar y eliminar puntos), sistema de palabra, enlace de la
-sesión, subir y quitar acta, y **edición de votaciones ya emitidas**
+completa, tabla (agregar y eliminar puntos), enlace de la sesión, subir y
+quitar acta, y **edición de votaciones ya emitidas**
 (`edit-votes-dialog.tsx`).
 
 ### 4.0.1 Alcance del rediseño en administración
