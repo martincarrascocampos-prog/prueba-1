@@ -1,0 +1,39 @@
+Actúa como un Desarrollador Full-Stack experto y Especialista en UX/UI. Te voy a proporcionar los archivos de una página web que ya está completamente creada, funcional y alojada en Replit. Es un sistema de gestión de sesiones (tipo Pleno o consejo universitario).
+
+Tu tarea es intervenir esta página web ya creada para integrar de forma orgánica un nuevo Módulo de Asistencia, una actualización a la Tabla de la Sesión y crear una nueva ventana dedicada a un Sistema de Palabra en tiempo real.
+
+Por favor, analiza la estructura de la página adjunta y aplícale los siguientes cambios específicos:
+
+1. Tabla de la Sesión (Orden del Día) y Tiempos
+
+División por puntos: La tabla de la sesión debe estructurarse "punto por punto".
+
+Tiempo estimado: Añade la funcionalidad para asignar "horas/minutos estimados por punto" al crear la tabla. Esta estimación de tiempo debe ser visible para todas las personas en la pantalla de la página web una vez que la sesión inicie.
+
+2. Módulo de Asistencia y Quórum Dinámico
+
+Modalidad de ingreso: Al registrar asistencia en la página, la persona debe poder indicar si participa de forma "Online" o "Presencial".
+
+Nómina en tiempo real: En cada sesión se debe poder abrir una "nómina real" con la lista de asistentes en vivo. Esta lista debe mostrar la hora exacta de ingreso de cada uno (timestamp).
+
+Edición de Administrador: El rol Admin debe poder editar manualmente la asistencia de cualquier usuario directamente en la interfaz por posibles errores.
+
+Retiro anticipado (Check-out): Añade la opción de "Retirarse de la sesión" durante su transcurso. Al activarse, la nómina real se debe ver actualizada inmediatamente y se debe descontar a la persona de forma dinámica para actualizar las votaciones y el quórum.
+
+3. Nueva Ventana: Sistema de Palabra
+
+Anclaje por puntos: Crea una nueva ventana dentro de la sesión llamada "Sistema de Palabra". Aquí se debe poder crear una lista de palabras asignadas a los miembros, estructurada específicamente según cada punto de la tabla.
+
+Categoría de Orador: Al pedir la palabra, el sistema debe dar la opción de identificar si el miembro es "Integrante del Pleno" o "Estudiante de Base".
+
+Temporizador Individual: Las palabras individuales deben tener un temporizador con base de 1 minuto. Sin embargo, debe existir la opción de que el Admin cambie el minuto del temporizador a cualquier otro tiempo.
+
+Palabras Colectivas: Añade una funcionalidad para juntar "palabras colectivas" a un grupo de consejeros pertenecientes a una misma "Unidad Académica" (sumando los minutos de varias personas en un solo temporizador continuo).
+
+4. UI/UX y Notificaciones en Vivo
+
+Sincronización Global: Quiero que esta dinámica se manifieste instantáneamente en los usuarios personales, la tabla de sesión y la lista de asistencias (implementando WebSockets/Socket.io en la arquitectura de Replit).
+
+Vista Global de Sesión: Se debe generar una vista donde todos los asistentes puedan ver quién está hablando en ese momento en cada sesión, acompañado del temporizador en cuenta regresiva.
+
+Vista Personal del Orador: En la cuenta específica de la persona que tiene el turno de hablar, debe aparecer un mensaje o banner destacado que diga: "Tienes la palabra".

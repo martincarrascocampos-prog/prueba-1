@@ -1,0 +1,42 @@
+Actúa como un Desarrollador Full-Stack experto y Especialista en UX/UI. Te voy a proporcionar los archivos de una página web que ya está completamente creada, funcional y alojada en Replit. Es un sistema de gestión de sesiones (tipo Pleno o consejo universitario).
+
+Tu tarea es intervenir esta página web ya creada para integrar de forma orgánica un nuevo Módulo de Asistencia, una actualización a la Tabla de la Sesión y un Sistema de Palabra en tiempo real.
+
+Por favor, analiza la estructura de la página adjunta y aplícale los siguientes cambios específicos:
+
+1. Tabla de la Sesión (Orden del Día) y Tiempos
+
+División por puntos: La tabla de la sesión debe estructurarse "punto por punto".
+
+Tiempo estimado: Añade la funcionalidad para asignar "horas/minutos estimados por punto" al crear la tabla. Esta estimación de tiempo debe ser visible para todas las personas en la pantalla de la página web una vez que la sesión inicie.
+
+Anclaje de intervenciones: El sistema de palabras que se describe a continuación debe estar anclado a cada punto específico de esta tabla.
+
+2. Módulo de Asistencia y Quórum Dinámico
+
+Modalidad de ingreso: Al registrar asistencia en la página, el usuario debe indicar si participa de forma "Online" o "Presencial".
+
+Nómina en tiempo real: Integra un panel desplegable o modal con la lista de asistentes en vivo. Debe mostrar la hora exacta de ingreso de cada uno (timestamp).
+
+Edición de Administrador: El rol Admin debe poder modificar manualmente el estado o la hora de asistencia de cualquier usuario directamente en la interfaz para corregir errores.
+
+Retiro anticipado (Check-out): Añade un botón de "Retirarse de la sesión" para el usuario. Al activarse, actualiza la nómina en la página en vivo y descuenta dinámicamente a la persona del padrón de votaciones activas para ajustar el quórum exacto.
+
+3. Módulo: Sistema de Palabra (Gestión de Intervenciones)
+
+Categoría de Orador: Al pedir la palabra, la página debe diferenciar e identificar visualmente si quien habla es "Integrante del Pleno" o "Estudiante de Base".
+
+Temporizador Individual: Integra un temporizador en cuenta regresiva con base de 1 minuto por intervención. El Admin/Mesa debe tener un input en la interfaz para editar este tiempo asignado a cualquier otra cantidad de minutos sobre la marcha.
+
+Palabras Colectivas: Añade una funcionalidad para agrupar o ceder el tiempo entre un grupo de consejeros de una misma "Unidad Académica" (es decir, sumar los minutos de varias personas en un solo temporizador continuo).
+
+4. UI/UX y Notificaciones en Vivo
+
+Sincronización Global: Asegúrate de que la tabla, los tiempos estimados, la nómina de asistencia y los paneles de usuario en la página web reflejen los cambios instantáneamente para todos (implementando WebSockets/Socket.io en la arquitectura de Replit).
+
+Vista Global de Sesión: Todos los usuarios deben ver en la página web quién está hablando actualmente, acompañado del temporizador dinámico en cuenta regresiva.
+
+Vista Personal del Orador: Cuando sea el turno exacto de un usuario, su vista personal de la página debe mostrar un banner destacado que diga: "Tienes la palabra".
+
+Reglas de entrega estricta:
+No me entregues un plan teórico. Entrégame las modificaciones exactas que debo hacer en los archivos de mi página web en Replit. Indícame claramente qué líneas de mis archivos actuales (HTML, CSS, JS del cliente, servidor) debo reemplazar, eliminar o agregar para que la página web funcione con estas nuevas características. Incluye las instrucciones para instalar las dependencias de tiempo real en el entorno de Replit.

@@ -1,0 +1,63 @@
+Prompt para reconstruir y publicar "FECh Plenario" desde cero
+Pega este texto completo como primer mensaje en un proyecto nuevo de Replit. Adjunta también el archivo fech_miembros_seed.csv (la lista de los 93 miembros con sus pesos). Todo el texto de la interfaz debe estar en español de Chile.
+
+Quiero que construyas una aplicación web llamada FECh Plenario: un sistema de gestión de sesiones plenarias y votación ponderada para la Federación de Estudiantes de Chile (FECh). Es una sola app web servida por un backend.
+
+Stack técnico
+Backend: Node.js + Express con PostgreSQL (usa la base de datos PostgreSQL de Replit).
+Frontend: páginas estáticas HTML/CSS/JavaScript (sin framework pesado). Exportación a Excel con SheetJS (XLSX) desde el navegador vía CDN.
+Despliegue final: Autoscale (la app duerme cuando no se usa y despierta en el primer acceso).
+Idioma
+Toda la interfaz y los textos visibles deben estar en español (Chile).
+Autenticación
+Admin: usuario FECH, contraseña 1906. Acceso al panel de administración.
+Miembros: 93 personas precargadas (ver CSV adjunto). Contraseña inicial de cada miembro: 1234.
+Las sesiones de login deben guardarse en PostgreSQL (usa connect-pg-simple sobre el mismo pool), NO en memoria — porque en Autoscale la memoria se pierde al dormir/escalar y se cerrarían todas las sesiones. Crea la tabla de sesiones en la inicialización del esquema.
+Exige una variable de entorno SESSION_SECRET en producción. Cookie segura en producción y trust proxy activado (la app corre detrás del proxy de Replit).
+Datos precargados (seed)
+Carga los 93 miembros desde el CSV adjunto (fech_miembros_seed.csv). Columnas: username, display_name, group, faculty, student_count, voting_weight.
+
+La Mesa Directiva FECh tiene peso de voto 15.0.
+Cada Consejero/a FECh tiene peso 0.75.
+Los pesos de voto deben ser editables por el admin desde el panel.
+Modelo de datos (PostgreSQL)
+usuarios: id, username, display_name, group, faculty, password (hash bcrypt), voting_weight, rol (admin/miembro).
+sesiones plenarias: id, título, estado (abierta/cerrada), código de sesión para asistencia manual, fecha.
+asistencia: id, session_id, user_id, timestamp (única por sesión+usuario).
+temas de votación: id, session_id, título, estado (abierto/cerrado).
+votos: id, vote_topic_id, user_id, opción (favor/contra/abstención), weight_at_vote (el peso del votante congelado al momento de votar), timestamp.
+tokens de reseteo de contraseña.
+Reglas de votación ponderada (MUY IMPORTANTE)
+Cada voto guarda weight_at_vote = el peso del miembro al momento de emitirlo (congelado). Así, aunque luego el admin edite pesos, los votos ya emitidos conservan su peso original.
+Para miembros que no votaron (sinVoto) o estuvieron ausentes, se usa su voting_weight actual.
+Denominador del cálculo = suma del peso efectivo de cada miembro, de modo que favor + contra + abstención + sinVoto + ausente = 100% siempre.
+Aprobado si: peso a favor > peso en contra.
+La emisión del voto debe ser atómica: un solo statement SQL que verifique presencia (asistencia marcada) + que el tema esté abierto + evite voto duplicado, todo en una sola operación (INSERT ... SELECT ... ON CONFLICT DO NOTHING RETURNING id). Debe ser seguro bajo muchos votos concurrentes.
+Panel de Admin
+Crear, abrir y cerrar sesiones plenarias.
+Asistencia por código QR y por código de sesión manual.
+Votación ponderada con porcentajes en vivo.
+Reabrir votaciones cerradas.
+Eliminar sesiones y votaciones.
+Limpiar todo ("clear-all"): borra sesiones/votos/asistencia pero conserva los 93 miembros y sus pesos.
+Editar el peso de voto por miembro.
+Exportar a Excel: asistencia, resultados y matriz.
+Refresco automático vía AJAX + polling cada 15 segundos.
+Panel de Miembro
+Marcar asistencia mediante escaneo de QR o ingresando el código de sesión.
+Emitir voto ponderado (favor/contra/abstención).
+Ver su historial personal de votos.
+Rendimiento y concurrencia (REQUISITO)
+La aplicación debe soportar al menos 100 ingresos (usuarios) en paralelo sin que se vea afectado su rendimiento — pensado para días de plenario donde decenas/cientos de miembros entran, marcan asistencia y votan casi al mismo tiempo.
+Usa un único pool de conexiones a PostgreSQL compartido por toda la app (no abras una conexión por request), para mantenerte dentro de los límites de conexiones de la base.
+La emisión del voto debe ser atómica (un solo statement SQL, ver sección de votación) para que decenas de votos simultáneos sobre el mismo tema no produzcan duplicados ni condiciones de carrera.
+Mantén las consultas indexadas (asistencia por sesión+usuario, votos por tema+usuario) para que el conteo en vivo siga siendo rápido bajo carga.
+Las sesiones de login en PostgreSQL (no en memoria) permiten que la app escale en Autoscale sin cerrar sesiones.
+Verifica el comportamiento con una prueba de carga simulando ~100+ accesos/votos concurrentes antes de publicar.
+Rutas y navegación
+La raíz / redirige a la página de login.
+Páginas separadas para login, panel admin y panel miembro.
+Un endpoint de health check (ej. /api/healthz) para el chequeo de salud del despliegue.
+Al terminar
+Verifica que login, asistencia (QR y código), votación ponderada y exportación a Excel funcionen.
+Publica en Autoscale, visibilidad Pública, con un nombre de URL como fech-plenario.

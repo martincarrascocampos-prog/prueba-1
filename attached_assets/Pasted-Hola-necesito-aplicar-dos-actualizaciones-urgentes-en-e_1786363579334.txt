@@ -1,0 +1,27 @@
+Hola, necesito aplicar dos actualizaciones urgentes en el código del Sistema Plenario. Tuvimos un problema grave de sobrecarga en el servidor (consumimos más de 23 millones de compute units) durante el último Pleno con apenas 120 personas conectadas, por lo que es urgente optimizar el código e implementar una mejora en el registro de asistencia.
+
+Por favor, implementa los siguientes cambios:
+
+1. Optimización del consumo y corrección de loops (Prioridad Máxima)
+
+Revisa exhaustivamente el código del frontend (especialmente los hooks de estado si estás usando React) y corrige cualquier bucle infinito (infinite loop) que esté haciendo llamadas descontroladas a la base de datos o al servidor.
+
+Cambia el sistema de actualización en tiempo real de la "Nómina en Vivo", "Sistema de Palabra" y "Mociones". Si se está utilizando un short polling (setInterval) muy agresivo, debes cambiarlo a WebSockets (por ejemplo, con Socket.io) para que el servidor solo empuje la información cuando haya un evento nuevo (alguien pide la palabra, alguien marca asistencia o alguien vota).
+
+Si implementar WebSockets es muy complejo ahora, aumenta el intervalo del polling a 10 segundos como mínimo. Además, asegúrate de que el servidor no recalcule matemáticamente el quórum o las ponderaciones de forma constante si la base de datos no ha sufrido modificaciones.
+
+2. Nueva figura: Inasistencia Justificada (Uso exclusivo de Administrador)
+
+Lógica de interfaz: "Inasistencia Justificada" NO debe ser una opción visible para el usuario común en el módulo de "Marcar Asistencia". Debe ser una opción exclusiva del Panel de Administrador, disponible únicamente cuando el admin edite manualmente el estado de asistencia de un integrante.
+
+Regla de negocio (Backend): Para efectos operativos, la "Inasistencia Justificada" debe considerarse a todo nivel como una inasistencia normal. Es decir, el usuario NO suma para el quórum de la sesión y NO queda habilitado para emitir votos en las mociones.
+
+Visibilidad (Frontend): Aunque funcionalmente es una inasistencia, el sistema debe registrarla de forma distinta en la base de datos para mostrar la etiqueta específica de "Inasistencia Justificada". Esta etiqueta debe reflejarse visualmente en:
+
+El Panel Público (en el detalle de la sesión).
+
+La sección "Mi Historial" del usuario afectado.
+
+El archivo de exportación Excel del registro de asistencia.
+
+Por favor, aplícalo y confírmame para realizar pruebas.
