@@ -1,19 +1,26 @@
-import { defineConfig, InputTransformerFn } from "orval";
 import path from "path";
+
+// Este archivo no importa nada de "orval" a propósito. El cortafuegos de
+// paquetes de Replit bloquea la descarga de orval, y tenerlo declarado como
+// dependencia hacía fallar `pnpm install` entero — es decir, impedía levantar
+// la aplicación por culpa de una herramienta que sólo se usa para generar
+// código. El código generado está versionado, así que orval se invoca por
+// npx sólo cuando hace falta (ver el script "codegen"), y aquí exportamos un
+// objeto plano en vez de usar su helper `defineConfig`, que sólo aporta tipos.
 
 const root = path.resolve(__dirname, "..", "..");
 const apiClientReactSrc = path.resolve(root, "lib", "api-client-react", "src");
 const apiZodSrc = path.resolve(root, "lib", "api-zod", "src");
 
 // Our exports make assumptions about the title of the API being "Api" (i.e. generated output is `api.ts`).
-const titleTransformer: InputTransformerFn = (config) => {
+const titleTransformer = (config: { info?: { title?: string } }) => {
   config.info ??= {};
   config.info.title = "Api";
 
   return config;
 };
 
-export default defineConfig({
+export default {
   "api-client-react": {
     input: {
       target: "./openapi.yaml",
@@ -69,4 +76,4 @@ export default defineConfig({
       },
     },
   },
-});
+};
