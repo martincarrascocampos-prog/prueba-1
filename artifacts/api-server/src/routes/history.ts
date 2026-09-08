@@ -1,6 +1,6 @@
 import { Router, type IRouter } from "express";
 import { Readable } from "stream";
-import { eq, sql } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 import {
   db,
   plenariasTable,
@@ -545,6 +545,20 @@ router.get("/public/sessions/:id/acta", async (req, res): Promise<void> => {
     req.log.error({ err: error }, "Error serving public acta");
     res.status(500).json({ error: "Error al servir el acta" });
   }
+});
+
+// Public transparency: list of all active members (name, group, faculty only — no credentials)
+router.get("/public/members", async (_req, res): Promise<void> => {
+  const members = await db
+    .select({
+      name: usersTable.displayName,
+      group: usersTable.group,
+      faculty: usersTable.faculty,
+    })
+    .from(usersTable)
+    .where(and(eq(usersTable.rol, "miembro"), eq(usersTable.active, true)))
+    .orderBy(usersTable.displayName);
+  res.json(members);
 });
 
 export default router;
