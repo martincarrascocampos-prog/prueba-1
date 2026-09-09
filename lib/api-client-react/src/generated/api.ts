@@ -1791,6 +1791,78 @@ export const useMarkAttendance = <TError = ErrorType<void>,
       return useMutation(getMarkAttendanceMutationOptions(options));
     }
 
+export const getRejoinAttendanceUrl = (id: number,) => {
+
+
+
+
+  return `/api/sessions/${id}/attendance/rejoin`
+}
+
+/**
+ * Inverso del auto check-out. Solo funciona mientras la sesión sigue abierta: reingresar a una cerrada devolvería el peso de la persona a resultados ya fijados.
+
+ * @summary Reingresar a la sesión tras haberse retirado
+ */
+export const rejoinAttendance = async (id: number, options?: RequestInit): Promise<void> => {
+
+  return customFetch<void>(getRejoinAttendanceUrl(id),
+  {
+    ...options,
+    method: 'POST'
+
+
+  }
+);}
+
+
+
+
+export const getRejoinAttendanceMutationOptions = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof rejoinAttendance>>, TError,{id: number}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof rejoinAttendance>>, TError,{id: number}, TContext> => {
+
+const mutationKey = ['rejoinAttendance'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof rejoinAttendance>>, {id: number}> = (props) => {
+          const {id} = props ?? {};
+
+          return  rejoinAttendance(id,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type RejoinAttendanceMutationResult = NonNullable<Awaited<ReturnType<typeof rejoinAttendance>>>
+
+    export type RejoinAttendanceMutationError = ErrorType<void>
+
+    /**
+ * @summary Reingresar a la sesión tras haberse retirado
+ */
+export const useRejoinAttendance = <TError = ErrorType<void>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof rejoinAttendance>>, TError,{id: number}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof rejoinAttendance>>,
+        TError,
+        {id: number},
+        TContext
+      > => {
+      return useMutation(getRejoinAttendanceMutationOptions(options));
+    }
+
 export const getCheckOutAttendanceUrl = (id: number,) => {
 
 

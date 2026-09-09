@@ -248,6 +248,60 @@ router.post("/sessions/:id/attendance/checkout", requireAuth, async (req, res): 
   res.json({ ok: true, message: "Te has retirado de la sesión" });
 });
 
+// Quien se retiró puede volver a entrar por su cuenta. Es el inverso del
+// endpoint anterior, y comparte su misma condición: solo mientras la sesión
+// siga abierta. Reingresar a una sesión cerrada devolvería el peso de esa
+// persona a resultados que ya se fijaron.
+router.post("/sessions/:id/attendance/rejoin", requireAuth, async (req, res): Promise<void> => {
+  const raw = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
+  const sessionId = parseInt(raw, 10);
+  if (isNaN(sessionId)) {
+    res.status(400).json({ error: "ID inválido" });
+    return;
+  }
+
+  const userId = req.session.userId!;
+
+  const [session] = await db
+    .select()
+    .from(plenariasTable)
+    .where(eq(plenariasTable.id, sessionId));
+
+  if (!session) {
+    res.status(404).json({ error: "Sesión no encontrada" });
+    return;
+  }
+
+  if (session.status !== "abierta") {
+    res.status(400).json({ error: "La sesión no está abierta" });
+    return;
+  }
+
+  const [updated] = await db
+    .update(attendanceTable)
+    .set({ checkedOutAt: null })
+    .where(
+      and(
+        eq(attendanceTable.sessionId, sessionId),
+        eq(attendanceTable.userId, userId),
+        isNotNull(attendanceTable.checkedOutAt),
+      ),
+    )
+    .returning({ id: attendanceTable.id });
+
+  if (!updated) {
+    res.status(400).json({ error: "No estás retirade de esta sesión" });
+    return;
+  }
+
+  emitSessionEvent(sessionId, "attendance:changed");
+  // Al retirarse quedó fuera de la sala de eventos, así que la difusión
+  // anterior no le llega: hay que avisarle directamente para que vuelva a
+  // entrar y se actualice al instante.
+  emitUserEvent(userId, "access:changed");
+  res.json({ ok: true, message: "Has reingresado a la sesión" });
+});
+
 // Admin retires a member from the session (check-out, keeps their cast votes).
 // Distinct from PATCH present:false, which deletes the row entirely (absent).
 router.post(

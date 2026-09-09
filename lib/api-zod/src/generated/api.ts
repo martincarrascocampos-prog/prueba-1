@@ -420,6 +420,16 @@ export const MarkAttendanceBody = zod.object({
 
 
 /**
+ * Inverso del auto check-out. Solo funciona mientras la sesión sigue abierta: reingresar a una cerrada devolvería el peso de la persona a resultados ya fijados.
+
+ * @summary Reingresar a la sesión tras haberse retirado
+ */
+export const RejoinAttendanceParams = zod.object({
+  "id": zod.coerce.number()
+})
+
+
+/**
  * @summary Retirarse de la sesión (auto check-out)
  */
 export const CheckOutAttendanceParams = zod.object({

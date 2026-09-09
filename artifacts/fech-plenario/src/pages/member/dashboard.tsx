@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { useGetMe, useListSessions, useMarkAttendance, useListTopics, useListAttendance, useListAgendaPoints, useCheckOutAttendance, getGetMeQueryKey, getListTopicsQueryKey, getListSessionsQueryKey, getListAttendanceQueryKey, getListAgendaPointsQueryKey, type AttendanceInputModality } from "@workspace/api-client-react";
+import { useGetMe, useListSessions, useMarkAttendance, useListTopics, useListAttendance, useListAgendaPoints, useCheckOutAttendance, useRejoinAttendance, getGetMeQueryKey, getListTopicsQueryKey, getListSessionsQueryKey, getListAttendanceQueryKey, getListAgendaPointsQueryKey, type AttendanceInputModality } from "@workspace/api-client-react";
 import { useQueryClient } from "@tanstack/react-query";
 import { AppLayout } from "@/components/layout";
 import { QrScannerDialog } from "@/components/qr-scanner";
@@ -18,7 +18,7 @@ import { useSessionLive } from "@/hooks/use-session-live";
 import { getSocket } from "@/lib/realtime";
 import { useLobbyLive } from "@/hooks/use-lobby-live";
 import { TopicBallotsPanel } from "@/components/topic-ballots-panel";
-import { QrCode, ArrowRight, RefreshCw, MapPin, Clock, Wifi, LogOut, CheckCircle2, Hand, ChevronDown, Users } from "lucide-react";
+import { QrCode, ArrowRight, RefreshCw, MapPin, Clock, Wifi, LogOut, CheckCircle2, Hand, ChevronDown, Users, LogIn } from "lucide-react";
 
 
 // Botón para plegar un apartado. Va junto al título y no sobre la cabecera
@@ -65,6 +65,7 @@ export default function MemberDashboard() {
   const { data: attendance } = useListAttendance(sessionId, { query: { enabled: !!openSession, refetchInterval: 30000, queryKey: getListAttendanceQueryKey(sessionId) } });
   const { data: agenda } = useListAgendaPoints(sessionId, { query: { enabled: !!openSession, refetchInterval: 30000, queryKey: getListAgendaPointsQueryKey(sessionId) } });
   const checkOut = useCheckOutAttendance();
+  const rejoin = useRejoinAttendance();
 
   const { connected: liveConnected } = useSessionLive(openSession?.id);
   useLobbyLive();
@@ -97,6 +98,24 @@ export default function MemberDashboard() {
         queryClient.invalidateQueries({ queryKey: getListAttendanceQueryKey(sessionId) });
       },
       onError: () => toast({ title: "No se pudo registrar el retiro", variant: "destructive" }),
+    });
+  };
+
+  const handleRejoin = () => {
+    if (!openSession || rejoin.isPending) return;
+    rejoin.mutate({ id: openSession.id }, {
+      onSuccess: () => {
+        toast({ title: "Has reingresado a la sesión" });
+        // Al retirarse se salió de la sala de eventos: hay que volver a entrar
+        // para recibir las actualizaciones en vivo.
+        getSocket().emit("join", openSession.id);
+        queryClient.invalidateQueries({ queryKey: getListAttendanceQueryKey(sessionId) });
+      },
+      onError: (err) => toast({
+        title: "No se pudo reingresar",
+        description: err instanceof Error ? err.message.slice(0, 200) : undefined,
+        variant: "destructive",
+      }),
     });
   };
 
@@ -187,9 +206,24 @@ export default function MemberDashboard() {
                     </Button>
                   </div>
                 ) : iCheckedOut ? (
-                  <div className="flex items-center gap-3 rounded-lg border bg-muted/40 p-4 text-sm text-muted-foreground">
-                    <LogOut className="h-5 w-5 shrink-0" />
-                    Te retiraste de esta sesión y ya no cuentas para el quórum.
+                  <div className="space-y-4">
+                    <div className="flex items-start gap-3 rounded-lg border bg-muted/40 p-4 text-sm text-muted-foreground">
+                      <LogOut className="mt-0.5 h-5 w-5 shrink-0" />
+                      <div>
+                        <div className="font-semibold text-foreground">Te retiraste de esta sesión</div>
+                        No cuentas para el quórum y no puedes votar. Si vuelves, tu asistencia se
+                        reactiva y recuperas ambas cosas.
+                      </div>
+                    </div>
+                    <Button
+                      type="button"
+                      className="w-full"
+                      disabled={rejoin.isPending}
+                      onClick={handleRejoin}
+                    >
+                      <LogIn className="h-4 w-4 mr-2" />
+                      {rejoin.isPending ? "Reingresando…" : "Reingresar a la sesión"}
+                    </Button>
                   </div>
                 ) : (
                   <>

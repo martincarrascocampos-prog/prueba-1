@@ -506,6 +506,29 @@ paths:
         "409":
           description: Asistencia ya registrada
 
+  /sessions/{id}/attendance/rejoin:
+    post:
+      operationId: rejoinAttendance
+      tags: [attendance]
+      summary: Reingresar a la sesión tras haberse retirado
+      description: >
+        Inverso del auto check-out. Solo funciona mientras la sesión sigue
+        abierta: reingresar a una cerrada devolvería el peso de la persona a
+        resultados ya fijados.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Reingreso registrado
+        "400":
+          description: La sesión no está abierta, o no estabas retirade
+        "404":
+          description: Sesión no encontrada
+
   /sessions/{id}/attendance/checkout:
     post:
       operationId: checkOutAttendance

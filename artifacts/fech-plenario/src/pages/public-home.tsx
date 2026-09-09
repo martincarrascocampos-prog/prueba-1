@@ -200,7 +200,7 @@ const TABS: { id: TabId; label: string; icon: typeof Home; on: string }[] = [
   { id: "inicio", label: "Inicio", icon: Home, on: "border-pink-600 text-pink-700 bg-pink-50" },
   { id: "facil", label: "Pleno Fácil", icon: Sparkles, on: "border-teal-700 text-teal-700 bg-teal-50" },
   { id: "composicion", label: "Composición", icon: Users, on: "border-emerald-700 text-emerald-700 bg-emerald-50" },
-  { id: "asistencias", label: "Asistencias", icon: BarChart2, on: "border-blue-700 text-blue-700 bg-blue-50" },
+  { id: "asistencias", label: "Asistencia y votos", icon: BarChart2, on: "border-blue-700 text-blue-700 bg-blue-50" },
   { id: "palabra", label: "Uso de la palabra", icon: Mic, on: "border-orange-600 text-orange-700 bg-orange-50" },
   { id: "sesiones", label: "Sesiones", icon: Archive, on: "border-violet-700 text-violet-700 bg-violet-50" },
 ];
@@ -477,15 +477,30 @@ function PorCampus({ personas, color, nombreUnidad }: {
 
 // ─── Datos derivados ─────────────────────────────────────────────────────────
 
+type VotoPropio = {
+  sesion: string; fecha: string; mocion: string;
+  voto: string | null;     // null = estaba ausente
+  aprobada: boolean | null;
+};
+
 type MemberAttendance = {
   name: string; group: string | null; estamento: EstamentoKey;
   attended: number; total: number;
   sessions: { title: string; date: string; present: boolean }[];
+  votos: VotoPropio[];
+  emitidos: number;   // mociones en que efectivamente votó
+  votables: number;   // mociones en que pudo votar (estaba presente y era elegible)
 };
 
 function buildAttendance(sessions: AdminHistorySession[]): MemberAttendance[] {
   const past = sessions.filter((s) => s.phase === "pasado");
   const map = new Map<string, MemberAttendance>();
+
+  const nuevo = (name: string, group: string | null): MemberAttendance => ({
+    name, group, estamento: estamentoOf(group),
+    attended: 0, total: 0, sessions: [], votos: [], emitidos: 0, votables: 0,
+  });
+
   for (const s of past) {
     const rows = [
       ...(s.attendees ?? []).map((a) => ({ name: a.name, group: a.group ?? null, present: true })),
@@ -493,17 +508,47 @@ function buildAttendance(sessions: AdminHistorySession[]): MemberAttendance[] {
     ];
     for (const r of rows) {
       let e = map.get(r.name);
-      if (!e) {
-        e = { name: r.name, group: r.group, estamento: estamentoOf(r.group), attended: 0, total: 0, sessions: [] };
-        map.set(r.name, e);
-      }
+      if (!e) map.set(r.name, (e = nuevo(r.name, r.group)));
       e.total++;
       if (r.present) e.attended++;
       e.sessions.push({ title: s.title, date: formatShortDate(s.scheduledAt), present: r.present });
     }
+
+    // Voto nominal por moción. Los ballots solo traen a quienes estaban
+    // habilitades: una votación restringida a un estamento no aparece en el
+    // registro de quien no podía votarla, que es lo correcto.
+    for (const t of s.topics) {
+      for (const b of t.ballots ?? []) {
+        let e = map.get(b.name);
+        if (!e) map.set(b.name, (e = nuevo(b.name, b.group ?? null)));
+        const ausente = b.status === "absent";
+        e.votos.push({
+          sesion: s.title,
+          fecha: formatShortDate(s.scheduledAt),
+          mocion: t.title,
+          voto: ausente ? null : b.voteLabel ?? null,
+          aprobada: t.approved,
+        });
+        if (!ausente) {
+          e.votables++;
+          if (b.voteLabel) e.emitidos++;
+        }
+      }
+    }
   }
+
   return [...map.values()].sort((a, b) =>
     (ORDEN[a.estamento] - ORDEN[b.estamento]) || a.name.localeCompare(b.name, "es"));
+}
+
+// Color por sentido del voto. Las candidaturas no son a favor ni en contra,
+// así que caen en el neutro.
+function colorVoto(v: string | null): { texto: string; borde: string; fondo: string } {
+  const l = (v ?? "").toLowerCase();
+  if (l.includes("favor")) return { texto: "text-lime-800", borde: "border-lime-400", fondo: "bg-lime-50" };
+  if (l.includes("contra")) return { texto: "text-red-800", borde: "border-red-400", fondo: "bg-red-50" };
+  if (l.includes("absten")) return { texto: "text-amber-800", borde: "border-amber-400", fondo: "bg-amber-50" };
+  return { texto: "text-blue-800", borde: "border-blue-400", fondo: "bg-blue-50" };
 }
 
 type SpeakerRow = {
@@ -1162,8 +1207,9 @@ export default function PublicHome() {
         {/* ── Asistencias ── */}
         {tab === "asistencias" && (
           <section>
-            <SectionHeading icon={<BarChart2 className="h-5 w-5" />} title="Histórico de Asistencias"
-              subtitle="Presencia de cada integrante a través de las sesiones realizadas." color="#1D4ED8" />
+            <SectionHeading icon={<BarChart2 className="h-5 w-5" />} title="Asistencia y Votaciones por Integrante"
+              subtitle="Cuánto asistió cada quien y cómo votó en cada moción. Despliega una tarjeta para ver su desglose."
+              color="#1D4ED8" />
 
             {(() => {
               const q = attSearch.trim().toLowerCase();
@@ -1229,6 +1275,7 @@ export default function PublicHome() {
                             </div>
                             <p className="mt-1.5 text-xs text-muted-foreground">
                               {m.attended} de {m.total} sesiones
+                              {m.votables > 0 && ` · votó ${m.emitidos} de ${m.votables} mociones`}
                             </p>
                             <div className="mt-2 flex flex-wrap gap-0.5">
                               {m.sessions.map((s, i) => (
@@ -1239,6 +1286,60 @@ export default function PublicHome() {
                                 </span>
                               ))}
                             </div>
+
+                            {/* Desglose nominal. Plegado: son todas las mociones
+                                de todas las sesiones y llenaría la tarjeta. */}
+                            {m.votos.length > 0 && (
+                              <details className="mt-2.5 border-t border-gray-200 pt-2">
+                                <summary className="cursor-pointer select-none text-xs font-semibold text-blue-700 hover:underline">
+                                  Ver sus {m.votos.length} votaciones
+                                </summary>
+                                <div className="mt-2 space-y-2.5">
+                                  {[...new Set(m.votos.map((v) => v.sesion))].map((sesion) => {
+                                    const votos = m.votos.filter((v) => v.sesion === sesion);
+                                    return (
+                                      <div key={sesion}>
+                                        <div className="mb-1 flex items-baseline justify-between gap-2 border-b border-gray-200 pb-0.5">
+                                          <span className="truncate text-[10px] font-bold uppercase tracking-wider text-gray-600">
+                                            {sesion}
+                                          </span>
+                                          <span className="shrink-0 text-[10px] text-muted-foreground">
+                                            {votos[0].fecha}
+                                          </span>
+                                        </div>
+                                        <ul className="space-y-1">
+                                          {votos.map((v, i) => {
+                                            const c = colorVoto(v.voto);
+                                            return (
+                                              <li key={i} className="flex items-start justify-between gap-2 text-[11px]">
+                                                <span className="min-w-0 flex-1 leading-snug">
+                                                  {v.mocion}
+                                                  {v.aprobada !== null && (
+                                                    <span className={`ml-1 font-semibold ${
+                                                      v.aprobada ? "text-lime-700" : "text-red-700"}`}>
+                                                      · {v.aprobada ? "aprobada" : "rechazada"}
+                                                    </span>
+                                                  )}
+                                                </span>
+                                                {v.voto === null ? (
+                                                  <span className="shrink-0 border border-gray-300 px-1.5 text-[10px] text-muted-foreground">
+                                                    Ausente
+                                                  </span>
+                                                ) : (
+                                                  <span className={`shrink-0 border px-1.5 text-[10px] font-semibold capitalize ${c.borde} ${c.fondo} ${c.texto}`}>
+                                                    {v.voto}
+                                                  </span>
+                                                )}
+                                              </li>
+                                            );
+                                          })}
+                                        </ul>
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              </details>
+                            )}
                           </div>
                         );
                       })}
