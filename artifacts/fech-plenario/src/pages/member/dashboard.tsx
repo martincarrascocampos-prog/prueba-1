@@ -17,7 +17,25 @@ import { SessionResources } from "@/components/session-resources";
 import { useSessionLive } from "@/hooks/use-session-live";
 import { getSocket } from "@/lib/realtime";
 import { useLobbyLive } from "@/hooks/use-lobby-live";
-import { QrCode, ArrowRight, RefreshCw, MapPin, Clock, Wifi, LogOut, CheckCircle2, Hand } from "lucide-react";
+import { TopicBallotsPanel } from "@/components/topic-ballots-panel";
+import { QrCode, ArrowRight, RefreshCw, MapPin, Clock, Wifi, LogOut, CheckCircle2, Hand, ChevronDown, Users } from "lucide-react";
+
+
+// Botón para plegar un apartado. Va junto al título y no sobre la cabecera
+// entera, porque varias traen sus propios controles.
+function Plegar({ abierto, onClick, que }: { abierto: boolean; onClick: () => void; que: string }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-expanded={abierto}
+      aria-label={`${abierto ? "Plegar" : "Desplegar"} ${que}`}
+      className="flex h-7 w-7 shrink-0 items-center justify-center border border-gray-300 text-muted-foreground transition-colors hover:border-gray-800 hover:text-foreground"
+    >
+      <ChevronDown className={`h-4 w-4 transition-transform ${abierto ? "" : "-rotate-90"}`} />
+    </button>
+  );
+}
 
 export default function MemberDashboard() {
   const { data: user } = useGetMe();
@@ -32,6 +50,13 @@ export default function MemberDashboard() {
   const [scannerOpen, setScannerOpen] = useState(false);
 
   const [modality, setModality] = useState<AttendanceInputModality>("presencial");
+
+  // Cada apartado se pliega por separado, para no llegar a una pantalla
+  // saturada al entrar a una sesión en curso.
+  const [abierto, setAbierto] = useState<Record<string, boolean>>({
+    asistencia: true, mociones: true, tabla: true, palabra: true, nomina: true,
+  });
+  const alternar = (k: string) => setAbierto((p) => ({ ...p, [k]: !p[k] }));
 
   const openSession = sessions?.find(s => s.status === "abierta");
   const sessionId = openSession?.id || 0;
@@ -131,7 +156,8 @@ export default function MemberDashboard() {
         {openSession ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <Card>
-              <CardHeader>
+              <CardHeader className="flex-row items-start justify-between space-y-0">
+                <div className="space-y-1.5">
                 <CardTitle>Marcar Asistencia</CardTitle>
                 <CardDescription>
                   {isPresent
@@ -140,8 +166,10 @@ export default function MemberDashboard() {
                     ? "Te retiraste de esta sesión."
                     : "Ingresa el código mostrado en la pantalla principal para poder votar."}
                 </CardDescription>
+                </div>
+                <Plegar abierto={abierto.asistencia} onClick={() => alternar("asistencia")} que="Marcar Asistencia" />
               </CardHeader>
-              <CardContent>
+              {abierto.asistencia && <CardContent>
                 {isPresent ? (
                   <div className="space-y-4">
                     <div className="flex items-center gap-3 rounded-lg border border-lime-200 bg-lime-50/60 p-4">
@@ -202,11 +230,12 @@ export default function MemberDashboard() {
                     </div>
                   </>
                 )}
-              </CardContent>
+              </CardContent>}
             </Card>
 
             <Card>
-              <CardHeader>
+              <CardHeader className="flex-row items-start justify-between space-y-0">
+                <div className="space-y-1.5">
                 <CardTitle>Mociones Abiertas</CardTitle>
                 <CardDescription>Sesión: {openSession.title}</CardDescription>
                 <div className="text-sm text-muted-foreground flex flex-col gap-1 pt-1">
@@ -218,8 +247,10 @@ export default function MemberDashboard() {
                   )}
                 </div>
                 <SessionResources meetingLink={openSession.meetingLink} actaObjectPath={openSession.actaObjectPath} actaFileName={openSession.actaFileName} className="pt-2" />
+                </div>
+                <Plegar abierto={abierto.mociones} onClick={() => alternar("mociones")} que="Mociones Abiertas" />
               </CardHeader>
-              <CardContent>
+              {abierto.mociones && <CardContent>
                 {openTopics.length > 0 ? (
                   <div className="space-y-3">
                     {openTopics.map(topic => (
@@ -236,29 +267,35 @@ export default function MemberDashboard() {
                     No hay mociones abiertas en este momento.
                   </div>
                 )}
-              </CardContent>
+              </CardContent>}
             </Card>
 
             <Card className="md:col-span-2">
-              <CardHeader>
-                <CardTitle>Tabla de la Sesión</CardTitle>
-                <CardDescription>Puntos a tratar en esta sesión.</CardDescription>
+              <CardHeader className="flex-row items-start justify-between space-y-0">
+                <div className="space-y-1.5">
+                  <CardTitle>Tabla de la Sesión</CardTitle>
+                  <CardDescription>Puntos a tratar en esta sesión.</CardDescription>
+                </div>
+                <Plegar abierto={abierto.tabla} onClick={() => alternar("tabla")} que="la Tabla de la Sesión" />
               </CardHeader>
-              <CardContent>
+              {abierto.tabla && <CardContent>
                 <SessionAgenda points={agenda ?? []} />
-              </CardContent>
+              </CardContent>}
             </Card>
 
             <Card className="md:col-span-2">
-              <CardHeader>
+              <CardHeader className="flex-row items-start justify-between space-y-0">
+                <div className="space-y-1.5">
                 <CardTitle className="flex items-center gap-2"><Hand className="h-5 w-5" /> Sistema de Palabra</CardTitle>
                 <CardDescription>
                   {isPresent
                     ? "Pide la palabra y sigue la cola de oradores en tiempo real."
                     : "Marca tu asistencia para poder pedir la palabra."}
                 </CardDescription>
+                </div>
+                <Plegar abierto={abierto.palabra} onClick={() => alternar("palabra")} que="el Sistema de Palabra" />
               </CardHeader>
-              <CardContent>
+              {abierto.palabra && <CardContent>
                 <SpeakingPanel
                   sessionId={sessionId}
                   agenda={agenda ?? []}
@@ -267,19 +304,55 @@ export default function MemberDashboard() {
                   speakingRoundOpen={openSession.speakingRoundOpen}
                   speakingRoundAgendaPointId={openSession.speakingRoundAgendaPointId}
                 />
-              </CardContent>
+              </CardContent>}
             </Card>
 
             <Card className="md:col-span-2">
-              <CardHeader>
+              <CardHeader className="flex-row items-start justify-between space-y-0">
+                <div className="space-y-1.5">
                 <CardTitle>Nómina en Vivo</CardTitle>
                 <CardDescription>
                   {attendance?.present.length ?? 0} presentes · ponderación {attendance?.presentWeight.toFixed(2) ?? "0.00"} / {attendance?.totalWeight.toFixed(2) ?? "0.00"}
                 </CardDescription>
+                </div>
+                <Plegar abierto={abierto.nomina} onClick={() => alternar("nomina")} que="la Nómina en Vivo" />
               </CardHeader>
-              <CardContent>
+              {abierto.nomina && <CardContent className="space-y-4">
                 <LiveRoster present={attendance?.present ?? []} checkedOut={attendance?.checkedOut ?? []} />
-              </CardContent>
+
+                {/* Desglose nominal por moción. Va plegado: son decenas de
+                    nombres y desplegarlo por defecto sepultaría la nómina. */}
+                {(topics ?? []).length > 0 && (
+                  <div className="space-y-2 border-t pt-4">
+                    <div className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
+                      Cómo votó cada integrante
+                    </div>
+                    {(topics ?? []).map((t) => (
+                      <details key={t.id} className="border">
+                        <summary className="flex cursor-pointer select-none items-center justify-between gap-3 px-3 py-2 text-sm hover:bg-muted/40">
+                          <span className="flex min-w-0 items-center gap-2">
+                            <Users className="h-4 w-4 shrink-0 text-muted-foreground" />
+                            <span className="truncate font-medium">{t.title}</span>
+                          </span>
+                          <span className={`shrink-0 px-2 py-0.5 text-[10px] font-bold tracking-wider text-white ${
+                            t.status === "abierto" ? "bg-lime-600" : "bg-gray-500"}`}>
+                            {t.status === "abierto" ? "EN VOTACIÓN" : "CERRADA"}
+                          </span>
+                        </summary>
+                        <div className="border-t p-3">
+                          {t.status === "abierto" && (
+                            <p className="mb-3 border-l-[3px] border-amber-500 bg-amber-50/60 px-3 py-2 text-xs leading-snug">
+                              Esta votación sigue abierta: el recuento no es definitivo y puede
+                              cambiar hasta que la Mesa la cierre.
+                            </p>
+                          )}
+                          <TopicBallotsPanel topicId={t.id} sessionId={sessionId} live />
+                        </div>
+                      </details>
+                    ))}
+                  </div>
+                )}
+              </CardContent>}
             </Card>
           </div>
         ) : (
