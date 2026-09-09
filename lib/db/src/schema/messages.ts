@@ -15,16 +15,20 @@ import { plenariasTable } from "./sessions";
 
 // Qué se espera de quien recibe el mensaje.
 export const messageKindEnum = pgEnum("message_kind", [
-  // Pide responder si asistirá o no. Es el caso de una citación a pleno.
+  // Cita a un pleno y pide responder si asistirá y de qué forma.
   "citacion",
-  // Pide una respuesta libre, sin confirmar ni justificar asistencia.
-  "consulta",
-  // No espera respuesta.
+  // Aviso que no espera respuesta.
   "informativo",
 ]);
 
-// Respuesta de quien recibe una citación.
-export const messageReplyEnum = pgEnum("message_reply", ["confirmada", "justificada"]);
+// Respuesta a una citación. La modalidad se declara al confirmar, porque a la
+// Mesa le sirve saber cuánta gente estará en sala y cuánta conectada antes de
+// la sesión, no solo cuántas personas vendrán.
+export const messageReplyEnum = pgEnum("message_reply", [
+  "presencial",
+  "online",
+  "justificada",
+]);
 
 // Qué resolvió administración sobre una justificación.
 export const replyReviewEnum = pgEnum("reply_review", ["pendiente", "aceptada", "rechazada"]);

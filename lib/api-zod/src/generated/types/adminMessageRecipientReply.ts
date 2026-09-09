@@ -13,6 +13,7 @@ export type AdminMessageRecipientReply = typeof AdminMessageRecipientReply[keyof
 
 
 export const AdminMessageRecipientReply = {
-  confirmada: 'confirmada',
+  presencial: 'presencial',
+  online: 'online',
   justificada: 'justificada',
 } as const;

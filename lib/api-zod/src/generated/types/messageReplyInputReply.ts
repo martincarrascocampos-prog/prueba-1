@@ -10,6 +10,7 @@ export type MessageReplyInputReply = typeof MessageReplyInputReply[keyof typeof 
 
 
 export const MessageReplyInputReply = {
-  confirmada: 'confirmada',
+  presencial: 'presencial',
+  online: 'online',
   justificada: 'justificada',
 } as const;

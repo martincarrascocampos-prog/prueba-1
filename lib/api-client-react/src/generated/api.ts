@@ -4676,7 +4676,7 @@ export const getListMyMessagesUrl = () => {
 }
 
 /**
- * @summary Mi correo interno
+ * @summary Mi mensajería
  */
 export const listMyMessages = async ( options?: RequestInit): Promise<InboxMessage[]> => {
 
@@ -4723,7 +4723,7 @@ export type ListMyMessagesQueryError = ErrorType<unknown>
 
 
 /**
- * @summary Mi correo interno
+ * @summary Mi mensajería
  */
 
 export function useListMyMessages<TData = Awaited<ReturnType<typeof listMyMessages>>, TError = ErrorType<unknown>>(

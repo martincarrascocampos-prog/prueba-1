@@ -11,6 +11,5 @@ export type AdminMessageKind = typeof AdminMessageKind[keyof typeof AdminMessage
 
 export const AdminMessageKind = {
   citacion: 'citacion',
-  consulta: 'consulta',
   informativo: 'informativo',
 } as const;

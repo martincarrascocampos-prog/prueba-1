@@ -11,6 +11,5 @@ export type MessageInputKind = typeof MessageInputKind[keyof typeof MessageInput
 
 export const MessageInputKind = {
   citacion: 'citacion',
-  consulta: 'consulta',
   informativo: 'informativo',
 } as const;

@@ -986,7 +986,6 @@ export type InboxMessageKind = typeof InboxMessageKind[keyof typeof InboxMessage
 
 export const InboxMessageKind = {
   citacion: 'citacion',
-  consulta: 'consulta',
   informativo: 'informativo',
 } as const;
 
@@ -997,7 +996,8 @@ export type InboxMessageReply = typeof InboxMessageReply[keyof typeof InboxMessa
 
 
 export const InboxMessageReply = {
-  confirmada: 'confirmada',
+  presencial: 'presencial',
+  online: 'online',
   justificada: 'justificada',
 } as const;
 
@@ -1049,7 +1049,8 @@ export type MessageRecipientReply = typeof MessageRecipientReply[keyof typeof Me
 
 
 export const MessageRecipientReply = {
-  confirmada: 'confirmada',
+  presencial: 'presencial',
+  online: 'online',
   justificada: 'justificada',
 } as const;
 
@@ -1090,7 +1091,8 @@ export type AdminMessageRecipientReply = typeof AdminMessageRecipientReply[keyof
 
 
 export const AdminMessageRecipientReply = {
-  confirmada: 'confirmada',
+  presencial: 'presencial',
+  online: 'online',
   justificada: 'justificada',
 } as const;
 
@@ -1134,7 +1136,6 @@ export type AdminMessageKind = typeof AdminMessageKind[keyof typeof AdminMessage
 
 export const AdminMessageKind = {
   citacion: 'citacion',
-  consulta: 'consulta',
   informativo: 'informativo',
 } as const;
 
@@ -1153,7 +1154,10 @@ export interface AdminMessage {
   recipients?: AdminMessageRecipient[];
   total?: number;
   leidos?: number;
+  /** Presenciales más online. */
   confirmadas?: number;
+  presenciales?: number;
+  online?: number;
   justificadas?: number;
   sinResponder?: number;
   pendientesRevision?: number;
@@ -1167,7 +1171,6 @@ export type MessageInputKind = typeof MessageInputKind[keyof typeof MessageInput
 
 export const MessageInputKind = {
   citacion: 'citacion',
-  consulta: 'consulta',
   informativo: 'informativo',
 } as const;
 
@@ -1194,13 +1197,14 @@ export type MessageReplyInputReply = typeof MessageReplyInputReply[keyof typeof 
 
 
 export const MessageReplyInputReply = {
-  confirmada: 'confirmada',
+  presencial: 'presencial',
+  online: 'online',
   justificada: 'justificada',
 } as const;
 
 export interface MessageReplyInput {
   reply: MessageReplyInputReply;
-  /** Obligatorio al justificar. */
+  /** Obligatorio al justificar; se ignora al confirmar. */
   reason?: string;
 }
 

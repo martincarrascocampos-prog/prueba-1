@@ -13,6 +13,7 @@ export type InboxMessageReply = typeof InboxMessageReply[keyof typeof InboxMessa
 
 
 export const InboxMessageReply = {
-  confirmada: 'confirmada',
+  presencial: 'presencial',
+  online: 'online',
   justificada: 'justificada',
 } as const;

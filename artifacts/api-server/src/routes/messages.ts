@@ -12,12 +12,15 @@ import { requireAuth, requireAdmin } from "../middlewares/auth";
 
 const router: IRouter = Router();
 
-type Kind = "citacion" | "consulta" | "informativo";
-type Reply = "confirmada" | "justificada";
+type Kind = "citacion" | "informativo";
+type Reply = "presencial" | "online" | "justificada";
 type Review = "pendiente" | "aceptada" | "rechazada";
 
-const KINDS: Kind[] = ["citacion", "consulta", "informativo"];
-const REPLIES: Reply[] = ["confirmada", "justificada"];
+const KINDS: Kind[] = ["citacion", "informativo"];
+const REPLIES: Reply[] = ["presencial", "online", "justificada"];
+
+// Confirmar es asistir, sea en sala o conectade.
+const esConfirmacion = (r: Reply | string | null) => r === "presencial" || r === "online";
 
 function parseId(raw: string | string[]): number | null {
   const v = parseInt(Array.isArray(raw) ? raw[0] : raw, 10);
@@ -203,13 +206,15 @@ router.get("/admin/messages", requireAdmin, async (_req, res): Promise<void> => 
   res.json(
     messages.map((m) => {
       const dest = byMessage.get(m.id) ?? [];
-      const confirmadas = dest.filter((d) => d.reply === "confirmada");
+      const confirmadas = dest.filter((d) => esConfirmacion(d.reply));
       return {
         ...m,
         recipients: dest,
         total: dest.length,
         leidos: dest.filter((d) => d.readAt !== null).length,
         confirmadas: confirmadas.length,
+        presenciales: dest.filter((d) => d.reply === "presencial").length,
+        online: dest.filter((d) => d.reply === "online").length,
         justificadas: dest.filter((d) => d.reply === "justificada").length,
         sinResponder: dest.filter((d) => d.reply === null).length,
         pendientesRevision: dest.filter((d) => d.review === "pendiente").length,

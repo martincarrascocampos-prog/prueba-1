@@ -1308,21 +1308,21 @@ export const ExportMatrixResponse = zod.object({
 
 
 /**
- * @summary Mi correo interno
+ * @summary Mi mensajería
  */
 export const ListMyMessagesResponseItem = zod.object({
   "id": zod.number(),
   "recipientId": zod.number().optional(),
   "subject": zod.string(),
   "body": zod.string(),
-  "kind": zod.enum(['citacion', 'consulta', 'informativo']),
+  "kind": zod.enum(['citacion', 'informativo']),
   "replyDeadline": zod.string().nullish(),
   "createdAt": zod.string(),
   "sessionId": zod.number().nullish(),
   "sessionTitle": zod.string().nullish(),
   "sessionScheduledAt": zod.string().nullish(),
   "readAt": zod.string().nullish(),
-  "reply": zod.union([zod.literal('confirmada'),zod.literal('justificada'),zod.literal(null)]).nullish(),
+  "reply": zod.union([zod.literal('presencial'),zod.literal('online'),zod.literal('justificada'),zod.literal(null)]).nullish(),
   "replyReason": zod.string().nullish(),
   "repliedAt": zod.string().nullish(),
   "review": zod.union([zod.literal('pendiente'),zod.literal('aceptada'),zod.literal('rechazada'),zod.literal(null)]).nullish(),
@@ -1347,8 +1347,8 @@ export const ReplyMessageParams = zod.object({
 })
 
 export const ReplyMessageBody = zod.object({
-  "reply": zod.enum(['confirmada', 'justificada']),
-  "reason": zod.string().optional().describe('Obligatorio al justificar.')
+  "reply": zod.enum(['presencial', 'online', 'justificada']),
+  "reason": zod.string().optional().describe('Obligatorio al justificar; se ignora al confirmar.')
 })
 
 export const ReplyMessageResponse = zod.object({
@@ -1356,7 +1356,7 @@ export const ReplyMessageResponse = zod.object({
   "messageId": zod.number(),
   "userId": zod.number(),
   "readAt": zod.string().nullish(),
-  "reply": zod.union([zod.literal('confirmada'),zod.literal('justificada'),zod.literal(null)]).nullish(),
+  "reply": zod.union([zod.literal('presencial'),zod.literal('online'),zod.literal('justificada'),zod.literal(null)]).nullish(),
   "replyReason": zod.string().nullish(),
   "repliedAt": zod.string().nullish(),
   "review": zod.union([zod.literal('pendiente'),zod.literal('aceptada'),zod.literal('rechazada'),zod.literal(null)]).nullish(),
@@ -1371,7 +1371,7 @@ export const ListAdminMessagesResponseItem = zod.object({
   "id": zod.number(),
   "subject": zod.string(),
   "body": zod.string(),
-  "kind": zod.enum(['citacion', 'consulta', 'informativo']),
+  "kind": zod.enum(['citacion', 'informativo']),
   "replyDeadline": zod.string().nullish(),
   "createdAt": zod.string(),
   "sessionId": zod.number().nullish(),
@@ -1384,7 +1384,7 @@ export const ListAdminMessagesResponseItem = zod.object({
   "faculty": zod.string().nullish(),
   "weight": zod.string().optional(),
   "readAt": zod.string().nullish(),
-  "reply": zod.union([zod.literal('confirmada'),zod.literal('justificada'),zod.literal(null)]).nullish(),
+  "reply": zod.union([zod.literal('presencial'),zod.literal('online'),zod.literal('justificada'),zod.literal(null)]).nullish(),
   "replyReason": zod.string().nullish(),
   "repliedAt": zod.string().nullish(),
   "review": zod.union([zod.literal('pendiente'),zod.literal('aceptada'),zod.literal('rechazada'),zod.literal(null)]).nullish(),
@@ -1392,7 +1392,9 @@ export const ListAdminMessagesResponseItem = zod.object({
 })).optional(),
   "total": zod.number().optional(),
   "leidos": zod.number().optional(),
-  "confirmadas": zod.number().optional(),
+  "confirmadas": zod.number().optional().describe('Presenciales más online.'),
+  "presenciales": zod.number().optional(),
+  "online": zod.number().optional(),
   "justificadas": zod.number().optional(),
   "sinResponder": zod.number().optional(),
   "pendientesRevision": zod.number().optional(),
@@ -1411,7 +1413,7 @@ export const ListAdminMessagesResponse = zod.array(ListAdminMessagesResponseItem
 export const SendMessageBody = zod.object({
   "subject": zod.string().min(1),
   "body": zod.string().min(1),
-  "kind": zod.enum(['citacion', 'consulta', 'informativo']).optional(),
+  "kind": zod.enum(['citacion', 'informativo']).optional(),
   "sessionId": zod.number().nullish().describe('Pleno al que se refiere. Nulo para un mensaje extra-pleno.'),
   "replyDeadline": zod.string().nullish(),
   "userIds": zod.array(zod.number()).optional().describe('Destinatarios explícitos. Tiene prioridad sobre groups.'),
@@ -1439,7 +1441,7 @@ export const ReviewMessageReplyResponse = zod.object({
   "messageId": zod.number(),
   "userId": zod.number(),
   "readAt": zod.string().nullish(),
-  "reply": zod.union([zod.literal('confirmada'),zod.literal('justificada'),zod.literal(null)]).nullish(),
+  "reply": zod.union([zod.literal('presencial'),zod.literal('online'),zod.literal('justificada'),zod.literal(null)]).nullish(),
   "replyReason": zod.string().nullish(),
   "repliedAt": zod.string().nullish(),
   "review": zod.union([zod.literal('pendiente'),zod.literal('aceptada'),zod.literal('rechazada'),zod.literal(null)]).nullish(),

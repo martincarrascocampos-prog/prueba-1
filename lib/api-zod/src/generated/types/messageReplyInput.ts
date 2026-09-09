@@ -9,6 +9,6 @@ import type { MessageReplyInputReply } from './messageReplyInputReply';
 
 export interface MessageReplyInput {
   reply: MessageReplyInputReply;
-  /** Obligatorio al justificar. */
+  /** Obligatorio al justificar; se ignora al confirmar. */
   reason?: string;
 }

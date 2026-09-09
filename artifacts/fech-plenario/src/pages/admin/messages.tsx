@@ -21,18 +21,16 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { GROUP_ORDER } from "@/lib/groups";
 import {
-  Mail, Send, Plus, X, CheckCircle2, XCircle, Clock, Users, Scale, AlertTriangle, Search,
+  Mail, Send, Plus, X, CheckCircle2, XCircle, Clock, Users, Scale, AlertTriangle, Search, MapPin, Wifi,
 } from "lucide-react";
 
 const TIPOS = [
-  { value: "citacion", label: "Citación", desc: "Pide confirmar asistencia o justificar" },
-  { value: "consulta", label: "Consulta", desc: "Pide una respuesta, sin confirmar asistencia" },
-  { value: "informativo", label: "Informativo", desc: "No espera respuesta" },
+  { value: "citacion", label: "Citación", desc: "Cita al pleno y pide responder si asistirá" },
+  { value: "informativo", label: "Informativo", desc: "Aviso que no espera respuesta" },
 ] as const;
 
 const ETIQUETA_TIPO: Record<string, { label: string; clase: string }> = {
   citacion: { label: "CITACIÓN", clase: "bg-violet-700" },
-  consulta: { label: "CONSULTA", clase: "bg-blue-700" },
   informativo: { label: "INFORMATIVO", clase: "bg-gray-500" },
 };
 
@@ -63,7 +61,7 @@ function Redactar({ onEnviado }: { onEnviado: () => void }) {
 
   const [subject, setSubject] = useState("");
   const [body, setBody] = useState("");
-  const [kind, setKind] = useState<"citacion" | "consulta" | "informativo">("citacion");
+  const [kind, setKind] = useState<"citacion" | "informativo">("citacion");
   const [sessionId, setSessionId] = useState<string>("ninguna");
   const [deadline, setDeadline] = useState("");
   // "todos" | "grupos" | "personas"
@@ -263,8 +261,9 @@ function Respuestas({ mensaje }: { mensaje: AdminMessage }) {
 
   const dest = mensaje.recipients ?? [];
   const justificadas = dest.filter((d) => d.reply === "justificada");
-  const confirmadas = dest.filter((d) => d.reply === "confirmada");
-  const sinResponder = dest.filter((d) => d.reply === null);
+  const presenciales = dest.filter((d) => d.reply === "presencial");
+  const enLinea = dest.filter((d) => d.reply === "online");
+  const sinResponder = dest.filter((d) => d.reply === null || d.reply === undefined);
 
   return (
     <div className="space-y-4">
@@ -321,18 +320,34 @@ function Respuestas({ mensaje }: { mensaje: AdminMessage }) {
       )}
 
       <div className="grid gap-3 sm:grid-cols-2">
-        <div>
-          <div className="mb-1.5 text-[11px] font-bold uppercase tracking-wider text-lime-700">
-            Confirmaron ({confirmadas.length})
+        <div className="space-y-3">
+          <div>
+            <div className="mb-1.5 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-lime-700">
+              <MapPin className="h-3.5 w-3.5" /> Presencial ({presenciales.length})
+            </div>
+            <div className="flex flex-wrap gap-1">
+              {presenciales.length === 0
+                ? <span className="text-xs text-muted-foreground">Nadie todavía.</span>
+                : presenciales.map((r) => (
+                    <span key={r.userId} className="border border-lime-300 bg-lime-50 px-2 py-0.5 text-xs">
+                      {r.name}
+                    </span>
+                  ))}
+            </div>
           </div>
-          <div className="flex flex-wrap gap-1">
-            {confirmadas.length === 0
-              ? <span className="text-xs text-muted-foreground">Nadie todavía.</span>
-              : confirmadas.map((r) => (
-                  <span key={r.userId} className="border border-lime-300 bg-lime-50 px-2 py-0.5 text-xs">
-                    {r.name}
-                  </span>
-                ))}
+          <div>
+            <div className="mb-1.5 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider text-blue-700">
+              <Wifi className="h-3.5 w-3.5" /> Online ({enLinea.length})
+            </div>
+            <div className="flex flex-wrap gap-1">
+              {enLinea.length === 0
+                ? <span className="text-xs text-muted-foreground">Nadie todavía.</span>
+                : enLinea.map((r) => (
+                    <span key={r.userId} className="border border-blue-300 bg-blue-50 px-2 py-0.5 text-xs">
+                      {r.name}
+                    </span>
+                  ))}
+            </div>
           </div>
         </div>
         <div>
@@ -371,10 +386,10 @@ export default function AdminMessages() {
         <div className="flex flex-wrap items-center justify-between gap-3 border-b-2 border-gray-800 pb-4">
           <div>
             <h1 className="flex items-center gap-2 text-2xl font-bold">
-              <Mail className="h-6 w-6" /> Correo interno
+              <Mail className="h-6 w-6" /> Mensajería Plenaria
             </h1>
             <p className="text-sm text-muted-foreground">
-              Citaciones, consultas y avisos al pleno, con sus respuestas.
+              Citaciones y avisos al pleno, con sus respuestas.
             </p>
           </div>
           <Button className="rounded-none" onClick={() => setRedactando((v) => !v)}>
@@ -440,7 +455,10 @@ export default function AdminMessages() {
                     {m.kind === "citacion" && (
                       <div className="flex shrink-0 flex-wrap gap-1.5 text-[11px] font-bold">
                         <span className="border border-lime-300 bg-lime-50 px-2 py-0.5 text-lime-800">
-                          {m.confirmadas} confirman
+                          {m.presenciales} presencial
+                        </span>
+                        <span className="border border-blue-300 bg-blue-50 px-2 py-0.5 text-blue-800">
+                          {m.online} online
                         </span>
                         <span className="border border-orange-300 bg-orange-50 px-2 py-0.5 text-orange-800">
                           {m.justificadas} justifican

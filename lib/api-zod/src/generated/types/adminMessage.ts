@@ -23,7 +23,10 @@ export interface AdminMessage {
   recipients?: AdminMessageRecipient[];
   total?: number;
   leidos?: number;
+  /** Presenciales más online. */
   confirmadas?: number;
+  presenciales?: number;
+  online?: number;
   justificadas?: number;
   sinResponder?: number;
   pendientesRevision?: number;

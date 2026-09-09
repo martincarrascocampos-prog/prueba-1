@@ -31,7 +31,7 @@ tags:
   - name: unidades
     description: Unidades académicas (catálogo)
   - name: messages
-    description: Correo interno
+    description: Mensajería Plenaria
   - name: public
     description: Endpoints públicos (sin autenticación)
   - name: Storage
@@ -1312,7 +1312,7 @@ paths:
     get:
       operationId: listMyMessages
       tags: [messages]
-      summary: Mi correo interno
+      summary: Mi mensajería
       responses:
         "200":
           description: Mensajes recibidos, del más reciente al más antiguo
@@ -2533,7 +2533,7 @@ components:
         body: { type: string }
         kind:
           type: string
-          enum: [citacion, consulta, informativo]
+          enum: [citacion, informativo]
         replyDeadline: { type: ["string", "null"] }
         createdAt: { type: string }
         sessionId: { type: ["integer", "null"] }
@@ -2542,7 +2542,7 @@ components:
         readAt: { type: ["string", "null"] }
         reply:
           type: ["string", "null"]
-          enum: [confirmada, justificada, null]
+          enum: [presencial, online, justificada, null]
         replyReason: { type: ["string", "null"] }
         repliedAt: { type: ["string", "null"] }
         review:
@@ -2560,7 +2560,7 @@ components:
         readAt: { type: ["string", "null"] }
         reply:
           type: ["string", "null"]
-          enum: [confirmada, justificada, null]
+          enum: [presencial, online, justificada, null]
         replyReason: { type: ["string", "null"] }
         repliedAt: { type: ["string", "null"] }
         review:
@@ -2581,7 +2581,7 @@ components:
         readAt: { type: ["string", "null"] }
         reply:
           type: ["string", "null"]
-          enum: [confirmada, justificada, null]
+          enum: [presencial, online, justificada, null]
         replyReason: { type: ["string", "null"] }
         repliedAt: { type: ["string", "null"] }
         review:
@@ -2598,7 +2598,7 @@ components:
         body: { type: string }
         kind:
           type: string
-          enum: [citacion, consulta, informativo]
+          enum: [citacion, informativo]
         replyDeadline: { type: ["string", "null"] }
         createdAt: { type: string }
         sessionId: { type: ["integer", "null"] }
@@ -2609,7 +2609,11 @@ components:
             $ref: "#/components/schemas/AdminMessageRecipient"
         total: { type: integer }
         leidos: { type: integer }
-        confirmadas: { type: integer }
+        confirmadas:
+          type: integer
+          description: Presenciales más online.
+        presenciales: { type: integer }
+        online: { type: integer }
         justificadas: { type: integer }
         sinResponder: { type: integer }
         pendientesRevision: { type: integer }
@@ -2627,7 +2631,7 @@ components:
         body: { type: string, minLength: 1 }
         kind:
           type: string
-          enum: [citacion, consulta, informativo]
+          enum: [citacion, informativo]
         sessionId:
           type: ["integer", "null"]
           description: Pleno al que se refiere. Nulo para un mensaje extra-pleno.
@@ -2647,10 +2651,10 @@ components:
       properties:
         reply:
           type: string
-          enum: [confirmada, justificada]
+          enum: [presencial, online, justificada]
         reason:
           type: string
-          description: Obligatorio al justificar.
+          description: Obligatorio al justificar; se ignora al confirmar.
 
     ReplyReviewInput:
       type: object

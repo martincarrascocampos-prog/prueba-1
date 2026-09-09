@@ -13,6 +13,7 @@ export type MessageRecipientReply = typeof MessageRecipientReply[keyof typeof Me
 
 
 export const MessageRecipientReply = {
-  confirmada: 'confirmada',
+  presencial: 'presencial',
+  online: 'online',
   justificada: 'justificada',
 } as const;

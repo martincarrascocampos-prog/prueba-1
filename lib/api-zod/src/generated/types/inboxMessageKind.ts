@@ -11,6 +11,5 @@ export type InboxMessageKind = typeof InboxMessageKind[keyof typeof InboxMessage
 
 export const InboxMessageKind = {
   citacion: 'citacion',
-  consulta: 'consulta',
   informativo: 'informativo',
 } as const;

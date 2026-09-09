@@ -14,7 +14,7 @@ import { Label } from "@/components/ui/label";
 import { Spinner } from "@/components/ui/spinner";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { Mail, CheckCircle2, Clock, Send, AlertTriangle, FileText } from "lucide-react";
+import { Mail, CheckCircle2, Clock, Send, AlertTriangle, FileText, MapPin, Wifi } from "lucide-react";
 
 const MOTIVOS = [
   "Motivos académicos (evaluación o clase)",
@@ -26,9 +26,10 @@ const MOTIVOS = [
 
 const ETIQUETA: Record<string, { label: string; clase: string }> = {
   citacion: { label: "CITACIÓN", clase: "bg-violet-700" },
-  consulta: { label: "CONSULTA", clase: "bg-blue-700" },
   informativo: { label: "INFORMATIVO", clase: "bg-gray-500" },
 };
+
+type Respuesta = "presencial" | "online" | "justificada";
 
 
 // Los errores del servidor traen la causa en el mensaje (incluye el código
@@ -59,7 +60,7 @@ function Responder({ mensaje }: { mensaje: InboxMessage }) {
     ? new Date(mensaje.replyDeadline).getTime() < Date.now()
     : false;
 
-  const enviar = (reply: "confirmada" | "justificada") => {
+  const enviar = (reply: Respuesta) => {
     responder.mutate(
       {
         id: mensaje.id,
@@ -69,9 +70,11 @@ function Responder({ mensaje }: { mensaje: InboxMessage }) {
         onSuccess: () => {
           queryClient.invalidateQueries({ queryKey: getListMyMessagesQueryKey() });
           toast({
-            title: reply === "confirmada"
-              ? "Asistencia confirmada"
-              : "Justificación enviada — queda pendiente de revisión",
+            title: reply === "justificada"
+              ? "Justificación enviada — queda pendiente de revisión"
+              : reply === "presencial"
+                ? "Confirmaste asistencia presencial"
+                : "Confirmaste asistencia online",
           });
           setAbierto(false);
           setDetalle("");
@@ -87,22 +90,26 @@ function Responder({ mensaje }: { mensaje: InboxMessage }) {
 
   // Ya respondió: se muestra el estado, con opción de cambiarlo si hay plazo.
   if (mensaje.reply) {
-    const confirmada = mensaje.reply === "confirmada";
+    const justifico = mensaje.reply === "justificada";
+    const presencial = mensaje.reply === "presencial";
+    const borde = justifico ? "border-l-orange-500 bg-orange-50/50"
+      : presencial ? "border-l-lime-600 bg-lime-50/50" : "border-l-blue-600 bg-blue-50/50";
     return (
-      <div className={`border border-l-[3px] p-3.5 ${
-        confirmada ? "border-l-lime-600 bg-lime-50/50" : "border-l-orange-500 bg-orange-50/50"}`}>
+      <div className={`border border-l-[3px] p-3.5 ${borde}`}>
         <div className="flex items-start gap-2.5">
-          {confirmada
-            ? <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-lime-700" />
-            : <FileText className="mt-0.5 h-4 w-4 shrink-0 text-orange-700" />}
+          {justifico ? <FileText className="mt-0.5 h-4 w-4 shrink-0 text-orange-700" />
+            : presencial ? <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-lime-700" />
+            : <Wifi className="mt-0.5 h-4 w-4 shrink-0 text-blue-700" />}
           <div className="min-w-0 flex-1">
             <div className="text-sm font-bold">
-              {confirmada ? "Confirmaste tu asistencia" : "Justificaste tu inasistencia"}
+              {justifico ? "Justificaste tu inasistencia"
+                : presencial ? "Confirmaste asistencia presencial"
+                : "Confirmaste asistencia online"}
             </div>
             {mensaje.replyReason && (
               <p className="mt-1 text-sm leading-relaxed text-muted-foreground">{mensaje.replyReason}</p>
             )}
-            {!confirmada && (
+            {justifico && (
               <div className="mt-2">
                 {mensaje.review === "aceptada" ? (
                   <span className="inline-block bg-lime-700 px-2 py-0.5 text-[10px] font-bold tracking-wider text-white">
@@ -135,8 +142,12 @@ function Responder({ mensaje }: { mensaje: InboxMessage }) {
           <div className="mt-3 border-t pt-3">
             <div className="flex flex-wrap gap-2">
               <Button size="sm" className="rounded-none bg-lime-700 hover:bg-lime-800"
-                disabled={responder.isPending} onClick={() => enviar("confirmada")}>
-                Confirmar asistencia
+                disabled={responder.isPending} onClick={() => enviar("presencial")}>
+                <MapPin className="mr-1.5 h-3.5 w-3.5" /> Presencial
+              </Button>
+              <Button size="sm" className="rounded-none bg-blue-700 hover:bg-blue-800"
+                disabled={responder.isPending} onClick={() => enviar("online")}>
+                <Wifi className="mr-1.5 h-3.5 w-3.5" /> Online
               </Button>
               <Button size="sm" variant="outline" className="rounded-none"
                 onClick={() => setAbierto(false)}>Cancelar</Button>
@@ -154,7 +165,7 @@ function Responder({ mensaje }: { mensaje: InboxMessage }) {
         <div className="text-sm">
           <b>Plazo vencido</b>
           <p className="text-xs text-muted-foreground">
-            El plazo cerró el {fecha(mensaje.replyDeadline)}. Escríbele a la Mesa si tu situación cambió.
+            El plazo cerró el {fecha(mensaje.replyDeadline)}. Habla con la Mesa si tu situación cambió.
           </p>
         </div>
       </div>
@@ -175,13 +186,17 @@ function Responder({ mensaje }: { mensaje: InboxMessage }) {
       )}
 
       {!abierto ? (
-        <div className="mt-3 flex flex-wrap gap-2">
+        <div className="mt-3 grid gap-2 sm:grid-cols-3">
           <Button className="rounded-none bg-lime-700 hover:bg-lime-800"
-            disabled={responder.isPending} onClick={() => enviar("confirmada")}>
-            <CheckCircle2 className="mr-2 h-4 w-4" /> Confirmar asistencia
+            disabled={responder.isPending} onClick={() => enviar("presencial")}>
+            <MapPin className="mr-2 h-4 w-4" /> Asistiré presencial
+          </Button>
+          <Button className="rounded-none bg-blue-700 hover:bg-blue-800"
+            disabled={responder.isPending} onClick={() => enviar("online")}>
+            <Wifi className="mr-2 h-4 w-4" /> Asistiré online
           </Button>
           <Button variant="outline" className="rounded-none" onClick={() => setAbierto(true)}>
-            <FileText className="mr-2 h-4 w-4" /> Justificar inasistencia
+            <FileText className="mr-2 h-4 w-4" /> No podré asistir
           </Button>
         </div>
       ) : (
@@ -234,7 +249,7 @@ export default function MemberMessages() {
       <div className="mx-auto max-w-4xl space-y-5">
         <div className="border-b-2 border-gray-800 pb-4">
           <h1 className="flex items-center gap-2 text-2xl font-bold">
-            <Mail className="h-6 w-6" /> Correo interno
+            <Mail className="h-6 w-6" /> Mensajería Plenaria
           </h1>
           <p className="text-sm text-muted-foreground">
             Citaciones y avisos de la Mesa Directiva.
