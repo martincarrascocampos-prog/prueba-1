@@ -1,0 +1,244 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Archivo+Black&display=swap">
+  <style>
+    body { margin: 0; background: #ffffff; color: #1B2232;
+      font-family: Archivo, "Helvetica Neue", Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: #0F388A; text-decoration: none; } a:hover { color: #AD1F36; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+    .display { font-family: "Archivo Black", Archivo, Arial, sans-serif; font-weight: 400; letter-spacing: -0.02em; }
+  </style>
+</helmet>
+
+<div style="width: 1440px; background: #ffffff">
+
+  <div style="height: 38px; background: #1B2232; color: #C6CBD6; display: flex; align-items: center; justify-content: space-between; padding: 0 120px; font-size: 12px">
+    <span>Federación de Estudiantes de la Universidad de Chile</span>
+    <a href="#" style="display: flex; align-items: center; gap: 7px; color: #fff; font-size: 12px; font-weight: 600">
+      Sistema Plenario
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></svg>
+    </a>
+  </div>
+
+  <div style="height: 80px; border-bottom: 1px solid #E0E4EB; display: flex; align-items: center; justify-content: space-between; padding: 0 120px">
+    <div style="display: flex; align-items: center; gap: 14px">
+      <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true">
+        <rect width="40" height="40" fill="#0F388A"/>
+        <rect x="9" y="9" width="22" height="4.5" fill="#ffffff"/>
+        <rect x="9" y="17.75" width="14" height="4.5" fill="#ffffff"/>
+        <rect x="9" y="26.5" width="22" height="4.5" fill="#E5006D"/>
+      </svg>
+      <div class="display" style="font-size: 22px">FECh</div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 28px; font-size: 13.5px; font-weight: 500">
+      <a href="#" style="color: #1B2232">Inicio</a>
+      <a href="#" style="color: #1B2232">Representación</a>
+      <a href="#" style="color: #1B2232">El Pleno</a>
+      <a href="#" style="color: #1B2232; border-bottom: 2px solid #0F388A; padding-bottom: 3px">Bienestar</a>
+      <a href="#" style="color: #1B2232">Participación</a>
+      <a href="#" style="color: #1B2232">Transparencia</a>
+      <a href="#" style="color: #1B2232">Noticias</a>
+    </div>
+  </div>
+
+  <div style="padding: 56px 120px 36px; border-bottom: 1px solid #E0E4EB">
+    <div style="display: flex; align-items: baseline; gap: 18px">
+      <span class="display" style="font-size: 44px; color: #E0E4EB">04</span>
+      <h1 class="display" style="font-size: 44px; margin: 0">Bienestar y beneficios</h1>
+    </div>
+    <p style="font-size: 17px; color: #525F7A; margin: 14px 0 0; max-width: 720px; line-height: 1.55">
+      Nadie debería perder un beneficio por no saber que existía. Acá está qué te
+      corresponde, hasta cuándo, y en qué oficina se resuelve.
+    </p>
+  </div>
+
+  <!-- Buscador -->
+  <div style="padding: 40px 120px 0">
+    <div style="border: 1px solid #E0E4EB; border-top: 4px solid #047857; border-radius: 8px; padding: 28px">
+      <div style="font-size: 17px; font-weight: 700; margin-bottom: 16px">¿Qué necesitas resolver?</div>
+      <div style="display: grid; grid-template-columns: 1fr 240px 240px 130px; gap: 12px; align-items: end">
+        <div style="display: flex; flex-direction: column; gap: 7px">
+          <label style="font-size: 12.5px; font-weight: 600; color: #525F7A">Tu facultad</label>
+          <div style="border: 1px solid #C6CBD6; border-radius: 2px; height: 46px; display: flex; align-items: center; justify-content: space-between; padding: 0 14px">
+            <span style="font-size: 14px; color: #8B94A6">Selecciona tu unidad</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#525F7A" stroke-width="2.2" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 7px">
+          <label style="font-size: 12.5px; font-weight: 600; color: #525F7A">Tipo de apoyo</label>
+          <div style="border: 1px solid #C6CBD6; border-radius: 2px; height: 46px; display: flex; align-items: center; justify-content: space-between; padding: 0 14px">
+            <span style="font-size: 14px; color: #8B94A6">Todos</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#525F7A" stroke-width="2.2" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 7px">
+          <label style="font-size: 12.5px; font-weight: 600; color: #525F7A">Estado</label>
+          <div style="border: 1px solid #C6CBD6; border-radius: 2px; height: 46px; display: flex; align-items: center; justify-content: space-between; padding: 0 14px">
+            <span style="font-size: 14px">Postulaciones abiertas</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#525F7A" stroke-width="2.2" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+        </div>
+        <div style="background: #047857; color: #fff; height: 46px; border-radius: 2px; display: flex; align-items: center; justify-content: center; font-size: 14.5px; font-weight: 600">Buscar</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Resultados -->
+  <div style="padding: 36px 120px 0">
+    <div style="display: grid; grid-template-columns: 1fr 420px; gap: 32px">
+
+      <div style="display: flex; flex-direction: column; gap: 14px">
+        <div style="display: flex; align-items: baseline; justify-content: space-between">
+          <div style="font-size: 14px; color: #525F7A">[N] beneficios disponibles para [FACULTAD]</div>
+          <div style="font-size: 13px; color: #525F7A">Ordenar por: cierre más próximo</div>
+        </div>
+
+        <div style="border: 1px solid #E0E4EB; border-radius: 8px; padding: 22px; display: flex; gap: 20px">
+          <div style="width: 4px; background: #AD1F36; border-radius: 2px; flex-shrink: 0"></div>
+          <div style="flex-grow: 1">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px">
+              <span style="background: #FDE8EC; color: #AD1F36; border: 1px solid #F5C2CC; border-radius: 2px; padding: 3px 9px; font-size: 11px; font-weight: 700">CIERRA EN [N] DÍAS</span>
+              <span style="font-size: 11.5px; color: #525F7A">Beca de alimentación</span>
+            </div>
+            <div style="font-size: 17px; font-weight: 700">[Nombre del beneficio]</div>
+            <div style="font-size: 13.5px; color: #525F7A; margin-top: 7px; line-height: 1.55">
+              [Qué cubre, en una línea.] Requisitos: [requisito], [requisito].
+            </div>
+            <div style="display: flex; gap: 20px; margin-top: 14px; font-size: 12.5px; color: #525F7A">
+              <span>Postula en: [oficina]</span>
+              <span>Cierre: [FECHA]</span>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px; justify-content: center">
+            <div style="background: #0F388A; color: #fff; padding: 11px 20px; border-radius: 2px; font-size: 13.5px; font-weight: 600; white-space: nowrap">Cómo postular</div>
+            <div style="border: 1px solid #C6CBD6; padding: 11px 20px; border-radius: 2px; font-size: 13.5px; font-weight: 600; text-align: center; white-space: nowrap">Bases</div>
+          </div>
+        </div>
+
+        <div style="border: 1px solid #E0E4EB; border-radius: 8px; padding: 22px; display: flex; gap: 20px">
+          <div style="width: 4px; background: #047857; border-radius: 2px; flex-shrink: 0"></div>
+          <div style="flex-grow: 1">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px">
+              <span style="background: #E7F5EF; color: #047857; border: 1px solid #B8E0D0; border-radius: 2px; padding: 3px 9px; font-size: 11px; font-weight: 700">ABIERTA</span>
+              <span style="font-size: 11.5px; color: #525F7A">Apoyo de salud mental</span>
+            </div>
+            <div style="font-size: 17px; font-weight: 700">[Nombre del beneficio]</div>
+            <div style="font-size: 13.5px; color: #525F7A; margin-top: 7px; line-height: 1.55">
+              [Qué cubre, en una línea.] Requisitos: [requisito], [requisito].
+            </div>
+            <div style="display: flex; gap: 20px; margin-top: 14px; font-size: 12.5px; color: #525F7A">
+              <span>Postula en: [oficina]</span>
+              <span>Sin fecha de cierre</span>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px; justify-content: center">
+            <div style="background: #0F388A; color: #fff; padding: 11px 20px; border-radius: 2px; font-size: 13.5px; font-weight: 600; white-space: nowrap">Cómo postular</div>
+            <div style="border: 1px solid #C6CBD6; padding: 11px 20px; border-radius: 2px; font-size: 13.5px; font-weight: 600; text-align: center; white-space: nowrap">Bases</div>
+          </div>
+        </div>
+
+        <div style="border: 1px solid #E0E4EB; border-radius: 8px; padding: 22px; display: flex; gap: 20px">
+          <div style="width: 4px; background: #1D4ED8; border-radius: 2px; flex-shrink: 0"></div>
+          <div style="flex-grow: 1">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px">
+              <span style="background: #E8EEFC; color: #1D4ED8; border: 1px solid #BFD0F7; border-radius: 2px; padding: 3px 9px; font-size: 11px; font-weight: 700">ABIERTA</span>
+              <span style="font-size: 11.5px; color: #525F7A">Material de estudio</span>
+            </div>
+            <div style="font-size: 17px; font-weight: 700">[Nombre del beneficio]</div>
+            <div style="font-size: 13.5px; color: #525F7A; margin-top: 7px; line-height: 1.55">
+              [Qué cubre, en una línea.] Requisitos: [requisito], [requisito].
+            </div>
+            <div style="display: flex; gap: 20px; margin-top: 14px; font-size: 12.5px; color: #525F7A">
+              <span>Postula en: [oficina]</span>
+              <span>Cierre: [FECHA]</span>
+            </div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 8px; justify-content: center">
+            <div style="background: #0F388A; color: #fff; padding: 11px 20px; border-radius: 2px; font-size: 13.5px; font-weight: 600; white-space: nowrap">Cómo postular</div>
+            <div style="border: 1px solid #C6CBD6; padding: 11px 20px; border-radius: 2px; font-size: 13.5px; font-weight: 600; text-align: center; white-space: nowrap">Bases</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mapa de oficinas -->
+      <div style="display: flex; flex-direction: column; gap: 14px">
+        <div style="font-size: 17px; font-weight: 700">Dónde ir</div>
+        <div style="border: 1px solid #E0E4EB; border-radius: 8px; overflow: hidden">
+          <svg width="418" height="270" viewBox="0 0 418 270" aria-hidden="true" style="display: block">
+            <rect width="418" height="270" fill="#F4F5F8"/>
+            <path d="M0 60 H418" stroke="#E0E4EB" stroke-width="8"/>
+            <path d="M0 170 H418" stroke="#E0E4EB" stroke-width="8"/>
+            <path d="M120 0 V270" stroke="#E0E4EB" stroke-width="8"/>
+            <path d="M290 0 V270" stroke="#E0E4EB" stroke-width="8"/>
+            <rect x="20" y="80" width="80" height="70" fill="#E7EAF0"/>
+            <rect x="150" y="80" width="110" height="70" fill="#E7EAF0"/>
+            <rect x="320" y="80" width="76" height="70" fill="#E7EAF0"/>
+            <rect x="150" y="190" width="110" height="60" fill="#E7EAF0"/>
+            <g>
+              <circle cx="205" cy="115" r="15" fill="#047857"/>
+              <path d="M205 138 199 124h12z" fill="#047857"/>
+              <circle cx="205" cy="115" r="5" fill="#fff"/>
+            </g>
+            <g>
+              <circle cx="60" cy="200" r="12" fill="#1D4ED8"/>
+              <path d="M60 219 55 207h10z" fill="#1D4ED8"/>
+              <circle cx="60" cy="200" r="4" fill="#fff"/>
+            </g>
+            <g>
+              <circle cx="355" cy="205" r="12" fill="#E5006D"/>
+              <path d="M355 224 350 212h10z" fill="#E5006D"/>
+              <circle cx="355" cy="205" r="4" fill="#fff"/>
+            </g>
+            <text x="12" y="262" font-family="Archivo, Arial" font-size="10.5" fill="#8B94A6">Mapa interactivo · [OpenStreetMap]</text>
+          </svg>
+          <div style="padding: 18px; display: flex; flex-direction: column; gap: 14px; border-top: 1px solid #E0E4EB">
+            <div style="display: flex; gap: 12px">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#047857" stroke-width="2" stroke-linecap="round" style="flex-shrink: 0; margin-top: 2px"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>
+              <div>
+                <div style="font-size: 14px; font-weight: 600">Bienestar FECh · Casa Central</div>
+                <div style="font-size: 12.5px; color: #525F7A; margin-top: 3px">[DIRECCIÓN] · [HORARIO]</div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 12px">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1D4ED8" stroke-width="2" stroke-linecap="round" style="flex-shrink: 0; margin-top: 2px"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>
+              <div>
+                <div style="font-size: 14px; font-weight: 600">Bienestar Estudiantil [CAMPUS]</div>
+                <div style="font-size: 12.5px; color: #525F7A; margin-top: 3px">[DIRECCIÓN] · [HORARIO]</div>
+              </div>
+            </div>
+            <div style="display: flex; gap: 12px">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#E5006D" stroke-width="2" stroke-linecap="round" style="flex-shrink: 0; margin-top: 2px"><path d="M12 21s7-5.5 7-11a7 7 0 1 0-14 0c0 5.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>
+              <div>
+                <div style="font-size: 14px; font-weight: 600">Salud Estudiantil (SEMDA)</div>
+                <div style="font-size: 12.5px; color: #525F7A; margin-top: 3px">[DIRECCIÓN] · [HORARIO]</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background: #FDF6E7; border: 1px solid #F2D99A; border-radius: 4px; padding: 18px; display: flex; gap: 12px">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#8A5A00" stroke-width="2" stroke-linecap="round" style="flex-shrink: 0; margin-top: 1px"><circle cx="12" cy="12" r="9"/><path d="M12 8v.01"/><path d="M12 12v4"/></svg>
+          <div style="font-size: 13px; color: #6B4700; line-height: 1.55">
+            <strong>Urgencia</strong> — si necesitas apoyo inmediato, escribe a
+            [CORREO DE URGENCIA] o llama al [TELÉFONO]. Responde una persona, no un
+            formulario.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div style="height: 60px"></div>
+
+</div>
+</x-dc>
+</body>
+</html>

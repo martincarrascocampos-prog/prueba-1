@@ -1,0 +1,196 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Archivo+Black&display=swap">
+  <style>
+    body { margin: 0; background: #ffffff; color: #1B2232;
+      font-family: Archivo, "Helvetica Neue", Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: #0F388A; text-decoration: none; } a:hover { color: #AD1F36; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+    .display { font-family: "Archivo Black", Archivo, Arial, sans-serif; font-weight: 400; letter-spacing: -0.02em; }
+    .hex { font-size: 11px; color: #8B94A6; font-family: ui-monospace, "SF Mono", Menlo, monospace; }
+  </style>
+</helmet>
+
+<div style="width: 1200px; background: #ffffff; padding: 48px 56px 56px">
+
+  <div style="display: flex; align-items: baseline; justify-content: space-between; border-bottom: 2px solid #1B2232; padding-bottom: 16px; margin-bottom: 32px">
+    <h1 class="display" style="font-size: 34px; margin: 0">Identidad y componentes</h1>
+    <div style="font-size: 13px; color: #525F7A">Los mismos tokens que ya usa el Sistema Plenario</div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 44px">
+
+    <!-- Marca y tipografía -->
+    <div style="display: flex; flex-direction: column; gap: 28px">
+      <div>
+        <div class="eyebrow" style="color: #525F7A; margin-bottom: 14px">Marca</div>
+        <div style="display: flex; align-items: center; gap: 28px">
+          <svg width="72" height="72" viewBox="0 0 40 40" aria-hidden="true">
+            <rect width="40" height="40" fill="#0F388A"/>
+            <rect x="9" y="9" width="22" height="4.5" fill="#ffffff"/>
+            <rect x="9" y="17.75" width="14" height="4.5" fill="#ffffff"/>
+            <rect x="9" y="26.5" width="22" height="4.5" fill="#E5006D"/>
+          </svg>
+          <svg width="72" height="72" viewBox="0 0 40 40" aria-hidden="true">
+            <rect width="40" height="40" fill="#1B2232"/>
+            <rect x="9" y="9" width="22" height="4.5" fill="#ffffff"/>
+            <rect x="9" y="17.75" width="14" height="4.5" fill="#ffffff"/>
+            <rect x="9" y="26.5" width="22" height="4.5" fill="#E5006D"/>
+          </svg>
+          <div style="font-size: 13px; color: #525F7A; line-height: 1.55; max-width: 260px">
+            Marca de trabajo: tres barras (la F) con la última en magenta.
+            <strong>Reemplazar por el escudo oficial de la FECh</strong> cuando esté
+            en vectorial.
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="eyebrow" style="color: #525F7A; margin-bottom: 14px">Tipografía</div>
+        <div style="display: flex; flex-direction: column; gap: 14px">
+          <div style="border-bottom: 1px solid #E0E4EB; padding-bottom: 14px">
+            <div class="display" style="font-size: 40px; line-height: 1">Archivo Black</div>
+            <div style="font-size: 12px; color: #8B94A6; margin-top: 6px">Titulares y cifras · 28–62 px</div>
+          </div>
+          <div style="border-bottom: 1px solid #E0E4EB; padding-bottom: 14px">
+            <div style="font-size: 26px; font-weight: 700">Archivo Bold</div>
+            <div style="font-size: 12px; color: #8B94A6; margin-top: 6px">Subtítulos y nombres · 15–26 px</div>
+          </div>
+          <div>
+            <div style="font-size: 16px; font-weight: 400; line-height: 1.55">Archivo Regular — texto corrido, con interlínea 1,55 y ancho máximo de 720 px para que se lea sin esfuerzo.</div>
+            <div style="font-size: 12px; color: #8B94A6; margin-top: 6px">Cuerpo · 13–18 px</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="eyebrow" style="color: #525F7A; margin-bottom: 14px">Geometría</div>
+        <div style="display: flex; gap: 24px; align-items: flex-end">
+          <div style="text-align: center">
+            <div style="width: 74px; height: 56px; border: 1px solid #C6CBD6; border-radius: 2px"></div>
+            <div style="font-size: 11.5px; color: #525F7A; margin-top: 8px">2 px<br>controles</div>
+          </div>
+          <div style="text-align: center">
+            <div style="width: 74px; height: 56px; border: 1px solid #C6CBD6; border-radius: 4px"></div>
+            <div style="font-size: 11.5px; color: #525F7A; margin-top: 8px">4 px<br>bloques</div>
+          </div>
+          <div style="text-align: center">
+            <div style="width: 74px; height: 56px; border: 1px solid #C6CBD6; border-radius: 8px"></div>
+            <div style="font-size: 11.5px; color: #525F7A; margin-top: 8px">8 px<br>tarjetas</div>
+          </div>
+          <div style="font-size: 12.5px; color: #525F7A; line-height: 1.55; max-width: 200px">
+            Radios cortos, bordes de 1 px, sin sombras difusas. Sobrio y geométrico.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Color -->
+    <div style="display: flex; flex-direction: column; gap: 28px">
+      <div>
+        <div class="eyebrow" style="color: #525F7A; margin-bottom: 14px">Institucional</div>
+        <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px">
+          <div>
+            <div style="height: 72px; background: #0F388A; border-radius: 4px"></div>
+            <div style="font-size: 12.5px; font-weight: 600; margin-top: 8px">Azul FECh</div>
+            <div class="hex">#0F388A</div>
+          </div>
+          <div>
+            <div style="height: 72px; background: #AD1F36; border-radius: 4px"></div>
+            <div style="font-size: 12.5px; font-weight: 600; margin-top: 8px">Alerta</div>
+            <div class="hex">#AD1F36</div>
+          </div>
+          <div>
+            <div style="height: 72px; background: #1B2232; border-radius: 4px"></div>
+            <div style="font-size: 12.5px; font-weight: 600; margin-top: 8px">Tinta</div>
+            <div class="hex">#1B2232</div>
+          </div>
+          <div>
+            <div style="height: 72px; background: #F4F5F8; border: 1px solid #E0E4EB; border-radius: 4px"></div>
+            <div style="font-size: 12.5px; font-weight: 600; margin-top: 8px">Fondo suave</div>
+            <div class="hex">#F4F5F8</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="eyebrow" style="color: #525F7A; margin-bottom: 6px">Estamentos: color + forma</div>
+        <div style="font-size: 12.5px; color: #525F7A; margin-bottom: 14px; line-height: 1.5">
+          La forma no es decoración: distingue los grupos en blanco y negro y para
+          quien no diferencia bien naranja de magenta.
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px">
+          <div style="display: flex; align-items: center; gap: 14px">
+            <span style="width: 34px; height: 34px; background: #E5006D; border-radius: 3px; display: flex; align-items: center; justify-content: center">
+              <svg width="20" height="20" viewBox="0 0 18 18"><path d="M9 1l2.3 5.4 5.7.4-4.4 3.7 1.4 5.6L9 13.2 4 16.1l1.4-5.6L1 6.8l5.7-.4z" fill="#fff"/></svg>
+            </span>
+            <span style="font-size: 14px; font-weight: 600; width: 200px">Mesa Directiva</span>
+            <span class="hex">#E5006D · estrella</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 14px">
+            <span style="width: 34px; height: 34px; background: #EA580C; border-radius: 3px; display: flex; align-items: center; justify-content: center">
+              <svg width="20" height="20" viewBox="0 0 18 18"><path d="M9 2 16.5 15.5H1.5Z" fill="#fff"/></svg>
+            </span>
+            <span style="font-size: 14px; font-weight: 600; width: 200px">COSEFECH</span>
+            <span class="hex">#EA580C · triángulo</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 14px">
+            <span style="width: 34px; height: 34px; background: #1D4ED8; border-radius: 3px; display: flex; align-items: center; justify-content: center">
+              <svg width="20" height="20" viewBox="0 0 18 18"><circle cx="9" cy="9" r="7" fill="#fff"/></svg>
+            </span>
+            <span style="font-size: 14px; font-weight: 600; width: 200px">Consejerías FECh</span>
+            <span class="hex">#1D4ED8 · círculo</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 14px">
+            <span style="width: 34px; height: 34px; background: #047857; border-radius: 3px; display: flex; align-items: center; justify-content: center">
+              <svg width="20" height="20" viewBox="0 0 18 18"><rect x="2" y="2" width="14" height="14" fill="#fff"/></svg>
+            </span>
+            <span style="font-size: 14px; font-weight: 600; width: 200px">Centros de Estudiantes</span>
+            <span class="hex">#047857 · cuadrado</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 14px">
+            <span style="width: 34px; height: 34px; background: #6D28D9; border-radius: 3px; display: flex; align-items: center; justify-content: center">
+              <svg width="20" height="20" viewBox="0 0 18 18"><path d="M9 1 17 9 9 17 1 9Z" fill="#fff"/></svg>
+            </span>
+            <span style="font-size: 14px; font-weight: 600; width: 200px">Otros</span>
+            <span class="hex">#6D28D9 · rombo</span>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="eyebrow" style="color: #525F7A; margin-bottom: 14px">Componentes</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center">
+          <div style="background: #0F388A; color: #fff; padding: 13px 22px; border-radius: 2px; font-size: 14px; font-weight: 600">Acción principal</div>
+          <div style="border: 1px solid #C6CBD6; padding: 13px 22px; border-radius: 2px; font-size: 14px; font-weight: 600">Secundaria</div>
+          <div style="background: #1B2232; color: #fff; padding: 13px 22px; border-radius: 2px; font-size: 14px; font-weight: 600">Sistema Plenario ↗</div>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 14px">
+          <span style="background: #E7F5EF; color: #047857; border: 1px solid #B8E0D0; border-radius: 2px; padding: 4px 10px; font-size: 11.5px; font-weight: 700">APROBADA</span>
+          <span style="background: #FDE8EC; color: #AD1F36; border: 1px solid #F5C2CC; border-radius: 2px; padding: 4px 10px; font-size: 11.5px; font-weight: 700">RECHAZADA</span>
+          <span style="background: #F4F5F8; color: #525F7A; border: 1px solid #E0E4EB; border-radius: 2px; padding: 4px 10px; font-size: 11.5px; font-weight: 700">ABSTENCIÓN</span>
+          <span style="background: #FDF6E7; color: #8A5A00; border: 1px solid #F2D99A; border-radius: 2px; padding: 4px 10px; font-size: 11.5px; font-weight: 700">RETIRADE</span>
+        </div>
+        <div style="display: flex; gap: 12px; margin-top: 16px">
+          <div style="flex-grow: 1; border: 1px solid #C6CBD6; border-radius: 2px; height: 46px; display: flex; align-items: center; padding: 0 14px; font-size: 14px; color: #8B94A6">Campo de texto</div>
+          <div style="width: 180px; border: 1px solid #C6CBD6; border-radius: 2px; height: 46px; display: flex; align-items: center; justify-content: space-between; padding: 0 14px; font-size: 14px; color: #8B94A6">
+            Selector
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#525F7A" stroke-width="2.2" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

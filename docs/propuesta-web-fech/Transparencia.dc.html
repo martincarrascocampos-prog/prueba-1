@@ -1,0 +1,209 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Archivo+Black&display=swap">
+  <style>
+    body { margin: 0; background: #ffffff; color: #1B2232;
+      font-family: Archivo, "Helvetica Neue", Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: #0F388A; text-decoration: none; } a:hover { color: #AD1F36; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+    .display { font-family: "Archivo Black", Archivo, Arial, sans-serif; font-weight: 400; letter-spacing: -0.02em; }
+  </style>
+</helmet>
+
+<div style="width: 1440px; background: #ffffff">
+
+  <div style="height: 38px; background: #1B2232; color: #C6CBD6; display: flex; align-items: center; justify-content: space-between; padding: 0 120px; font-size: 12px">
+    <span>Federación de Estudiantes de la Universidad de Chile</span>
+    <a href="#" style="display: flex; align-items: center; gap: 7px; color: #fff; font-size: 12px; font-weight: 600">
+      Sistema Plenario
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></svg>
+    </a>
+  </div>
+
+  <div style="height: 80px; border-bottom: 1px solid #E0E4EB; display: flex; align-items: center; justify-content: space-between; padding: 0 120px">
+    <div style="display: flex; align-items: center; gap: 14px">
+      <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true">
+        <rect width="40" height="40" fill="#0F388A"/>
+        <rect x="9" y="9" width="22" height="4.5" fill="#ffffff"/>
+        <rect x="9" y="17.75" width="14" height="4.5" fill="#ffffff"/>
+        <rect x="9" y="26.5" width="22" height="4.5" fill="#E5006D"/>
+      </svg>
+      <div class="display" style="font-size: 22px">FECh</div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 28px; font-size: 13.5px; font-weight: 500">
+      <a href="#" style="color: #1B2232">Inicio</a>
+      <a href="#" style="color: #1B2232">Representación</a>
+      <a href="#" style="color: #1B2232">El Pleno</a>
+      <a href="#" style="color: #1B2232">Bienestar</a>
+      <a href="#" style="color: #1B2232">Participación</a>
+      <a href="#" style="color: #1B2232; border-bottom: 2px solid #0F388A; padding-bottom: 3px">Transparencia</a>
+      <a href="#" style="color: #1B2232">Noticias</a>
+    </div>
+  </div>
+
+  <div style="padding: 56px 120px 36px; border-bottom: 1px solid #E0E4EB">
+    <div style="display: flex; align-items: baseline; gap: 18px">
+      <span class="display" style="font-size: 44px; color: #E0E4EB">06</span>
+      <h1 class="display" style="font-size: 44px; margin: 0">Cuentas claras</h1>
+    </div>
+    <p style="font-size: 17px; color: #525F7A; margin: 14px 0 0; max-width: 720px; line-height: 1.55">
+      La FECh administra recursos que son de las y los estudiantes. Publicarlos no
+      es un gesto de buena voluntad: es la condición para que alguien confíe.
+    </p>
+  </div>
+
+  <!-- Cifras del periodo -->
+  <div style="padding: 44px 120px 0">
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px">
+      <div style="border: 1px solid #E0E4EB; border-top: 4px solid #1D4ED8; border-radius: 8px; padding: 26px">
+        <div class="eyebrow" style="color: #525F7A">Ingresos del periodo</div>
+        <div class="display" style="font-size: 34px; margin-top: 12px">$ [MONTO]</div>
+        <div style="font-size: 13px; color: #525F7A; margin-top: 8px">Aporte estudiantil, convenios y actividades</div>
+      </div>
+      <div style="border: 1px solid #E0E4EB; border-top: 4px solid #EA580C; border-radius: 8px; padding: 26px">
+        <div class="eyebrow" style="color: #525F7A">Egresos ejecutados</div>
+        <div class="display" style="font-size: 34px; margin-top: 12px">$ [MONTO]</div>
+        <div style="font-size: 13px; color: #525F7A; margin-top: 8px">Con respaldo documental por cada partida</div>
+      </div>
+      <div style="border: 1px solid #E0E4EB; border-top: 4px solid #047857; border-radius: 8px; padding: 26px">
+        <div class="eyebrow" style="color: #525F7A">Saldo disponible</div>
+        <div class="display" style="font-size: 34px; margin-top: 12px">$ [MONTO]</div>
+        <div style="font-size: 13px; color: #525F7A; margin-top: 8px">Al cierre de [MES] de [AAAA]</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Figura: ingresos y egresos -->
+  <div style="padding: 40px 120px 0">
+    <div style="border: 1px solid #E0E4EB; border-radius: 8px; padding: 30px; display: grid; grid-template-columns: 1fr 320px; gap: 40px">
+      <div>
+        <div style="display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 4px">
+          <h2 style="font-size: 19px; font-weight: 700; margin: 0">Ingresos y egresos por mes</h2>
+          <span style="border: 1px solid #C6CBD6; border-radius: 2px; padding: 4px 9px; font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #525F7A; white-space: nowrap">Cifras de ejemplo</span>
+        </div>
+        <div style="font-size: 13px; color: #525F7A; margin-bottom: 20px">
+          Periodo [MES]–[MES] de [AAAA] · pesos chilenos
+        </div>
+
+        <div style="display: flex; gap: 22px; margin-bottom: 14px; font-size: 13px">
+          <div style="display: flex; align-items: center; gap: 8px">
+            <span style="width: 12px; height: 12px; background: #1D4ED8; border-radius: 2px; display: block"></span> Ingresos
+          </div>
+          <div style="display: flex; align-items: center; gap: 8px">
+            <span style="width: 12px; height: 12px; background: #EA580C; border-radius: 2px; display: block"></span> Egresos
+          </div>
+        </div>
+
+        <svg width="700" height="300" viewBox="0 0 700 300" role="img" aria-label="Ingresos y egresos por mes, cifras de ejemplo">
+          <!-- Grilla recesiva -->
+          <line x1="70" y1="250" x2="690" y2="250" stroke="#C6CBD6" stroke-width="1"/>
+          <line x1="70" y1="192" x2="690" y2="192" stroke="#EEF0F4" stroke-width="1"/>
+          <line x1="70" y1="134" x2="690" y2="134" stroke="#EEF0F4" stroke-width="1"/>
+          <line x1="70" y1="76" x2="690" y2="76" stroke="#EEF0F4" stroke-width="1"/>
+          <line x1="70" y1="18" x2="690" y2="18" stroke="#EEF0F4" stroke-width="1"/>
+          <text x="62" y="254" text-anchor="end" font-family="Archivo, Arial" font-size="11" fill="#8B94A6">0</text>
+          <text x="62" y="196" text-anchor="end" font-family="Archivo, Arial" font-size="11" fill="#8B94A6">[M]</text>
+          <text x="62" y="138" text-anchor="end" font-family="Archivo, Arial" font-size="11" fill="#8B94A6">[M]</text>
+          <text x="62" y="80" text-anchor="end" font-family="Archivo, Arial" font-size="11" fill="#8B94A6">[M]</text>
+          <text x="62" y="22" text-anchor="end" font-family="Archivo, Arial" font-size="11" fill="#8B94A6">[M]</text>
+
+          <!-- Mes 1 -->
+          <rect x="86" y="100" width="34" height="150" rx="4" fill="#1D4ED8"/><rect x="86" y="246" width="34" height="4" fill="#1D4ED8"/>
+          <rect x="122" y="130" width="34" height="120" rx="4" fill="#EA580C"/><rect x="122" y="246" width="34" height="4" fill="#EA580C"/>
+          <text x="121" y="270" text-anchor="middle" font-family="Archivo, Arial" font-size="11.5" fill="#525F7A">[MES]</text>
+          <!-- Mes 2 -->
+          <rect x="189" y="85" width="34" height="165" rx="4" fill="#1D4ED8"/><rect x="189" y="246" width="34" height="4" fill="#1D4ED8"/>
+          <rect x="225" y="112" width="34" height="138" rx="4" fill="#EA580C"/><rect x="225" y="246" width="34" height="4" fill="#EA580C"/>
+          <text x="224" y="270" text-anchor="middle" font-family="Archivo, Arial" font-size="11.5" fill="#525F7A">[MES]</text>
+          <!-- Mes 3 -->
+          <rect x="292" y="92" width="34" height="158" rx="4" fill="#1D4ED8"/><rect x="292" y="246" width="34" height="4" fill="#1D4ED8"/>
+          <rect x="328" y="105" width="34" height="145" rx="4" fill="#EA580C"/><rect x="328" y="246" width="34" height="4" fill="#EA580C"/>
+          <text x="327" y="270" text-anchor="middle" font-family="Archivo, Arial" font-size="11.5" fill="#525F7A">[MES]</text>
+          <!-- Mes 4 -->
+          <rect x="395" y="78" width="34" height="172" rx="4" fill="#1D4ED8"/><rect x="395" y="246" width="34" height="4" fill="#1D4ED8"/>
+          <rect x="431" y="120" width="34" height="130" rx="4" fill="#EA580C"/><rect x="431" y="246" width="34" height="4" fill="#EA580C"/>
+          <text x="430" y="270" text-anchor="middle" font-family="Archivo, Arial" font-size="11.5" fill="#525F7A">[MES]</text>
+          <!-- Mes 5 -->
+          <rect x="498" y="82" width="34" height="168" rx="4" fill="#1D4ED8"/><rect x="498" y="246" width="34" height="4" fill="#1D4ED8"/>
+          <rect x="534" y="95" width="34" height="155" rx="4" fill="#EA580C"/><rect x="534" y="246" width="34" height="4" fill="#EA580C"/>
+          <text x="533" y="270" text-anchor="middle" font-family="Archivo, Arial" font-size="11.5" fill="#525F7A">[MES]</text>
+          <!-- Mes 6, con etiqueta directa -->
+          <rect x="601" y="70" width="34" height="180" rx="4" fill="#1D4ED8"/><rect x="601" y="246" width="34" height="4" fill="#1D4ED8"/>
+          <rect x="637" y="102" width="34" height="148" rx="4" fill="#EA580C"/><rect x="637" y="246" width="34" height="4" fill="#EA580C"/>
+          <text x="618" y="62" text-anchor="middle" font-family="Archivo, Arial" font-size="11" font-weight="600" fill="#525F7A">[M]</text>
+          <text x="654" y="94" text-anchor="middle" font-family="Archivo, Arial" font-size="11" font-weight="600" fill="#525F7A">[M]</text>
+          <text x="636" y="270" text-anchor="middle" font-family="Archivo, Arial" font-size="11.5" fill="#525F7A">[MES]</text>
+        </svg>
+
+        <div style="font-size: 12.5px; color: #525F7A; margin-top: 6px">
+          Cada barra se puede abrir para ver las partidas que la componen, o
+          descargar la tabla completa.
+        </div>
+      </div>
+
+      <!-- Documentos -->
+      <div style="display: flex; flex-direction: column; gap: 12px">
+        <div class="eyebrow" style="color: #525F7A; margin-bottom: 2px">Documentos oficiales</div>
+        <div style="border: 1px solid #E0E4EB; border-radius: 4px; padding: 16px; display: flex; align-items: center; justify-content: space-between; gap: 14px">
+          <div>
+            <div style="font-size: 14px; font-weight: 600">Presupuesto [AAAA]</div>
+            <div style="font-size: 12px; color: #8B94A6; margin-top: 3px">PDF · aprobado en pleno N° [NN]</div>
+          </div>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0F388A" stroke-width="2" stroke-linecap="round"><path d="M12 4v11"/><path d="m7 12 5 5 5-5"/><path d="M4 20h16"/></svg>
+        </div>
+        <div style="border: 1px solid #E0E4EB; border-radius: 4px; padding: 16px; display: flex; align-items: center; justify-content: space-between; gap: 14px">
+          <div>
+            <div style="font-size: 14px; font-weight: 600">Balance semestral</div>
+            <div style="font-size: 12px; color: #8B94A6; margin-top: 3px">PDF · [MES] de [AAAA]</div>
+          </div>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0F388A" stroke-width="2" stroke-linecap="round"><path d="M12 4v11"/><path d="m7 12 5 5 5-5"/><path d="M4 20h16"/></svg>
+        </div>
+        <div style="border: 1px solid #E0E4EB; border-radius: 4px; padding: 16px; display: flex; align-items: center; justify-content: space-between; gap: 14px">
+          <div>
+            <div style="font-size: 14px; font-weight: 600">Rendición de fondos concursables</div>
+            <div style="font-size: 12px; color: #8B94A6; margin-top: 3px">Planilla · actualizada al [FECHA]</div>
+          </div>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0F388A" stroke-width="2" stroke-linecap="round"><path d="M12 4v11"/><path d="m7 12 5 5 5-5"/><path d="M4 20h16"/></svg>
+        </div>
+        <div style="border: 1px solid #E0E4EB; border-radius: 4px; padding: 16px; display: flex; align-items: center; justify-content: space-between; gap: 14px">
+          <div>
+            <div style="font-size: 14px; font-weight: 600">Compras públicas U. de Chile</div>
+            <div style="font-size: 12px; color: #8B94A6; margin-top: 3px">Sitio externo</div>
+          </div>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F388A" stroke-width="2.2" stroke-linecap="round"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Solicitud de información -->
+  <div style="padding: 44px 120px 60px">
+    <div style="background: #1B2232; border-radius: 8px; padding: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center">
+      <div>
+        <span class="eyebrow" style="color: #F2A60D">Fiscalización</span>
+        <h2 class="display" style="font-size: 32px; color: #fff; margin: 14px 0 0; line-height: 1.12">Pide la información<br>que falta.</h2>
+        <p style="font-size: 15.5px; color: #C6CBD6; margin: 16px 0 0; line-height: 1.6; max-width: 440px">
+          Cualquier estudiante puede solicitar un antecedente que no esté publicado.
+          La solicitud queda con folio, con plazo de respuesta y visible para todes.
+        </p>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 14px">
+        <div style="background: #2A3446; border-radius: 4px; height: 46px; display: flex; align-items: center; padding: 0 16px; font-size: 14px; color: #8B94A6">Tu correo institucional</div>
+        <div style="background: #2A3446; border-radius: 4px; height: 100px; padding: 14px 16px; font-size: 14px; color: #8B94A6">Qué antecedente necesitas</div>
+        <div style="background: #F2A60D; color: #1B2232; padding: 15px; border-radius: 2px; font-size: 15px; font-weight: 700; text-align: center">Enviar solicitud</div>
+        <div style="font-size: 12px; color: #8B94A6; text-align: center">Plazo de respuesta comprometido: [N] días hábiles</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>

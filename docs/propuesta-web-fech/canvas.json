@@ -1,0 +1,78 @@
+{
+  "artboards": [
+    { "file": "Main.dc.html", "title": "Inicio", "x": 0, "y": 0, "w": 1440, "h": 3100, "print": "flow" },
+    { "file": "Pleno.dc.html", "title": "El Pleno en tiempo real", "x": 1560, "y": 0, "w": 1440, "h": 2100, "print": "flow" },
+    { "file": "Representacion.dc.html", "title": "Quién te representa", "x": 3120, "y": 0, "w": 1440, "h": 1800, "print": "flow" },
+    { "file": "Transparencia.dc.html", "title": "Cuentas claras", "x": 0, "y": 3400, "w": 1440, "h": 1600, "print": "flow" },
+    { "file": "Bienestar.dc.html", "title": "Bienestar y beneficios", "x": 1560, "y": 3400, "w": 1440, "h": 1350, "print": "flow" },
+    { "file": "Arquitectura.dc.html", "title": "Mapa del sitio", "x": 0, "y": 5300, "w": 1440, "h": 1150 },
+    { "file": "Movil.dc.html", "title": "Inicio en móvil", "x": 1560, "y": 5300, "w": 390, "h": 2000, "print": "flow" },
+    { "file": "Sistema.dc.html", "title": "Identidad y componentes", "x": 2050, "y": 5300, "w": 1200, "h": 900 }
+  ],
+  "annotations": [
+    {
+      "id": "brief",
+      "x": 0,
+      "y": -560,
+      "w": 900,
+      "text": "PROPUESTA v.2 — www.fech.cl\n\nBase: tu presentación «Propuesta de Modernización Digital» (10 secciones) + el sistema de diseño que ya usa el Sistema Plenario.\n\nDos decisiones de fondo:\n1. El sitio manda, el sistema es una herramienta. El Sistema Plenario entra por la esquina superior derecha, en la barra de servicio. No compite con el contenido.\n2. Las 10 secciones de la presentación caben en 7 entradas de menú. Ver el artboard «Mapa del sitio».\n\nTodo lo que va entre corchetes — [Nombre], [MONTO], [FECHA] — es un dato real que tú tienes que llenar. No inventé ninguno."
+    },
+    {
+      "id": "n-inicio",
+      "x": 0,
+      "y": -250,
+      "w": 400,
+      "text": "INICIO\nHub, no laberinto. La franja roja del pleno en vivo solo aparece cuando hay sesión abierta: el resto del tiempo la portada respira.\nEl acceso al Sistema Plenario vive arriba a la derecha."
+    },
+    {
+      "id": "n-pleno",
+      "x": 1560,
+      "y": -250,
+      "w": 400,
+      "text": "EL PLENO\nEs la cara pública de lo que ya construimos: quórum en torta, tabla en curso, uso de la palabra, hemiciclo con forma por estamento, y el archivo de actas y audios.\nAbajo, el puente al sistema interno."
+    },
+    {
+      "id": "n-representacion",
+      "x": 3120,
+      "y": -250,
+      "w": 400,
+      "text": "REPRESENTACIÓN\nMesa con fotos, consejerías agrupadas por campus y buscador de Centros de Estudiantes con su ponderación en el pleno.\nLos campus salen del mapa que hay en el código, que sigue pendiente de que lo corrijas."
+    },
+    {
+      "id": "n-transparencia",
+      "x": 0,
+      "y": 3160,
+      "w": 400,
+      "text": "CUENTAS CLARAS\nTres cifras arriba, el gráfico de ingresos y egresos al medio, los documentos oficiales al lado.\nAbajo, solicitud de información con folio y plazo comprometido: eso es lo que convierte publicar en fiscalizar."
+    },
+    {
+      "id": "n-bienestar",
+      "x": 1560,
+      "y": 3160,
+      "w": 400,
+      "text": "BIENESTAR\nLo primero no es un texto explicativo, es un buscador: facultad + tipo de apoyo + estado.\nCada resultado dice hasta cuándo y en qué oficina. El recuadro amarillo es el canal de urgencia."
+    },
+    {
+      "id": "n-arquitectura",
+      "x": 0,
+      "y": 5060,
+      "w": 420,
+      "text": "MAPA DEL SITIO\nEste es el artboard para la presentación: muestra que ninguna de las 10 secciones de tu propuesta se perdió, y deja explícito dónde queda el Sistema Plenario.\nAl final, las cuatro decisiones que la federación tiene que tomar antes de programar."
+    },
+    {
+      "id": "n-movil",
+      "x": 1560,
+      "y": 5060,
+      "w": 330,
+      "text": "MÓVIL\nCasi todo el tráfico va a entrar por aquí. El aviso de sesión en vivo va arriba, fijo, y los botones no bajan de 44 px de alto."
+    },
+    {
+      "id": "n-sistema",
+      "x": 2050,
+      "y": 5060,
+      "w": 400,
+      "text": "IDENTIDAD\nColores y radios tomados del código real, no inventados. La marca de tres barras es provisoria: hay que reemplazarla por el escudo oficial en vectorial."
+    }
+  ],
+  "launch": { "view": "canvas" }
+}

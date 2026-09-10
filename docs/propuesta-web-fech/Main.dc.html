@@ -1,0 +1,314 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Archivo+Black&display=swap">
+  <style>
+    body { margin: 0; background: #ffffff; color: #1B2232;
+      font-family: Archivo, "Helvetica Neue", Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: #0F388A; text-decoration: none; } a:hover { color: #AD1F36; }
+    .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+    .display { font-family: "Archivo Black", Archivo, Arial, sans-serif; font-weight: 400; letter-spacing: -0.02em; }
+  </style>
+</helmet>
+
+<div style="width: 1440px; background: #ffffff">
+
+  <!-- Barra de servicio: aquí vive el acceso al Sistema Plenario -->
+  <div style="height: 38px; background: #1B2232; color: #C6CBD6; display: flex; align-items: center; justify-content: space-between; padding: 0 120px; font-size: 12px">
+    <span style="letter-spacing: 0.02em">Federación de Estudiantes de la Universidad de Chile</span>
+    <div style="display: flex; align-items: center; gap: 24px">
+      <a href="#" style="color: #C6CBD6; font-size: 12px">Correo FECh</a>
+      <a href="#" style="color: #C6CBD6; font-size: 12px">Reglamentos</a>
+      <div style="display: flex; align-items: center; gap: 10px; background: #AD1F36; color: #fff; padding: 7px 14px; border-radius: 2px">
+        <span style="width: 7px; height: 7px; border-radius: 50%; background: #fff; display: block"></span>
+        <span style="font-size: 12px; font-weight: 700; letter-spacing: 0.06em">PLENO EN SESIÓN</span>
+      </div>
+      <a href="#" style="display: flex; align-items: center; gap: 7px; color: #fff; font-size: 12px; font-weight: 600">
+        Sistema Plenario
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Cabecera -->
+  <div style="height: 80px; border-bottom: 1px solid #E0E4EB; display: flex; align-items: center; justify-content: space-between; padding: 0 120px">
+    <div style="display: flex; align-items: center; gap: 14px">
+      <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true">
+        <rect x="0" y="0" width="40" height="40" fill="#0F388A"/>
+        <rect x="9" y="9" width="22" height="4.5" fill="#ffffff"/>
+        <rect x="9" y="17.75" width="14" height="4.5" fill="#ffffff"/>
+        <rect x="9" y="26.5" width="22" height="4.5" fill="#E5006D"/>
+      </svg>
+      <div>
+        <div class="display" style="font-size: 22px; line-height: 1">FECh</div>
+        <div style="font-size: 9.5px; color: #525F7A; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 3px">Universidad de Chile</div>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 28px; font-size: 13.5px; font-weight: 500">
+      <a href="#" style="color: #1B2232; border-bottom: 2px solid #0F388A; padding-bottom: 3px">Inicio</a>
+      <a href="#" style="color: #1B2232">Representación</a>
+      <a href="#" style="color: #1B2232">El Pleno</a>
+      <a href="#" style="color: #1B2232">Bienestar</a>
+      <a href="#" style="color: #1B2232">Participación</a>
+      <a href="#" style="color: #1B2232">Transparencia</a>
+      <a href="#" style="color: #1B2232">Noticias</a>
+      <span style="width: 1px; height: 22px; background: #E0E4EB; display: block"></span>
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#525F7A" stroke-width="1.9" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-4.3-4.3"/></svg>
+      <a href="#" style="background: #0F388A; color: #fff; padding: 10px 18px; border-radius: 2px; font-size: 13px; font-weight: 600">Contacto</a>
+    </div>
+  </div>
+
+  <!-- Portada -->
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0">
+    <div style="padding: 84px 60px 84px 120px; display: flex; flex-direction: column; gap: 28px; justify-content: center">
+      <span class="eyebrow" style="color: #AD1F36">Federación de Estudiantes · 2026–2027</span>
+      <h1 class="display" style="font-size: 62px; line-height: 1.02; margin: 0; text-wrap: balance">Tu federación,<br>a un clic.</h1>
+      <p style="font-size: 18px; line-height: 1.55; color: #525F7A; margin: 0; max-width: 470px; text-wrap: pretty">
+        Todo lo que la FECh decide, gasta y gestiona, en un solo lugar: actas del pleno,
+        beneficios, cuentas públicas y las personas que te representan.
+      </p>
+      <div style="display: flex; gap: 12px; align-items: center; padding-top: 6px">
+        <a href="#" style="background: #0F388A; color: #fff; padding: 15px 26px; border-radius: 2px; font-size: 15px; font-weight: 600; display: flex; align-items: center; gap: 10px">
+          Busca tu beneficio
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h13"/><path d="m13 6 6 6-6 6"/></svg>
+        </a>
+        <a href="#" style="border: 1px solid #C6CBD6; color: #1B2232; padding: 15px 26px; border-radius: 2px; font-size: 15px; font-weight: 600">Quién me representa</a>
+      </div>
+    </div>
+    <!-- Marca de fotografía: bloque plano con las formas de cada estamento -->
+    <div style="height: 520px; background: #0F388A; position: relative; overflow: hidden">
+      <svg width="720" height="520" viewBox="0 0 720 520" aria-hidden="true" style="display: block">
+        <rect width="720" height="520" fill="#0F388A"/>
+        <circle cx="150" cy="120" r="58" fill="#1D4ED8"/>
+        <rect x="300" y="70" width="104" height="104" fill="#047857"/>
+        <path d="M560 62 622 172 498 172Z" fill="#EA580C"/>
+        <path d="M150 300 208 358 150 416 92 358Z" fill="#6D28D9"/>
+        <path d="M360 292l17 47 50 2-39 32 13 48-41-28-41 28 13-48-39-32 50-2z" fill="#E5006D"/>
+        <rect x="500" y="300" width="116" height="116" fill="#F2A60D"/>
+      </svg>
+      <div style="position: absolute; bottom: 20px; right: 24px; font-size: 11px; color: rgba(255,255,255,0.72); letter-spacing: 0.08em; text-transform: uppercase">Fotografía de portada · [IMAGEN]</div>
+    </div>
+  </div>
+
+  <!-- Franja del pleno en vivo: solo aparece cuando hay sesión abierta -->
+  <div style="background: #1B2232; padding: 26px 120px; display: flex; align-items: center; justify-content: space-between; gap: 40px">
+    <div style="display: flex; align-items: center; gap: 28px">
+      <div style="display: flex; align-items: center; gap: 11px">
+        <span style="width: 9px; height: 9px; border-radius: 50%; background: #AD1F36; display: block"></span>
+        <span class="eyebrow" style="color: #fff">En vivo ahora</span>
+      </div>
+      <div>
+        <div style="color: #fff; font-size: 20px; font-weight: 700">Pleno Ordinario N° [NN]</div>
+        <div style="color: #9AA3B2; font-size: 13px; margin-top: 4px">Abierto a las [HH:MM] · Punto en discusión: [PUNTO DE LA TABLA]</div>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 36px">
+      <div style="text-align: right">
+        <div class="display" style="color: #fff; font-size: 30px; line-height: 1">[NN] / [NN]</div>
+        <div style="color: #9AA3B2; font-size: 11.5px; letter-spacing: 0.08em; text-transform: uppercase; margin-top: 4px">Quórum presente</div>
+      </div>
+      <a href="#" style="background: #fff; color: #1B2232; padding: 14px 24px; border-radius: 2px; font-size: 14px; font-weight: 700; display: flex; align-items: center; gap: 10px">
+        Seguir la sesión
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Accesos directos -->
+  <div style="padding: 72px 120px 20px">
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px">
+
+      <div style="border: 1px solid #E0E4EB; border-top: 4px solid #047857; border-radius: 8px; padding: 26px; display: flex; flex-direction: column; gap: 12px">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#047857" stroke-width="1.7" stroke-linecap="round"><path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="M3 14l9 5 9-5"/></svg>
+        <div style="font-size: 17px; font-weight: 700">Becas y beneficios</div>
+        <div style="font-size: 13.5px; color: #525F7A; line-height: 1.5">Qué te corresponde, con qué requisitos y en qué oficina se pide.</div>
+        <a href="#" style="font-size: 13px; font-weight: 600; margin-top: auto">Buscar por facultad →</a>
+      </div>
+
+      <div style="border: 1px solid #E0E4EB; border-top: 4px solid #0F388A; border-radius: 8px; padding: 26px; display: flex; flex-direction: column; gap: 12px">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#0F388A" stroke-width="1.7" stroke-linecap="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5"/><path d="M9 13h6"/><path d="M9 17h4"/></svg>
+        <div style="font-size: 17px; font-weight: 700">Actas del pleno</div>
+        <div style="font-size: 13.5px; color: #525F7A; line-height: 1.5">Cada sesión con su tabla, su asistencia y el resultado de cada votación.</div>
+        <a href="#" style="font-size: 13px; font-weight: 600; margin-top: auto">Ver el archivo →</a>
+      </div>
+
+      <div style="border: 1px solid #E0E4EB; border-top: 4px solid #E5006D; border-radius: 8px; padding: 26px; display: flex; flex-direction: column; gap: 12px">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#E5006D" stroke-width="1.7" stroke-linecap="round"><circle cx="9" cy="8" r="3.4"/><path d="M3 20a6 6 0 0 1 12 0"/><path d="M17 6.5a3 3 0 0 1 0 5.6"/><path d="M19 20a5.5 5.5 0 0 0-3-4.9"/></svg>
+        <div style="font-size: 17px; font-weight: 700">Tu Centro de Estudiantes</div>
+        <div style="font-size: 13.5px; color: #525F7A; line-height: 1.5">Quién lo integra, cómo contactarlo y qué peso tiene en el pleno.</div>
+        <a href="#" style="font-size: 13px; font-weight: 600; margin-top: auto">Buscar mi CE →</a>
+      </div>
+
+      <div style="border: 1px solid #E0E4EB; border-top: 4px solid #EA580C; border-radius: 8px; padding: 26px; display: flex; flex-direction: column; gap: 12px">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#EA580C" stroke-width="1.7" stroke-linecap="round"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20H2"/></svg>
+        <div style="font-size: 17px; font-weight: 700">Cuentas claras</div>
+        <div style="font-size: 13.5px; color: #525F7A; line-height: 1.5">En qué se gasta el arancel de la federación, mes a mes.</div>
+        <a href="#" style="font-size: 13px; font-weight: 600; margin-top: auto">Ver el presupuesto →</a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Noticias -->
+  <div style="padding: 72px 120px">
+    <div style="display: flex; align-items: flex-end; justify-content: space-between; border-bottom: 2px solid #1B2232; padding-bottom: 16px; margin-bottom: 32px">
+      <div style="display: flex; align-items: baseline; gap: 18px">
+        <span class="display" style="font-size: 34px; color: #E0E4EB">07</span>
+        <h2 class="display" style="font-size: 34px; margin: 0">La voz de la FECh</h2>
+      </div>
+      <a href="#" style="font-size: 13.5px; font-weight: 600">Todas las noticias →</a>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px">
+      <div style="display: flex; flex-direction: column; gap: 14px">
+        <div style="height: 190px; background: #1D4ED8; border-radius: 8px; display: flex; align-items: flex-end; padding: 14px">
+          <span style="font-size: 10.5px; color: rgba(255,255,255,0.75); letter-spacing: 0.08em; text-transform: uppercase">[IMAGEN]</span>
+        </div>
+        <span class="eyebrow" style="color: #1D4ED8">Declaración</span>
+        <div style="font-size: 19px; font-weight: 700; line-height: 1.3">[Titular de la declaración pública]</div>
+        <div style="font-size: 13.5px; color: #525F7A; line-height: 1.55">[Bajada de dos líneas que resume la postura y a quién se dirige.]</div>
+        <div style="font-size: 12px; color: #8B94A6">[FECHA]</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 14px">
+        <div style="height: 190px; background: #047857; border-radius: 8px; display: flex; align-items: flex-end; padding: 14px">
+          <span style="font-size: 10.5px; color: rgba(255,255,255,0.75); letter-spacing: 0.08em; text-transform: uppercase">[IMAGEN]</span>
+        </div>
+        <span class="eyebrow" style="color: #047857">Bienestar</span>
+        <div style="font-size: 19px; font-weight: 700; line-height: 1.3">[Titular sobre un beneficio o plazo que vence]</div>
+        <div style="font-size: 13.5px; color: #525F7A; line-height: 1.55">[Bajada de dos líneas con la fecha límite y dónde se postula.]</div>
+        <div style="font-size: 12px; color: #8B94A6">[FECHA]</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 14px">
+        <div style="height: 190px; background: #EA580C; border-radius: 8px; display: flex; align-items: flex-end; padding: 14px">
+          <span style="font-size: 10.5px; color: rgba(255,255,255,0.75); letter-spacing: 0.08em; text-transform: uppercase">[IMAGEN]</span>
+        </div>
+        <span class="eyebrow" style="color: #EA580C">Pleno</span>
+        <div style="font-size: 19px; font-weight: 700; line-height: 1.3">[Titular sobre un acuerdo del último pleno]</div>
+        <div style="font-size: 13.5px; color: #525F7A; line-height: 1.55">[Bajada de dos líneas con el resultado de la votación y qué implica.]</div>
+        <div style="font-size: 12px; color: #8B94A6">[FECHA]</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Secretarías -->
+  <div style="background: #F4F5F8; padding: 68px 120px">
+    <div style="display: flex; align-items: baseline; gap: 18px; margin-bottom: 10px">
+      <span class="display" style="font-size: 34px; color: #C6CBD6">08</span>
+      <h2 class="display" style="font-size: 34px; margin: 0">El trabajo en terreno</h2>
+    </div>
+    <p style="font-size: 16px; color: #525F7A; margin: 0 0 32px; max-width: 620px; line-height: 1.55">
+      Cada secretaría cuenta qué está haciendo y abre la puerta a quien quiera sumarse.
+      Sin pasar por una reunión para saber que existe.
+    </p>
+    <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px">
+      <div style="background: #fff; border: 1px solid #E0E4EB; border-radius: 8px; padding: 22px; display: flex; flex-direction: column; gap: 9px">
+        <div style="font-size: 15.5px; font-weight: 700">Secretaría de Género y Sexualidades</div>
+        <div style="font-size: 13px; color: #525F7A; line-height: 1.5">[Proyecto en curso]</div>
+        <a href="#" style="font-size: 12.5px; font-weight: 600; margin-top: 4px">Quiero participar →</a>
+      </div>
+      <div style="background: #fff; border: 1px solid #E0E4EB; border-radius: 8px; padding: 22px; display: flex; flex-direction: column; gap: 9px">
+        <div style="font-size: 15.5px; font-weight: 700">Secretaría de Derechos Humanos</div>
+        <div style="font-size: 13px; color: #525F7A; line-height: 1.5">[Proyecto en curso]</div>
+        <a href="#" style="font-size: 12.5px; font-weight: 600; margin-top: 4px">Quiero participar →</a>
+      </div>
+      <div style="background: #fff; border: 1px solid #E0E4EB; border-radius: 8px; padding: 22px; display: flex; flex-direction: column; gap: 9px">
+        <div style="font-size: 15.5px; font-weight: 700">Secretaría de Cultura</div>
+        <div style="font-size: 13px; color: #525F7A; line-height: 1.5">[Proyecto en curso]</div>
+        <a href="#" style="font-size: 12.5px; font-weight: 600; margin-top: 4px">Quiero participar →</a>
+      </div>
+      <div style="background: #fff; border: 1px solid #E0E4EB; border-radius: 8px; padding: 22px; display: flex; flex-direction: column; gap: 9px">
+        <div style="font-size: 15.5px; font-weight: 700">Secretaría de Medio Ambiente</div>
+        <div style="font-size: 13px; color: #525F7A; line-height: 1.5">[Proyecto en curso]</div>
+        <a href="#" style="font-size: 12.5px; font-weight: 600; margin-top: 4px">Quiero participar →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contacto -->
+  <div style="padding: 72px 120px; display: grid; grid-template-columns: 1fr 1fr; gap: 72px">
+    <div style="display: flex; flex-direction: column; gap: 18px">
+      <span class="eyebrow" style="color: #AD1F36">Escríbenos</span>
+      <h2 class="display" style="font-size: 36px; margin: 0; line-height: 1.1">La federación<br>tiene que responder.</h2>
+      <p style="font-size: 16px; color: #525F7A; margin: 0; line-height: 1.6; max-width: 440px">
+        Cada mensaje entra por un formulario que deja registro y se deriva a la
+        secretaría o consejería que corresponde. Sin depender de un DM.
+      </p>
+      <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 8px; font-size: 14px; color: #525F7A">
+        <div>Casa Central · [DIRECCIÓN]</div>
+        <div>[CORREO DE CONTACTO]</div>
+      </div>
+    </div>
+    <div style="border: 1px solid #E0E4EB; border-radius: 8px; padding: 32px; display: flex; flex-direction: column; gap: 16px">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px">
+        <div style="display: flex; flex-direction: column; gap: 7px">
+          <label style="font-size: 12.5px; font-weight: 600">Nombre</label>
+          <div style="height: 44px; border: 1px solid #C6CBD6; border-radius: 2px; background: #fff"></div>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 7px">
+          <label style="font-size: 12.5px; font-weight: 600">Correo</label>
+          <div style="height: 44px; border: 1px solid #C6CBD6; border-radius: 2px; background: #fff"></div>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 7px">
+        <label style="font-size: 12.5px; font-weight: 600">Facultad o unidad</label>
+        <div style="height: 44px; border: 1px solid #C6CBD6; border-radius: 2px; background: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 14px">
+          <span style="font-size: 14px; color: #8B94A6">Selecciona tu unidad</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#525F7A" stroke-width="2.2" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 7px">
+        <label style="font-size: 12.5px; font-weight: 600">Mensaje</label>
+        <div style="height: 108px; border: 1px solid #C6CBD6; border-radius: 2px; background: #fff"></div>
+      </div>
+      <div style="background: #0F388A; color: #fff; padding: 15px; border-radius: 2px; font-size: 15px; font-weight: 600; text-align: center">Enviar</div>
+    </div>
+  </div>
+
+  <!-- Pie -->
+  <div style="background: #1B2232; color: #C6CBD6; padding: 56px 120px 36px">
+    <div style="display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 44px">
+      <div style="display: flex; flex-direction: column; gap: 14px">
+        <svg width="36" height="36" viewBox="0 0 40 40" aria-hidden="true">
+          <rect x="0" y="0" width="40" height="40" fill="#ffffff"/>
+          <rect x="9" y="9" width="22" height="4.5" fill="#1B2232"/>
+          <rect x="9" y="17.75" width="14" height="4.5" fill="#1B2232"/>
+          <rect x="9" y="26.5" width="22" height="4.5" fill="#E5006D"/>
+        </svg>
+        <div style="font-size: 13px; line-height: 1.6; max-width: 260px">Federación de Estudiantes de la Universidad de Chile. Fundada en 1906.</div>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px">
+        <div style="color: #fff; font-weight: 700; margin-bottom: 4px">Representación</div>
+        <a href="#" style="color: #C6CBD6">Mesa Directiva</a>
+        <a href="#" style="color: #C6CBD6">Consejerías FECh</a>
+        <a href="#" style="color: #C6CBD6">COSEFECH</a>
+        <a href="#" style="color: #C6CBD6">Centros de Estudiantes</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px">
+        <div style="color: #fff; font-weight: 700; margin-bottom: 4px">Transparencia</div>
+        <a href="#" style="color: #C6CBD6">Actas y audios</a>
+        <a href="#" style="color: #C6CBD6">Presupuesto</a>
+        <a href="#" style="color: #C6CBD6">Solicitud de información</a>
+        <a href="#" style="color: #C6CBD6">TRICEL FECh</a>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 10px; font-size: 13px">
+        <div style="color: #fff; font-weight: 700; margin-bottom: 4px">Herramientas</div>
+        <a href="#" style="color: #C6CBD6">Sistema Plenario</a>
+        <a href="#" style="color: #C6CBD6">Catastro de organizaciones</a>
+        <a href="#" style="color: #C6CBD6">Historia de la FECh</a>
+      </div>
+    </div>
+    <div style="border-top: 1px solid #333C4E; margin-top: 40px; padding-top: 20px; font-size: 11.5px; color: #8B94A6">
+      www.fech.cl · Propuesta de modernización digital v.2
+    </div>
+  </div>
+
+</div>
+</x-dc>
+</body>
+</html>
