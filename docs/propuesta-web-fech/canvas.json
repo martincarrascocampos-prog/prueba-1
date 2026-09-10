@@ -1,13 +1,13 @@
 {
   "artboards": [
     { "file": "Main.dc.html", "title": "Inicio", "x": 0, "y": 0, "w": 1440, "h": 3100, "print": "flow" },
-    { "file": "Pleno.dc.html", "title": "El Pleno en tiempo real", "x": 1560, "y": 0, "w": 1440, "h": 2100, "print": "flow" },
+    { "file": "Pleno.dc.html", "title": "El Pleno en tiempo real", "x": 1560, "y": 0, "w": 1440, "h": 2200, "print": "flow" },
     { "file": "Representacion.dc.html", "title": "Quién te representa", "x": 3120, "y": 0, "w": 1440, "h": 1800, "print": "flow" },
     { "file": "Transparencia.dc.html", "title": "Cuentas claras", "x": 0, "y": 3400, "w": 1440, "h": 1600, "print": "flow" },
     { "file": "Bienestar.dc.html", "title": "Bienestar y beneficios", "x": 1560, "y": 3400, "w": 1440, "h": 1350, "print": "flow" },
-    { "file": "Arquitectura.dc.html", "title": "Mapa del sitio", "x": 0, "y": 5300, "w": 1440, "h": 1150 },
-    { "file": "Movil.dc.html", "title": "Inicio en móvil", "x": 1560, "y": 5300, "w": 390, "h": 2000, "print": "flow" },
-    { "file": "Sistema.dc.html", "title": "Identidad y componentes", "x": 2050, "y": 5300, "w": 1200, "h": 900 }
+    { "file": "Arquitectura.dc.html", "title": "Mapa del sitio", "x": 0, "y": 5300, "w": 1440, "h": 1240 },
+    { "file": "Movil.dc.html", "title": "Inicio en móvil", "x": 1560, "y": 5300, "w": 390, "h": 2140, "print": "flow" },
+    { "file": "Sistema.dc.html", "title": "Identidad y componentes", "x": 2050, "y": 5300, "w": 1200, "h": 980 }
   ],
   "annotations": [
     {
