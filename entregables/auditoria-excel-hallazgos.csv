@@ -1,0 +1,512 @@
+﻿Hoja,Fila,Severidad,Hallazgo
+Argentina - Instituciones,5,ALTA,"Email sin ""@"": secretariaextension.unt.edu.ar"
+Argentina - Instituciones,23,ALTA,"Email sin ""@"": rectorado.unlu.edu.ar"
+Brasil - Instituciones,23,ALTA,UNIVASF con fuente ufape.edu.br/reitoria (otra universidad)
+Brasil - Instituciones,78,ALTA,UNIMONTES con contacto y fuente de la UEMG (otra universidad)
+Costa Rica - Instituciones,20,ALTA,Email con dominio mal escrito @ina.ac.or → debe ser @ina.ac.cr
+Costa Rica - Instituciones,24,ALTA,Email con dominio mal escrito @ina.ac.or → debe ser @ina.ac.cr
+Costa Rica - Instituciones,34,ALTA,Email con dominio mal escrito @ina.ac.or → debe ser @ina.ac.cr
+México - Instituciones,86,ALTA,"Email @unicach.mx (otra universidad, UNICACH) para la Universidad Politécnica de Chiapas"
+México - Instituciones,94,ALTA,"Datos de la Universidad Pedagógica Nacional de COLOMBIA (email @pedagogica.edu.co, teléfono +57, fuente upn.edu.co) asignados a la UPN de México"
+México - Instituciones,133,ALTA,Email @utsjr.edu.mx (UT de San Juan del Río) para la UT de Querétaro
+Perú - Instituciones,91,ALTA,"Email mal formado URED.2018@HOTMAIL,COM (coma en vez de punto)"
+Perú - Instituciones,214,ALTA,Email mal formado (coma) y la organización figura INACTIVA desde 2020
+Argentina - Instituciones,22,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""SEC. DE EXTENSIÓN UNIVERSITARIA Y CULTURA"""
+Argentina - Instituciones,60,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Contacto general"""
+Argentina - Instituciones,63,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""no disponible publicamente"""
+Argentina - Instituciones,63,MEDIA,Sin email ni teléfono utilizables
+Argentina - Instituciones,65,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""-"""
+Argentina - Instituciones,65,MEDIA,Sin email ni teléfono utilizables
+Argentina - Instituciones,69,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Contacto general"""
+Argentina - Instituciones,70,MEDIA,Sin email ni teléfono utilizables
+Argentina - Instituciones,71,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Contacto general"""
+Argentina - Instituciones,73,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Contacto general"""
+Bolivia - Instituciones,5,MEDIA,Sin email ni teléfono utilizables
+Bolivia - Instituciones,29,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Plataforma de informaciones"""
+Bolivia - Instituciones,30,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Información general"""
+Bolivia - Instituciones,31,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Central telefónica institucional"""
+Bolivia - Instituciones,32,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Informaciones"""
+Bolivia - Instituciones,36,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Contacto institucional de sede central"""
+Bolivia - Instituciones,38,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Unidad de Tecnologías de Información y Comunicació"""
+Brasil - Instituciones,4,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""no disponible"""
+Brasil - Instituciones,4,MEDIA,Sin email ni teléfono utilizables
+Brasil - Instituciones,19,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Servicio de Información al Ciudadano"""
+Brasil - Instituciones,29,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""COORDINACIÓN DEL PLAN DE ESTUDIOS Y SEGUIMIENTO DE"""
+Brasil - Instituciones,34,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""no disponible"""
+Brasil - Instituciones,34,MEDIA,Sin email ni teléfono utilizables
+Brasil - Instituciones,56,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — """""
+Brasil - Instituciones,65,MEDIA,Sin email ni teléfono utilizables
+Brasil - Instituciones,68,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Atencion al Ciudadano"""
+Brasil - Instituciones,71,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Atencion al ciudadano"""
+Brasil - Instituciones,74,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Oficina de prensa"""
+Brasil - Instituciones,86,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Contacto general"""
+Brasil - Instituciones,91,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Contacto general"""
+Brasil - Instituciones,92,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""no disponible"""
+Brasil - Instituciones,92,MEDIA,Sin email ni teléfono utilizables
+Brasil - Instituciones,93,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Contacto general"""
+Brasil - Instituciones,94,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Contacto general"""
+Brasil - Instituciones,98,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Contacto general"""
+Brasil - Instituciones,100,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""no disponible"""
+Brasil - Instituciones,100,MEDIA,Sin email ni teléfono utilizables
+Brasil - Instituciones,110,MEDIA,Sin email ni teléfono utilizables
+Brasil - Instituciones,111,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""no disponible"""
+Brasil - Instituciones,111,MEDIA,Sin email ni teléfono utilizables
+Brasil - Instituciones,112,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Sector de Relación con el Estudiante"""
+Brasil - Instituciones,113,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Contacto general"""
+Brasil - Instituciones,116,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Jefatura de Pregrado"""
+Brasil - Instituciones,118,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Contacto general"""
+Brasil - Instituciones,119,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Contacto general"""
+Brasil - Instituciones,121,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Contacto general"""
+Brasil - Instituciones,124,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Contacto general"""
+Chile - Instituciones,41,MEDIA,Sin email ni teléfono utilizables
+Chile - Instituciones,43,MEDIA,Sin email ni teléfono utilizables
+Chile - Instituciones,47,MEDIA,Sin email ni teléfono utilizables
+Chile - Instituciones,50,MEDIA,Sin email ni teléfono utilizables
+Chile - Instituciones,51,MEDIA,Sin email ni teléfono utilizables
+Chile - Instituciones,52,MEDIA,Sin email ni teléfono utilizables
+Chile - Instituciones,54,MEDIA,Sin email ni teléfono utilizables
+Chile - Instituciones,55,MEDIA,Sin email ni teléfono utilizables
+Chile - Instituciones,60,MEDIA,Sin email ni teléfono utilizables
+Chile - Instituciones,68,MEDIA,Sin email ni teléfono utilizables
+Chile - Instituciones,73,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Bienestar Estudiantil"""
+Chile - Instituciones,74,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Servicio de Bienestar Estudiantil"""
+Chile - Instituciones,76,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Departamento de Bienestar Estudiantil (DGAE)"""
+Chile - Instituciones,84,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Servicio de Bienestar Estudiantil (descentralizado"""
+Chile - Instituciones,85,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Bienestar Integrado / Gestión de Becas y Beneficio"""
+Chile - Instituciones,86,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Unidad de Asuntos y Apoyos Estudiantiles"""
+Colombia - Instituciones,2,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Oficina de Admisiones / Atención al Ciudadano"""
+Colombia - Instituciones,3,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Atención al Ciudadano / Admisiones"""
+Colombia - Instituciones,4,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Atencion y Servicio al Ciudadano"""
+Colombia - Instituciones,28,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""no disponible"""
+Colombia - Instituciones,28,MEDIA,Sin email ni teléfono utilizables
+Colombia - Instituciones,30,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Oficina de Atención al Ciudadano"""
+Colombia - Instituciones,34,MEDIA,Unitrópico con fuente en directorio de la UNAD (otra universidad)
+Costa Rica - Instituciones,10,MEDIA,Guías y Scouts: web apunta al padrón del CPJ y fuente a siemprelistos.com mientras el email es siemprelistos.org
+Costa Rica - Instituciones,82,MEDIA,Sin email ni teléfono utilizables
+Ecuador- Instituciones,18,MEDIA,Sin email ni teléfono utilizables
+Ecuador- Instituciones,25,MEDIA,Sin email ni teléfono utilizables
+Ecuador- Instituciones,28,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Atención Ciudadana"""
+Ecuador- Instituciones,32,MEDIA,Sin email ni teléfono utilizables
+Ecuador- Instituciones,43,MEDIA,Sin email ni teléfono utilizables
+Ecuador- Instituciones,45,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Sede Ecuador"""
+Guatemala - Instituciones,43,MEDIA,Sin email ni teléfono utilizables
+Guatemala - Instituciones,44,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""no disponible públicamente"""
+Guatemala - Instituciones,44,MEDIA,Sin email ni teléfono utilizables
+Guatemala - Instituciones,45,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""no disponible públicamente"""
+Guatemala - Instituciones,46,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""no disponible públicamente"""
+Guatemala - Instituciones,47,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""no disponible públicamente"""
+Guatemala - Instituciones,48,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""no disponible públicamente"""
+Guatemala - Instituciones,48,MEDIA,Sin email ni teléfono utilizables
+Guatemala - Instituciones,49,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""no disponible públicamente"""
+Guatemala - Instituciones,50,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""no disponible públicamente"""
+Guatemala - Instituciones,50,MEDIA,Sin email ni teléfono utilizables
+Guatemala - Instituciones,51,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""no disponible públicamente"""
+Guatemala - Instituciones,51,MEDIA,Sin email ni teléfono utilizables
+Guatemala - Instituciones,52,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""no disponible públicamente"""
+Guatemala - Instituciones,52,MEDIA,Sin email ni teléfono utilizables
+Guatemala - Instituciones,53,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""División de Desarrollo Organizacional"""
+Guatemala - Instituciones,54,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""no disponible públicamente"""
+Guatemala - Instituciones,54,MEDIA,Sin email ni teléfono utilizables
+Guatemala - Instituciones,55,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""no disponible públicamente"""
+Guatemala - Instituciones,59,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""no disponible públicamente"""
+Guatemala - Instituciones,60,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""no disponible públicamente"""
+Guatemala - Instituciones,61,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""no disponible públicamente"""
+Guatemala - Instituciones,62,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""no disponible públicamente"""
+Guatemala - Instituciones,63,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""no disponible públicamente"""
+Honduras - Instituciones,3,MEDIA,Sin email ni teléfono utilizables
+Honduras - Instituciones,5,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Atención institucional"""
+Honduras - Instituciones,6,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Atención institucional"""
+Honduras - Instituciones,7,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Atención institucional"""
+Honduras - Instituciones,8,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Admisiones"""
+Honduras - Instituciones,9,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Admisiones"""
+Honduras - Instituciones,10,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Información de posgrados / admisiones"""
+Honduras - Instituciones,10,MEDIA,Sin email ni teléfono utilizables
+México - Instituciones,2,MEDIA,"Fuente apunta a gob.mx/issste, no a ISSFAM"
+México - Instituciones,46,MEDIA,Sin email ni teléfono utilizables
+México - Instituciones,48,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Coordinación General de Vinculación y Cooperación """
+México - Instituciones,50,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Coordinación General de Vinculación y Extensión Ac"""
+México - Instituciones,53,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Coordinación General de Relaciones Internacionales"""
+México - Instituciones,54,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Oficina de Internacionalización y Cooperación Acad"""
+México - Instituciones,58,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""División de Vinculación e Internacionalización"""
+México - Instituciones,59,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Unidad de Relaciones Interinstitucionales e Intern"""
+México - Instituciones,61,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Contacto institucional"""
+México - Instituciones,68,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Coordinación de Vinculación"""
+México - Instituciones,69,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""División de Vinculación Universitaria"""
+México - Instituciones,77,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Coordinación de Vinculación"""
+México - Instituciones,79,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Departamento de Servicios Estudiantiles / Control """
+México - Instituciones,80,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Departamento de Servicios Estudiantiles"""
+México - Instituciones,81,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Servicios Estudiantiles y Extensión"""
+México - Instituciones,82,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Servicios Estudiantiles"""
+México - Instituciones,83,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Departamento de Asuntos Estudiantiles"""
+México - Instituciones,84,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Coordinación de Bienestar y Servicios Estudiantile"""
+México - Instituciones,85,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Departamento de Bienestar Estudiantil"""
+México - Instituciones,87,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Coordinación de Orientación y Bienestar Estudianti"""
+México - Instituciones,88,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Departamento de Servicios Estudiantiles"""
+México - Instituciones,90,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Servicios Estudiantiles"""
+México - Instituciones,96,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Departamento de Servicios Escolares / Bienestar Es"""
+México - Instituciones,97,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Departamento de Apoyo Psicológico y Servicios Estu"""
+México - Instituciones,98,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Departamento de Servicios Estudiantiles"""
+México - Instituciones,98,MEDIA,Sin email ni teléfono
+México - Instituciones,99,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Departamento de Admisión"""
+México - Instituciones,100,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Departamento de Control Escolar y Apoyo Estudianti"""
+México - Instituciones,101,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Departamento de Servicios Estudiantiles y Becas"""
+México - Instituciones,101,MEDIA,Sin email ni teléfono
+México - Instituciones,102,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Departamento de Servicios Estudiantiles"""
+México - Instituciones,102,MEDIA,Sin email ni teléfono
+México - Instituciones,103,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Departamento de Servicios Estudiantiles y Activida"""
+México - Instituciones,103,MEDIA,Sin email ni teléfono
+México - Instituciones,104,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Departamento de Servicios Estudiantiles"""
+México - Instituciones,105,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Departamento de Servicios Estudiantiles"""
+México - Instituciones,106,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Departamento de Atención a Estudiantes"""
+México - Instituciones,107,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Departamento de Servicios Estudiantiles"""
+México - Instituciones,107,MEDIA,Sin email ni teléfono
+México - Instituciones,108,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Departamento de Servicios Estudiantiles"""
+México - Instituciones,108,MEDIA,Sin email ni teléfono
+México - Instituciones,109,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Departamento de Servicios Estudiantiles / Desarrol"""
+México - Instituciones,109,MEDIA,Sin email ni teléfono
+México - Instituciones,110,MEDIA,Email @utsoe.edu.mx (con punto final) vs web utsoes.edu.mx
+México - Instituciones,112,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Servicios Estudiantiles"""
+México - Instituciones,115,MEDIA,Email @utt.edu.mx no coincide con dominio uttt.edu.mx (UT Tula-Tepeji)
+México - Instituciones,116,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Departamento de Servicios Estudiantiles"""
+México - Instituciones,117,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Departamento de Servicios Estudiantiles"""
+México - Instituciones,118,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Servicios Estudiantiles"""
+México - Instituciones,119,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Servicios Escolares y Bienestar Estudiantil"""
+México - Instituciones,121,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Servicios Escolares y Bienestar"""
+México - Instituciones,122,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Servicios Escolares"""
+México - Instituciones,123,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Servicios Escolares"""
+México - Instituciones,125,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Servicios Escolares"""
+México - Instituciones,126,MEDIA,Email @unicha.edu.mx vs web unicat.edu.mx: verificar dominio correcto
+México - Instituciones,128,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Departamento de Servicios Estudiantiles"""
+México - Instituciones,130,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Servicios Estudiantiles"""
+México - Instituciones,132,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Servicios Estudiantiles y Admisiones"""
+México - Instituciones,134,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Departamento de Servicios Estudiantiles"""
+México - Instituciones,135,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Departamento de Servicios Estudiantiles"""
+México - Instituciones,136,MEDIA,Web uado.mx incorrecta: el dominio oficial es uadeo.mx
+México - Instituciones,137,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Departamento de Atención y Bienestar Estudiantil"""
+México - Instituciones,138,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Servicios Estudiantiles"""
+México - Instituciones,138,MEDIA,Sin email ni teléfono
+México - Instituciones,139,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Servicios Estudiantiles"""
+México - Instituciones,141,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Departamento de Admisiones y Atención a Alumnos"""
+Panamá - Instituciones,28,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Admisión / contacto institucional"""
+Panamá - Instituciones,29,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Admisión primer ingreso"""
+Panamá - Instituciones,30,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Contacto institucional"""
+Panamá - Instituciones,31,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""No verificada: sitio institucional suspendido al 2"""
+Panamá - Instituciones,31,MEDIA,Sin email ni teléfono utilizables
+Perú - Instituciones,56,MEDIA,Sin email ni teléfono utilizables
+Perú - Instituciones,57,MEDIA,Sin email ni teléfono utilizables
+Perú - Instituciones,67,MEDIA,Sin email ni teléfono utilizables
+Perú - Instituciones,113,MEDIA,Sin email ni teléfono utilizables
+Perú - Instituciones,249,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Gestión academica"""
+Perú - Instituciones,252,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Mesa de Ayuda DIRCE"""
+Perú - Instituciones,253,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Mesa de Partes / Transparencia"""
+Perú - Instituciones,254,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — """""
+Perú - Instituciones,255,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Atención institucional"""
+Perú - Instituciones,258,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Trámite Documentario Virtual"""
+Perú - Instituciones,260,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Oficina de Trámite Documentario"""
+Perú - Instituciones,272,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Central / atención institucional"""
+Perú - Instituciones,273,MEDIA,Sin email ni teléfono utilizables
+Perú - Instituciones,274,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Mesa de Partes"""
+Perú - Instituciones,283,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Sectretaria General"""
+Perú - Instituciones,286,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Unidad de Trámite Documentario y Archivo"""
+Perú - Instituciones,287,MEDIA,"Universidad: contacto no es Vicerrectoría/Secretaría General/Rectoría — ""Trámite Documentario"""
+Uruguay - Instituciones,2,MEDIA,Email secregral@oce.edu.uy: dominio oce.edu.uy distinto de udelar.edu.uy; verificar
+(varias),-,REVISAR,naturwayna@gmail.com: mismo email en 2 instituciones distintas: comité de apoyo a la cultura del gas natural (cacgn); fundación naturwayna
+(varias),-,REVISAR,ande@ande.cr: mismo email en 2 instituciones distintas: asociación nacional de educadores (ande - sindicato); asociación nacional de educadores - fondo de seguridad social (ande)
+(varias),-,REVISAR,mmatamorospaniagua@ina.ac.cr: mismo email en 2 instituciones distintas: centro de formación profesional turrialba; unidad regional cartago
+(varias),-,REVISAR,vbedoyam@sena.edu.co: mismo email en 4 instituciones distintas: centro de automatizacion industrial -manizales-; centro de comercio y servicios -manizales-; centro para la formacion cafetera -manizales-; centro pec
+(varias),-,REVISAR,"jovasquez@sena.edu.co: mismo email en 2 instituciones distintas: centro agropecuario y de biotecnologia el porvenir -monteria-; centro de comercio, industria y turismo de cordoba -monteria-"
+(varias),-,REVISAR,centrovillanueva@intecap.edu.gt: mismo email en 2 instituciones distintas: centro de capacitación villa nueva enriqueta; centro de capacitación villa nueva reformadores
+Argentina - Instituciones,38,REVISAR,Fuente en dominio distinto a la web (grupolarabida.org vs undec.edu.ar)
+Argentina - Instituciones,56,REVISAR,Dominio de email (secretariageneral@unsanisidro.edu.ar) distinto al de la web (unso.edu.ar)
+Argentina - Instituciones,62,REVISAR,Dominio de email (rectorado@unma.net.ar) distinto al de la web (unma.edu.ar)
+Argentina - Instituciones,73,REVISAR,Dominio de email (info@udelaciudad.edu.ar) distinto al de la web (unicaba.edu.ar)
+Bolivia - Instituciones,6,REVISAR,Dominio de email (bo.info@swisscontact.org) distinto al de la web (formaciontecnicabolivia.org)
+Bolivia - Instituciones,24,REVISAR,Fuente en dominio distinto a la web (ilo.org vs cob.org.bo)
+Bolivia - Instituciones,27,REVISAR,Fuente en dominio distinto a la web (conlactraho.org vs fenatrahob.org.bo)
+Bolivia - Instituciones,28,REVISAR,Fuente en dominio distinto a la web (ceub.edu.bo vs usfx.bo)
+Bolivia - Instituciones,29,REVISAR,Fuente en dominio distinto a la web (ceub.edu.bo vs umsa.bo)
+Bolivia - Instituciones,30,REVISAR,Fuente en dominio distinto a la web (ceub.edu.bo vs umss.edu.bo)
+Bolivia - Instituciones,31,REVISAR,Fuente en dominio distinto a la web (ceub.edu.bo vs uagrm.edu.bo)
+Bolivia - Instituciones,32,REVISAR,Fuente en dominio distinto a la web (ceub.edu.bo vs uatf.edu.bo)
+Bolivia - Instituciones,33,REVISAR,Fuente en dominio distinto a la web (ceub.edu.bo vs uto.edu.bo)
+Bolivia - Instituciones,34,REVISAR,Fuente en dominio distinto a la web (ceub.edu.bo vs uajms.edu.bo)
+Bolivia - Instituciones,35,REVISAR,Fuente en dominio distinto a la web (ceub.edu.bo vs uabjb.edu.bo)
+Bolivia - Instituciones,36,REVISAR,Fuente en dominio distinto a la web (ceub.edu.bo vs unsxx.bo)
+Bolivia - Instituciones,37,REVISAR,Fuente en dominio distinto a la web (ceub.edu.bo vs uap.edu.bo)
+Bolivia - Instituciones,38,REVISAR,Fuente en dominio distinto a la web (ceub.edu.bo vs upea.edu.bo)
+Brasil - Instituciones,24,REVISAR,Dominio de email (viceretoria@ufpi.edu.br) distinto al de la web (ufpi.br)
+Brasil - Instituciones,46,REVISAR,Dominio de email (soc@ufop.edu.br) distinto al de la web (ufop.br)
+Brasil - Instituciones,91,REVISAR,Dominio de email (ascom@uesb.edu.br) distinto al de la web (uesb.br)
+Brasil - Instituciones,116,REVISAR,Dominio de email (cyro@facef.br) distinto al de la web (unifacef.com.br)
+Chile - Instituciones,12,REVISAR,Fuente en dominio distinto a la web (suseso.cl vs cajalosandes.cl)
+Chile - Instituciones,15,REVISAR,Fuente en dominio distinto a la web (mercantil.com vs caja18.cl)
+Chile - Instituciones,18,REVISAR,Dominio de email (mesadeayuda.sc@babelgroup.com) distinto al de la web (campus.serviciocivil.cl)
+Chile - Instituciones,29,REVISAR,Dominio de email (yanara.vasquez@santiagocft.cl) distinto al de la web (cftestatalrm.cl)
+Chile - Instituciones,32,REVISAR,Dominio de email (admision@cftebiobio.cl) distinto al de la web (cftestatalbiobio.cl)
+Chile - Instituciones,35,REVISAR,Dominio de email (vinculacionconelmedio@cft-ell.cl) distinto al de la web (cftregionloslagos.cl)
+Chile - Instituciones,39,REVISAR,Dominio de email (socios@americasolidaria.org) distinto al de la web (americasolidaria.cl)
+Chile - Instituciones,39,REVISAR,Fuente en dominio distinto a la web (americasolidaria.org vs americasolidaria.cl)
+Chile - Instituciones,42,REVISAR,Dominio de email (comunicaciones@guiasyscoutschile.cl) distinto al de la web (guiasyscoutsdechile.org)
+Chile - Instituciones,45,REVISAR,Dominio de email (alianzas.chile@aiesec.net) distinto al de la web (aiesec.cl)
+Chile - Instituciones,46,REVISAR,Fuente en dominio distinto a la web (facebook.com vs jci.cc)
+Chile - Instituciones,51,REVISAR,Fuente en dominio distinto a la web (facebook.com vs weforum.org)
+Chile - Instituciones,62,REVISAR,Dominio de email (ftc@codelco.cl) distinto al de la web (ftc.cl)
+Chile - Instituciones,68,REVISAR,Fuente en dominio distinto a la web (chile.fes.de vs cut.cl)
+Colombia - Instituciones,4,REVISAR,Dominio de email (atencionalciudadano@correounivalle.edu.co) distinto al de la web (univalle.edu.co)
+Colombia - Instituciones,30,REVISAR,Dominio de email (atencionalciudadano@unimilitar.edu.co) distinto al de la web (umng.edu.co)
+Colombia - Instituciones,32,REVISAR,Fuente en dominio distinto a la web (unicolmayor.edu.co vs universidadmayor.edu.co)
+Colombia - Instituciones,35,REVISAR,Dominio de email (secretaria@uaiinpebi-cric.edu.co) distinto al de la web (uaiin-cric.edu.co)
+Colombia - Instituciones,36,REVISAR,Dominio de email (alopezhe@sena.edu.co) distinto al de la web (senamazonas.blogspot.com)
+Colombia - Instituciones,37,REVISAR,Dominio de email (lsanchezt@sena.edu.co) distinto al de la web (senalasalada.blogspot.com)
+Colombia - Instituciones,37,REVISAR,Fuente en dominio distinto a la web (caprendizaje.sena.edu.co vs senalasalada.blogspot.com)
+Colombia - Instituciones,38,REVISAR,Dominio de email (ellorente@sena.edu.co) distinto al de la web (centro-minero-ambiental.blogspot.com)
+Colombia - Instituciones,38,REVISAR,Fuente en dominio distinto a la web (caprendizaje.sena.edu.co vs centro-minero-ambiental.blogspot.com)
+Colombia - Instituciones,39,REVISAR,Dominio de email (djramirez@sena.edu.co) distinto al de la web (centrocuero.blogspot.com)
+Colombia - Instituciones,39,REVISAR,Fuente en dominio distinto a la web (caprendizaje.sena.edu.co vs centrocuero.blogspot.com)
+Colombia - Instituciones,41,REVISAR,Dominio de email (johnmartinez@sena.edu.co) distinto al de la web (centrodeconstruccion.blogspot.com)
+Colombia - Instituciones,41,REVISAR,Fuente en dominio distinto a la web (caprendizaje.sena.edu.co vs centrodeconstruccion.blogspot.com)
+Colombia - Instituciones,42,REVISAR,Dominio de email (hgomez@sena.edu.co) distinto al de la web (tecnologia-manufactura-avanzada.blogspot.com)
+Colombia - Instituciones,43,REVISAR,Dominio de email (aalopezd@sena.edu.co) distinto al de la web (centrotecnologicodelmobiliariosena.blogspot.com)
+Colombia - Instituciones,44,REVISAR,Dominio de email (jcossa@sena.edu.co) distinto al de la web (centrotgi.blogspot.com)
+Colombia - Instituciones,46,REVISAR,Dominio de email (atejada@sena.edu.co) distinto al de la web (ctmasena.blogspot.com)
+Colombia - Instituciones,46,REVISAR,Fuente en dominio distinto a la web (caprendizaje.sena.edu.co vs ctmasena.blogspot.com)
+Colombia - Instituciones,47,REVISAR,Dominio de email (Csantav@sena.edu.co) distinto al de la web (ctmasena.blogspot.com)
+Colombia - Instituciones,47,REVISAR,Fuente en dominio distinto a la web (caprendizaje.sena.edu.co vs ctmasena.blogspot.com)
+Colombia - Instituciones,48,REVISAR,Dominio de email (egarzonm@sena.edu.co) distinto al de la web (senaoriente.blogspot.com)
+Colombia - Instituciones,49,REVISAR,Dominio de email (nsaez@sena.edu.co) distinto al de la web (prezi.com)
+Colombia - Instituciones,49,REVISAR,Fuente en dominio distinto a la web (caprendizaje.sena.edu.co vs prezi.com)
+Colombia - Instituciones,50,REVISAR,Dominio de email (ypgonzalezg@sena.edu.co) distinto al de la web (centrodeserviciosdesaludsena.blogspot.com)
+Colombia - Instituciones,51,REVISAR,Dominio de email (dcgarzon@sena.edu.co) distinto al de la web (centrodeserviciosygestionempresarial.blogspot.com)
+Colombia - Instituciones,52,REVISAR,Dominio de email (wgomezr@sena.edu.co) distinto al de la web (sena-occidente.blogspot.com)
+Colombia - Instituciones,52,REVISAR,Fuente en dominio distinto a la web (caprendizaje.sena.edu.co vs sena-occidente.blogspot.com)
+Colombia - Instituciones,53,REVISAR,Dominio de email (egomez@sena.edu.co) distinto al de la web (araucasena.blogspot.com)
+Colombia - Instituciones,53,REVISAR,Fuente en dominio distinto a la web (caprendizaje.sena.edu.co vs araucasena.blogspot.com)
+Colombia - Instituciones,54,REVISAR,Dominio de email (ndcromero@sena.edu.co) distinto al de la web (centrodecomercioyserviciosatl.blogspot.com)
+Colombia - Instituciones,55,REVISAR,Dominio de email (dedeltoror@sena.edu.co) distinto al de la web (centronalcolomboaleman.blogspot.com)
+Colombia - Instituciones,56,REVISAR,Dominio de email (hestarita@sena.edu.co) distinto al de la web (industrialyaviacionatlco.blogspot.com)
+Colombia - Instituciones,57,REVISAR,Dominio de email (mnflorezro@sena.edu.co) distinto al de la web (cedagro.blogspot.com)
+Colombia - Instituciones,58,REVISAR,Dominio de email (cestarita@sena.edu.co) distinto al de la web (cysbolivar.blogspot.com)
+Colombia - Instituciones,59,REVISAR,Dominio de email (jvillanueva@sena.edu.co) distinto al de la web (cipbolivar.blogspot.com)
+Colombia - Instituciones,60,REVISAR,Dominio de email (storres@sena.edu.co) distinto al de la web (caymbolivar.blogspot.com)
+Colombia - Instituciones,61,REVISAR,Dominio de email (asarabia@sena.edu.co) distinto al de la web (nauticobolivar.blogspot.com)
+Colombia - Instituciones,62,REVISAR,Dominio de email (eramirezc@sena.edu.co) distinto al de la web (cedeagro.blogspot.com)
+Colombia - Instituciones,63,REVISAR,Dominio de email (dmmesa@sena.edu.co) distinto al de la web (centronacionalminero.blogspot.com)
+Colombia - Instituciones,63,REVISAR,Fuente en dominio distinto a la web (caprendizaje.sena.edu.co vs centronacionalminero.blogspot.com)
+Colombia - Instituciones,64,REVISAR,Dominio de email (sburgos@sena.edu.co) distinto al de la web (senacentrogestiontunja.blogspot.com)
+Colombia - Instituciones,64,REVISAR,Fuente en dominio distinto a la web (caprendizaje.sena.edu.co vs senacentrogestiontunja.blogspot.com)
+Colombia - Instituciones,65,REVISAR,Dominio de email (contratoaprendizajecimm@sena.edu.co) distinto al de la web (centroindustrialmantenimientointegral.blogspot.com)
+Colombia - Instituciones,68,REVISAR,Dominio de email (mateo.galvis@sena.edu.co) distinto al de la web (centrocomerciocaldas.blogspot.com)
+Colombia - Instituciones,68,REVISAR,Dominio de email (vbedoyam@sena.edu.co) distinto al de la web (centrocomerciocaldas.blogspot.com)
+Colombia - Instituciones,68,REVISAR,Fuente en dominio distinto a la web (caprendizaje.sena.edu.co vs centrocomerciocaldas.blogspot.com)
+Colombia - Instituciones,69,REVISAR,Dominio de email (varistizabala@sena.edu.co) distinto al de la web (senacentroformacioncafetera.blogspot.com)
+Colombia - Instituciones,69,REVISAR,Dominio de email (vbedoyam@sena.edu.co) distinto al de la web (senacentroformacioncafetera.blogspot.com)
+Colombia - Instituciones,69,REVISAR,Fuente en dominio distinto a la web (caprendizaje.sena.edu.co vs senacentroformacioncafetera.blogspot.com)
+Costa Rica - Instituciones,4,REVISAR,Dominio de email (jupema@juntadepensiones.cr) distinto al de la web (jupema.fi.cr)
+Costa Rica - Instituciones,4,REVISAR,Fuente en dominio distinto a la web (juntadepensiones.cr vs jupema.fi.cr)
+Costa Rica - Instituciones,9,REVISAR,Fuente en dominio distinto a la web (medicos.cr vs acosap.or.cr)
+Costa Rica - Instituciones,79,REVISAR,Fuente en dominio distinto a la web (rerumnovarumcr.com vs mtss.go.cr)
+Costa Rica - Instituciones,80,REVISAR,Dominio de email (cmtccr1@ice.co.cr) distinto al de la web (mtss.go.cr)
+Costa Rica - Instituciones,80,REVISAR,Fuente en dominio distinto a la web (cmtccr.org vs mtss.go.cr)
+Costa Rica - Instituciones,81,REVISAR,Fuente en dominio distinto a la web (govern1.com vs mtss.go.cr)
+Costa Rica - Instituciones,85,REVISAR,Dominio de email (info@seccr.com) distinto al de la web (seccr.org)
+Costa Rica - Instituciones,86,REVISAR,Dominio de email (sindeu@ucr.ac.cr) distinto al de la web (mtss.go.cr)
+Costa Rica - Instituciones,86,REVISAR,Fuente en dominio distinto a la web (sindeu.ucr.ac.cr vs mtss.go.cr)
+Costa Rica - Instituciones,87,REVISAR,Dominio de email (situn@una.cr) distinto al de la web (mtss.go.cr)
+Costa Rica - Instituciones,87,REVISAR,Fuente en dominio distinto a la web (situn.una.ac.cr vs mtss.go.cr)
+Costa Rica - Instituciones,88,REVISAR,Fuente en dominio distinto a la web (undeca.cr vs mtss.go.cr)
+Costa Rica - Instituciones,90,REVISAR,Dominio de email (sinaecr@ice.co.cr) distinto al de la web (sinaecr.com)
+Costa Rica - Instituciones,90,REVISAR,Fuente en dominio distinto a la web (sinaeafinesvirtual.com vs sinaecr.com)
+Costa Rica - Instituciones,91,REVISAR,Dominio de email (info@anep.or.cr) distinto al de la web (anep.cr)
+Costa Rica - Instituciones,92,REVISAR,Dominio de email (sitrap@sitrap.net) distinto al de la web (mtss.go.cr)
+Costa Rica - Instituciones,92,REVISAR,Fuente en dominio distinto a la web (sitrap.net vs mtss.go.cr)
+Ecuador- Instituciones,4,REVISAR,Dominio de email (secretaria@istsucre.edu.ec) distinto al de la web (tecnologicosucre.edu.ec)
+Ecuador- Instituciones,4,REVISAR,Fuente en dominio distinto a la web (ec.todosnegocios.com vs tecnologicosucre.edu.ec)
+Ecuador- Instituciones,10,REVISAR,Fuente en dominio distinto a la web (tsachila.edu.ec vs isttsachila.edu.ec)
+Ecuador- Instituciones,20,REVISAR,Fuente en dominio distinto a la web (facebook.com vs fut.cl)
+Ecuador- Instituciones,29,REVISAR,Dominio de email (eva.romero@utm.edu.ec) distinto al de la web (uta.edu.ec)
+Ecuador- Instituciones,29,REVISAR,Fuente en dominio distinto a la web (utm.edu.ec vs uta.edu.ec)
+Ecuador- Instituciones,31,REVISAR,Dominio de email (utmachala@utmachala.edu.ec) distinto al de la web (utelvt.edu.ec)
+Ecuador- Instituciones,31,REVISAR,Fuente en dominio distinto a la web (utmachala.edu.ec vs utelvt.edu.ec)
+Ecuador- Instituciones,47,REVISAR,Dominio de email (admisiones@uaw.edu.ec) distinto al de la web (amawtaywasi.edu.ec)
+Ecuador- Instituciones,47,REVISAR,Fuente en dominio distinto a la web (uaw.edu.ec vs amawtaywasi.edu.ec)
+Guatemala - Instituciones,37,REVISAR,Fuente en dominio distinto a la web (linkedin.com vs aiesec.org.gt)
+Guatemala - Instituciones,38,REVISAR,Fuente en dominio distinto a la web (cruzroja.gt vs cruzroja.org.gt)
+Guatemala - Instituciones,41,REVISAR,Fuente en dominio distinto a la web (facebook.com vs ajegua.org)
+Guatemala - Instituciones,42,REVISAR,Fuente en dominio distinto a la web (facebook.com vs yhriguatemala.org)
+Guatemala - Instituciones,47,REVISAR,Dominio de email (informacion@cunor.edu.gt) distinto al de la web (cunor.usac.edu.gt)
+Guatemala - Instituciones,49,REVISAR,Dominio de email (cunsur@internetdetelgua.com.g) distinto al de la web (cunsur.usac.edu.gt)
+Guatemala - Instituciones,51,REVISAR,Fuente en dominio distinto a la web (cunoroc.edu.gt vs cunoroc.usac.edu.gt)
+Guatemala - Instituciones,52,REVISAR,Fuente en dominio distinto a la web (centrouniversitariodepeten.com vs cudep.usac.edu.gt)
+Guatemala - Instituciones,56,REVISAR,Dominio de email (info@cunsol.edu.gt) distinto al de la web (cunsol.usac.edu.gt)
+Guatemala - Instituciones,56,REVISAR,Fuente en dominio distinto a la web (cunsol.edu.gt vs cunsol.usac.edu.gt)
+Guatemala - Instituciones,62,REVISAR,Dominio de email (orientacionvocacional@cunzac.edu.gt) distinto al de la web (cunzac.usac.edu.gt)
+México - Instituciones,7,REVISAR,Dominio de email (buzon@cnsf.gob.mx) distinto al de la web (gob.mx)
+México - Instituciones,10,REVISAR,Dominio de email (contacto@inap.org.mx) distinto al de la web (inap.mx)
+México - Instituciones,23,REVISAR,Dominio de email (nestor.tello@conalepjalisco.edu.mx) distinto al de la web (conalep.edu.mx)
+México - Instituciones,24,REVISAR,Dominio de email (direccion@conalepmex.edu.mx) distinto al de la web (conalep.edu.mx)
+México - Instituciones,34,REVISAR,Dominio de email (director@conalepsonora.edu.mx) distinto al de la web (conalep.edu.mx)
+México - Instituciones,48,REVISAR,Dominio de email (cooperaciontijuana@uabc.edu.mx) distinto al de la web (uabc.mx)
+México - Instituciones,48,REVISAR,Dominio de email (daecv.mxl@uabc.edu.mx) distinto al de la web (uabc.mx)
+México - Instituciones,68,REVISAR,Dominio de email (rectoria.uqroo@uqroo.edu.mx) distinto al de la web (uqroo.mx)
+México - Instituciones,95,REVISAR,Fuente en dominio distinto a la web (sites.google.com vs rcastellanos.cdmx.gob.mx)
+México - Instituciones,105,REVISAR,Dominio de email (contacto@utfv.edu.mx) distinto al de la web (utfv.edomex.gob.mx)
+México - Instituciones,131,REVISAR,Dominio de email (secretaria.academica@utxicotepec.edu.mx) distinto al de la web (utxj.edu.mx)
+México - Instituciones,135,REVISAR,Dominio de email (salcocer@ucaribe.edu.mx) distinto al de la web (unicaribe.mx)
+Panamá - Instituciones,28,REVISAR,Fuente en dominio distinto a la web (coneaupa.edu.pa vs unachi.ac.pa)
+Perú - Instituciones,5,REVISAR,Dominio de email (sis@sis.gob.pe) distinto al de la web (gob.pe)
+Perú - Instituciones,14,REVISAR,Dominio de email (escuela@servir.gob.pe) distinto al de la web (enap.edu.pe)
+Perú - Instituciones,16,REVISAR,Dominio de email (admin@omaperu.org) distinto al de la web (juventud.gob.pe)
+Perú - Instituciones,17,REVISAR,Dominio de email (INFO@CONSULTORA143.COM) distinto al de la web (juventud.gob.pe)
+Perú - Instituciones,52,REVISAR,Dominio de email (informes@bancodelestudiante.org) distinto al de la web (juventud.gob.pe)
+Perú - Instituciones,115,REVISAR,Dominio de email (INFO@SAYARIWAYNA.ORG) distinto al de la web (juventud.gob.pe)
+Perú - Instituciones,124,REVISAR,Dominio de email (direccion@gutnius.com) distinto al de la web (juventud.gob.pe)
+Perú - Instituciones,136,REVISAR,Dominio de email (huanuco@upejol.org.pe) distinto al de la web (juventud.gob.pe)
+Perú - Instituciones,168,REVISAR,Dominio de email (info@donandosonrisas.org) distinto al de la web (juventud.gob.pe)
+Perú - Instituciones,185,REVISAR,Dominio de email (contacto@themillennialsmovement.org) distinto al de la web (juventud.gob.pe)
+Perú - Instituciones,209,REVISAR,Dominio de email (administracion@asociacionkp.org) distinto al de la web (juventud.gob.pe)
+Perú - Instituciones,213,REVISAR,Dominio de email (20110936@lamolina.edu.pe) distinto al de la web (juventud.gob.pe)
+Perú - Instituciones,219,REVISAR,Dominio de email (gportuguez@veap.org.pe) distinto al de la web (juventud.gob.pe)
+Perú - Instituciones,221,REVISAR,Dominio de email (oscar.barrios@unmsm.edu.pe) distinto al de la web (juventud.gob.pe)
+Perú - Instituciones,228,REVISAR,Dominio de email (contacto@gruporana.org) distinto al de la web (juventud.gob.pe)
+Perú - Instituciones,230,REVISAR,Dominio de email (fgarcia@centrourbes.org) distinto al de la web (juventud.gob.pe)
+Perú - Instituciones,234,REVISAR,Dominio de email (re.udeplima@udep.pe) distinto al de la web (juventud.gob.pe)
+Perú - Instituciones,245,REVISAR,Fuente en dominio distinto a la web (facebook.com vs cutperu.org.pe)
+Perú - Instituciones,261,REVISAR,Dominio de email (mesadepartes@unas.edu.pe) distinto al de la web (gob.pe)
+Perú - Instituciones,265,REVISAR,Dominio de email (ocii.informes@unac.pe) distinto al de la web (unac.edu.pe)
+Perú - Instituciones,279,REVISAR,Dominio de email (informes@untels.edu.pe) distinto al de la web (gob.pe)
+Perú - Instituciones,288,REVISAR,Dominio de email (mesadepartes@unibagua.edu.pe) distinto al de la web (gob.pe)
+Perú - Instituciones,289,REVISAR,Dominio de email (uniscjsa@uniscjsa.edu.pe) distinto al de la web (gob.pe)
+Perú - Instituciones,290,REVISAR,Dominio de email (info@uniq.edu.pe) distinto al de la web (gob.pe)
+Perú - Instituciones,292,REVISAR,Dominio de email (unaat@unaat.edu.pe) distinto al de la web (gob.pe)
+Argentina - Instituciones,35,BAJA,Email no institucional: paulamiozzo@gmail.com
+Bolivia - Instituciones,4,BAJA,Email no institucional: incosantana@gmail.com
+Bolivia - Instituciones,8,BAJA,Email no institucional: montoyaonogw11@gmail.com
+Bolivia - Instituciones,14,BAJA,"Fuente contiene texto extra/espacios: ""https://www.minedu.gob.bo/files/documentos-normativos/VESFP/2024/regla"""
+Bolivia - Instituciones,18,BAJA,"Fuente contiene texto extra/espacios: ""https://www.minedu.gob.bo/files/documentos-normativos/VESFP/2024/regla"""
+Bolivia - Instituciones,23,BAJA,Celda de email con texto adicional (notas mezcladas con el correo)
+Bolivia - Instituciones,23,BAJA,"Fuente contiene texto extra/espacios: ""https://egpp.gob.bo/oferta-academica/ | https://egpp.gob.bo/unidad-de-"""
+Bolivia - Instituciones,25,BAJA,Email no institucional: sidis1986fstmb@hotmail.com
+Bolivia - Instituciones,25,BAJA,"Fuente contiene texto extra/espacios: ""https://sidisfstmb.wordpress.com/contacto/ | https://sidisfstmb.wordpr"""
+Bolivia - Instituciones,26,BAJA,Email no institucional: maestrosurbanoscteub@gmail.com
+Bolivia - Instituciones,26,BAJA,Email no institucional: CTEUB_1@hotmail.com
+Bolivia - Instituciones,27,BAJA,Email no institucional: fenatrahob@hotmail.com
+Bolivia - Instituciones,27,BAJA,"Fuente contiene texto extra/espacios: ""https://conlactraho.org/afiliada/federacion-nacional-de-trabajadoras-a"""
+Bolivia - Instituciones,28,BAJA,"Fuente contiene texto extra/espacios: ""https://ceub.edu.bo/universidades-del-sistema/ | https://www.umsa.bo/e"""
+Bolivia - Instituciones,29,BAJA,"Fuente contiene texto extra/espacios: ""https://ceub.edu.bo/universidades-del-sistema/ | https://www.umsa.bo/e"""
+Bolivia - Instituciones,30,BAJA,"Fuente contiene texto extra/espacios: ""https://ceub.edu.bo/universidades-del-sistema/ | https://www.umsa.bo/e"""
+Bolivia - Instituciones,31,BAJA,"Fuente contiene texto extra/espacios: ""https://ceub.edu.bo/universidades-del-sistema/ | https://www.umsa.bo/e"""
+Bolivia - Instituciones,32,BAJA,"Fuente contiene texto extra/espacios: ""https://ceub.edu.bo/universidades-del-sistema/ | https://www.umsa.bo/e"""
+Bolivia - Instituciones,33,BAJA,"Fuente contiene texto extra/espacios: ""https://ceub.edu.bo/universidades-del-sistema/ | https://www.umsa.bo/e"""
+Bolivia - Instituciones,34,BAJA,"Fuente contiene texto extra/espacios: ""https://ceub.edu.bo/universidades-del-sistema/ | https://www.umsa.bo/e"""
+Bolivia - Instituciones,35,BAJA,"Fuente contiene texto extra/espacios: ""https://ceub.edu.bo/universidades-del-sistema/ | https://www.umsa.bo/e"""
+Bolivia - Instituciones,36,BAJA,"Fuente contiene texto extra/espacios: ""https://ceub.edu.bo/universidades-del-sistema/ | https://www.umsa.bo/e"""
+Bolivia - Instituciones,37,BAJA,"Fuente contiene texto extra/espacios: ""https://ceub.edu.bo/universidades-del-sistema/ | https://www.umsa.bo/e"""
+Bolivia - Instituciones,38,BAJA,"Fuente contiene texto extra/espacios: ""https://ceub.edu.bo/universidades-del-sistema/ | https://www.umsa.bo/e"""
+Brasil - Instituciones,61,BAJA,"Email con carácter sobrante ""|"""
+Brasil - Instituciones,71,BAJA,Celda de email con texto adicional (notas mezcladas con el correo)
+Chile - Instituciones,52,BAJA,"Fuente sin http(s)://: ""Fridays for Future Chile (Facebook/Instagram oficiales — fue"""
+Chile - Instituciones,60,BAJA,"Fuente sin http(s)://: ""elmostrador.cl / emol.com (nota 1° mayo 2026)"""
+Chile - Instituciones,66,BAJA,Email no institucional: confederacionfenatsnacional@gmail.com
+Chile - Instituciones,67,BAJA,"Web contiene texto extra/espacios: ""https://fenpruss.cl/ (corregida — la URL original estaba rota)"""
+Chile - Instituciones,83,BAJA,Celda de email con texto adicional (notas mezcladas con el correo)
+Colombia - Instituciones,5,BAJA,Celda de email con texto adicional (notas mezcladas con el correo)
+Colombia - Instituciones,10,BAJA,Celda de email con texto adicional (notas mezcladas con el correo)
+Colombia - Instituciones,12,BAJA,Celda de email con texto adicional (notas mezcladas con el correo)
+Colombia - Instituciones,14,BAJA,Celda de email con texto adicional (notas mezcladas con el correo)
+Colombia - Instituciones,15,BAJA,Celda de email con texto adicional (notas mezcladas con el correo)
+Colombia - Instituciones,25,BAJA,Celda de email con texto adicional (notas mezcladas con el correo)
+Costa Rica - Instituciones,9,BAJA,Email no institucional: acosap@gmail.com
+Costa Rica - Instituciones,79,BAJA,Email no institucional: ctrn.costarica@gmail.com
+Ecuador- Instituciones,8,BAJA,Email no institucional: itsluisarboledamartinez@gmail.com
+Ecuador- Instituciones,17,BAJA,Email no institucional: presidenciacedocut@gmail.com
+Ecuador- Instituciones,20,BAJA,Email no institucional: frente.unitario.trabajadores@gmail.com
+Ecuador- Instituciones,20,BAJA,"Web sin http(s)://: ""fut.cl"""
+Guatemala - Instituciones,39,BAJA,Celda de email con texto adicional (notas mezcladas con el correo)
+Guatemala - Instituciones,49,BAJA,Celda de email con texto adicional (notas mezcladas con el correo)
+Guatemala - Instituciones,55,BAJA,Email no institucional: secretariacunbav@gmail.com
+Guatemala - Instituciones,61,BAJA,Email no institucional: jusaccentrouniversitario@gmail.com
+Honduras - Instituciones,3,BAJA,"Web contiene texto extra/espacios: ""https://www.eagp.gob.hn/?p=1770 (enlace proporcionado, inaccesible al """
+Honduras - Instituciones,4,BAJA,"Fuente contiene texto extra/espacios: ""https://www.injuve.gob.hn/preguntas | https://www.injuve.gob.hn/"""
+Honduras - Instituciones,5,BAJA,"Fuente contiene texto extra/espacios: ""https://des.unah.edu.hn/sistema-de-educacion-superior/instituciones/pu"""
+México - Instituciones,4,BAJA,Celda de email con texto adicional (notas mezcladas con el correo)
+México - Instituciones,5,BAJA,Celda de email con texto adicional (notas mezcladas con el correo)
+México - Instituciones,6,BAJA,Celda de email con texto adicional (notas mezcladas con el correo)
+México - Instituciones,8,BAJA,"Fuente sin http(s)://: ""mexico.techo.org/contacto"""
+México - Instituciones,9,BAJA,"Fuente sin http(s)://: ""ollinac.org/contacto — sitio oficial"""
+México - Instituciones,43,BAJA,"Fuente sin http(s)://: ""ctmoficial.org/contacto"""
+México - Instituciones,44,BAJA,"Fuente sin http(s)://: ""croc.org.mx"""
+México - Instituciones,46,BAJA,"Web sin http(s)://: ""unt.org.mx (dominio confirmado vía su página oficial de Face"""
+México - Instituciones,46,BAJA,"Fuente sin http(s)://: ""facebook.com/UnionNacionaldeTrabajadores"""
+México - Instituciones,47,BAJA,"Web sin http(s)://: ""www.uaa.mx"""
+México - Instituciones,47,BAJA,"Fuente sin http(s)://: ""uaa.mx/portal/noticias/uaa-impulsa-a-empresas-y-organizacion"""
+México - Instituciones,48,BAJA,Celda de email con texto adicional (notas mezcladas con el correo)
+México - Instituciones,48,BAJA,"Web sin http(s)://: ""www.uabc.mx"""
+México - Instituciones,48,BAJA,"Fuente sin http(s)://: ""uabc.mx/acerca-de-rectoria/ ; fundacionuabc.org ; https://ww"""
+México - Instituciones,49,BAJA,"Web sin http(s)://: ""www.uabcs.mx"""
+México - Instituciones,49,BAJA,"Fuente sin http(s)://: ""uabcs.mx/dvrii ; uabcs.mx"""
+México - Instituciones,50,BAJA,"Web sin http(s)://: ""www.uacam.mx"""
+México - Instituciones,50,BAJA,"Fuente sin http(s)://: ""vinculacion.uacam.mx ; cecaec.uacam.mx/view/contacto"""
+México - Instituciones,51,BAJA,Celda de email con texto adicional (notas mezcladas con el correo)
+México - Instituciones,51,BAJA,"Web sin http(s)://: ""www.unach.mx"""
+México - Instituciones,51,BAJA,"Fuente sin http(s)://: ""unach.mx/17-vinculacion ; sic.cultura.gob.mx (ficha UNACH)"""
+México - Instituciones,52,BAJA,"Web sin http(s)://: ""www.uach.mx"""
+México - Instituciones,52,BAJA,"Fuente sin http(s)://: ""anuies.mx (ficha institucional UACH)"""
+México - Instituciones,53,BAJA,"Web sin http(s)://: ""www.uadec.mx"""
+México - Instituciones,54,BAJA,"Web sin http(s)://: ""www.ucol.mx"""
+México - Instituciones,54,BAJA,"Fuente sin http(s)://: ""portal.ucol.mx/vinculacion/contacto.htm ; ucol.mx/acerca-de/"""
+México - Instituciones,55,BAJA,"Web sin http(s)://: ""www.ujed.mx"""
+México - Instituciones,55,BAJA,"Fuente sin http(s)://: ""ujed.mx ; sic.cultura.gob.mx (ficha UJED); https://www.ujed."""
+México - Instituciones,56,BAJA,"Fuente sin http(s)://: ""ugto.mx/directorio-universidad-guanajuato/rectoria-general-u"""
+México - Instituciones,57,BAJA,"Web sin http(s)://: ""www.uagro.mx"""
+México - Instituciones,57,BAJA,"Fuente sin http(s)://: ""uagro.mx ; dae.uagro.mx/regweb/index.php?Opcion=daecc/dirdae"""
+México - Instituciones,58,BAJA,"Web sin http(s)://: ""www.uaeh.edu.mx"""
+México - Instituciones,58,BAJA,"Fuente sin http(s)://: ""sic.cultura.gob.mx (ficha UAEH) ; universidadesdemexico.mx: """
+México - Instituciones,59,BAJA,"Web sin http(s)://: ""www.udg.mx"""
+México - Instituciones,59,BAJA,"Fuente sin http(s)://: ""rectoria.udg.mx/estructura/directorio ; en.wikipedia.org/wik"""
+México - Instituciones,60,BAJA,"Web sin http(s)://: ""www.uaemex.mx"""
+México - Instituciones,60,BAJA,"Fuente sin http(s)://: ""www.uaemex.mx"""
+México - Instituciones,61,BAJA,"Web sin http(s)://: ""www.umich.mx"""
+México - Instituciones,61,BAJA,"Fuente sin http(s)://: ""www.umich.mx"""
+México - Instituciones,62,BAJA,"Web sin http(s)://: ""www.uaem.mx"""
+México - Instituciones,62,BAJA,"Fuente sin http(s)://: ""www.uaem.mx"""
+México - Instituciones,63,BAJA,"Web sin http(s)://: ""www.uan.edu.mx"""
+México - Instituciones,63,BAJA,"Fuente sin http(s)://: ""www.uan.edu.mx"""
+México - Instituciones,64,BAJA,"Web sin http(s)://: ""www.uanl.mx"""
+México - Instituciones,65,BAJA,"Web sin http(s)://: ""www.uabjo.mx"""
+México - Instituciones,65,BAJA,"Fuente sin http(s)://: ""uabjo.mx/contacto"""
+México - Instituciones,66,BAJA,"Web sin http(s)://: ""www.buap.mx"""
+México - Instituciones,67,BAJA,"Web sin http(s)://: ""www.uaq.mx"""
+México - Instituciones,67,BAJA,"Fuente sin http(s)://: ""rectoria.uaq.mx"""
+México - Instituciones,68,BAJA,"Web sin http(s)://: ""www.uqroo.mx"""
+México - Instituciones,68,BAJA,"Fuente sin http(s)://: ""vinculacion.uqroo.mx"""
+México - Instituciones,69,BAJA,"Web sin http(s)://: ""www.uaslp.mx"""
+México - Instituciones,69,BAJA,"Fuente sin http(s)://: ""uaslp.mx"""
+México - Instituciones,70,BAJA,"Web sin http(s)://: ""www.uas.edu.mx"""
+México - Instituciones,70,BAJA,"Fuente sin http(s)://: ""uas.edu.mx dgvri.uas.edu.mx"""
+México - Instituciones,71,BAJA,Celda de email con texto adicional (notas mezcladas con el correo)
+México - Instituciones,71,BAJA,"Web sin http(s)://: ""www.unison.mx"""
+México - Instituciones,71,BAJA,"Fuente sin http(s)://: ""vinculacionyextension.unison.mx/directorio"""
+México - Instituciones,72,BAJA,"Web sin http(s)://: ""www.ujat.mx"""
+México - Instituciones,72,BAJA,"Fuente sin http(s)://: ""ujat.mx/principal/directorio ; mexicoescultura.com"""
+México - Instituciones,73,BAJA,"Web sin http(s)://: ""www.uat.edu.mx"""
+México - Instituciones,73,BAJA,"Fuente sin http(s)://: ""uat.edu.mx"""
+México - Instituciones,74,BAJA,"Web sin http(s)://: ""www.uatx.mx"""
+México - Instituciones,74,BAJA,"Fuente sin http(s)://: ""sic.cultura.gob.mx (ficha UATx) ; en.wikipedia.org/wiki/Auto"""
+México - Instituciones,75,BAJA,"Web sin http(s)://: ""www.uv.mx"""
+México - Instituciones,75,BAJA,"Fuente sin http(s)://: ""uv.mx/vinculacion/ ; uv.mx/juntagob/comunicado05/"""
+México - Instituciones,76,BAJA,"Web sin http(s)://: ""www.uady.mx"""
+México - Instituciones,76,BAJA,"Fuente sin http(s)://: ""uady.mx ; grupolarabida.org (ficha UADY)"""
+México - Instituciones,77,BAJA,"Web sin http(s)://: ""www.uaz.edu.mx"""
+México - Instituciones,77,BAJA,"Fuente sin http(s)://: ""uaz.edu.mx/rectoria/ ; uaz.edu.mx"""
+México - Instituciones,78,BAJA,"Web sin http(s)://: ""www.uacm.edu.mx"""
+México - Instituciones,78,BAJA,"Fuente sin http(s)://: ""uacm.edu.mx ; universidadesdemexico.mx"""
+México - Instituciones,99,BAJA,Celda de email con texto adicional (notas mezcladas con el correo)
+México - Instituciones,99,BAJA,"Web sin http(s)://: ""Promoción y Becas"""
+México - Instituciones,99,BAJA,"Fuente sin http(s)://: ""dapyb.jefatura@chapingo.mx"""
+Panamá - Instituciones,27,BAJA,"Fuente contiene texto extra/espacios: ""https://utp.ac.pa/contacto | https://utp.ac.pa/sites/default/files/doc"""
+Panamá - Instituciones,28,BAJA,"Fuente contiene texto extra/espacios: ""https://coneaupa.edu.pa/universidades-oficiales/ | https://www.unachi."""
+Perú - Instituciones,15,BAJA,"Fuente contiene texto extra/espacios: ""https://www.senati.edu.pe/sedes | https://www.senati.edu.pe/contacto |"""
+Perú - Instituciones,23,BAJA,Duplicado: Young Peruvian Leaders aparece también en fila 44
+Perú - Instituciones,245,BAJA,Celda de email con texto adicional (notas mezcladas con el correo)
+Perú - Instituciones,268,BAJA,Celda de email con texto adicional (notas mezcladas con el correo)
+(varias),México 94 / Argentina 51 / Colombia 31,INFO,"""Universidad Pedagógica Nacional"" en 3 países: correcto en AR y CO; el de México tiene datos colombianos"
